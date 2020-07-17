@@ -9658,6 +9658,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"normalize.css@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "normalize.css@npm:8.0.1"
+  checksum: de6c137a14291c00fee60a1e9e9ab4b78f93d48dd7ab5baa2783dd62bf19b456403bf0585ad201bb84ed184348fd49b467ccfc707068bf342123d00d31801e98
+  languageName: node
+  linkType: hard
+
 "npm-bundled@npm:^1.0.1":
   version: 1.1.1
   resolution: "npm-bundled@npm:1.1.1"
@@ -13951,6 +13958,7 @@ resolve@1.15.0:
     "@testing-library/react": ^9.3.2
     "@testing-library/user-event": ^7.1.2
     node-sass: ^4.14.1
+    normalize.css: ^8.0.1
     react: ^16.13.1
     react-dom: ^16.13.1
     react-scripts: 3.4.1
