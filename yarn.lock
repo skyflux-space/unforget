@@ -9341,6 +9341,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"nanoid@npm:^3.1.10":
+  version: 3.1.10
+  resolution: "nanoid@npm:3.1.10"
+  bin:
+    nanoid: bin/nanoid.cjs
+  checksum: f8c796e6cb01d49d625533a4ad83ca9834375909cc3980a3fe953eb5be4d262f096f05bebe4bfe6d636a342ed319fd94d19de0ccec0fe863711e2ed2eaf6d33e
+  languageName: node
+  linkType: hard
+
 "nanomatch@npm:^1.2.9":
   version: 1.2.13
   resolution: "nanomatch@npm:1.2.13"
@@ -13964,6 +13973,7 @@ resolve@1.15.0:
     "@testing-library/jest-dom": ^4.2.4
     "@testing-library/react": ^9.3.2
     "@testing-library/user-event": ^7.1.2
+    nanoid: ^3.1.10
     node-sass: ^4.14.1
     normalize.css: ^8.0.1
     ramda: ^0.27.0
