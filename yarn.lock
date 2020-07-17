@@ -3,7 +3,7 @@
 
 __metadata:
   version: 4
-  cacheKey: 5
+  cacheKey: 4
 
 "@babel/code-frame@npm:7.8.3, @babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.8.3":
   version: 7.8.3
@@ -6301,7 +6301,7 @@ fsevents@^1.2.7:
   resolution: "fsevents@patch:fsevents@npm%3A2.1.2#builtin<compat/fsevents>::version=2.1.2&hash=495457"
   dependencies:
     node-gyp: latest
-  checksum: 1d1501fde92a2c1ff0a134fe2db97a10916ed83321c8604998441a2cab4f5343040cd60ba64a6a06e3e321778139178c4b4a565eaa05b9cf7e16b511cdf9dcab
+  checksum: 6fb6ae0c1e5aca68fec6c0bf119d0dc9a1d653af60925c7ec69868f0ac68fa6930eeb769745030ecb560e00c144c74068da62bb77a000cc7dc263963ba4e2d7f
   languageName: node
   linkType: hard
 
@@ -6313,7 +6313,7 @@ fsevents@^1.2.7:
     nan: ^2.12.1
     node-gyp: latest
     node-pre-gyp: "*"
-  checksum: 07f95321e9908fc81115320b2e94bad9cd381c5a3f041ff46611f8170031da34700db3b19fd37861377d74fe92675c2c203e3537bfa561b4af5e4c7091cc2434
+  checksum: 181d9f88933413ce7653288b743abae38bb12d4327552698dcfa4663583933f79e63e8ce0ec7987ca087e0c49add8f05e735d17ada20bd406403fa603ded93c2
   languageName: node
   linkType: hard
 
@@ -11934,6 +11934,16 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"recoil@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "recoil@npm:0.0.10"
+  peerDependencies:
+    react: ^16.13.1
+    react-dom: ^16.13.1
+  checksum: 204948109a1d12003bca3446ac5bc009a66087faed87bf1a51893b983648377f334f205f955e56041a86f48006001e1fb88bdbf8d0293f77746fed055cbcf89d
+  languageName: node
+  linkType: hard
+
 "recursive-readdir@npm:2.2.2":
   version: 2.2.2
   resolution: "recursive-readdir@npm:2.2.2"
@@ -12282,7 +12292,7 @@ resolve@1.15.0:
 "resolve@patch:resolve@1.1.7#builtin<compat/resolve>":
   version: 1.1.7
   resolution: "resolve@patch:resolve@npm%3A1.1.7#builtin<compat/resolve>::version=1.1.7&hash=3388aa"
-  checksum: ca4e21815c78134fdb248d2175d98c2ead024c680a3a9c7b8ee13fc8a7f5157e061b13ae29ee07a60e1b9faea33c3740cb88d48d94966d7e94479add70d3f544
+  checksum: 5238277188664a6948dd7288d16f1a09e098fb36d4f9b2c749130969c998faa9bccefd30fd618073af5210fdc768730cadfc15588bbee4fc64b257f20cab6783
   languageName: node
   linkType: hard
 
@@ -12291,7 +12301,7 @@ resolve@1.15.0:
   resolution: "resolve@patch:resolve@npm%3A1.15.0#builtin<compat/resolve>::version=1.15.0&hash=3388aa"
   dependencies:
     path-parse: ^1.0.6
-  checksum: d544b03a55066b160338ca597c4a510247e4476dec897fc81e486e1e2a5c06083300dbd43675fb5c59b4bc331d12880e7cd397bef159dd0e5a0876a35296be33
+  checksum: a83913f52653a6e7f5a63f8e698d9753e39604666b71a37cd9796ce3de2dd56b00f87633eb4becd415dc35b827248285cda651dc0d8b1a1ccba51a4f12d0db8a
   languageName: node
   linkType: hard
 
@@ -12300,7 +12310,7 @@ resolve@1.15.0:
   resolution: "resolve@patch:resolve@npm%3A1.15.1#builtin<compat/resolve>::version=1.15.1&hash=3388aa"
   dependencies:
     path-parse: ^1.0.6
-  checksum: 6588c8a8735d8b2a00cfee2a325538f325ae5e48653490882d3e8afe6124f25c25d60ec09864f30a03c4471a3201c9cfba0e14ca0f74f626ac4b5c8d2e42c2c2
+  checksum: 6e76c94f84457c88dfff3f0ff894be6f6250380c9bb8a712891282d2f4ed146c6b4588c3ed2082ae530981adea1743ca6f56732de99004ab31b79f958cd42c0e
   languageName: node
   linkType: hard
 
@@ -13944,6 +13954,7 @@ resolve@1.15.0:
     react: ^16.13.1
     react-dom: ^16.13.1
     react-scripts: 3.4.1
+    recoil: ^0.0.10
   languageName: unknown
   linkType: soft
 
