@@ -11615,6 +11615,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"ramda@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "ramda@npm:0.27.0"
+  checksum: 27b2346803bb30acdde0afa25a364c99280a7fbf480ad959cfb5237371d0dd4719c7fb5052b2cbae4c92790c90ee9086e6cbb677500f3f8b4c338144cb71ecce
+  languageName: node
+  linkType: hard
+
 "randombytes@npm:^2.0.0, randombytes@npm:^2.0.1, randombytes@npm:^2.0.5":
   version: 2.1.0
   resolution: "randombytes@npm:2.1.0"
@@ -13959,6 +13966,7 @@ resolve@1.15.0:
     "@testing-library/user-event": ^7.1.2
     node-sass: ^4.14.1
     normalize.css: ^8.0.1
+    ramda: ^0.27.0
     react: ^16.13.1
     react-dom: ^16.13.1
     react-scripts: 3.4.1
