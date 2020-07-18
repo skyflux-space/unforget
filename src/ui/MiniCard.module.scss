@@ -1,0 +1,51 @@
+.card {
+    max-height: 35vh;
+    padding: 0.8rem;
+
+    border-radius: 5px;
+    box-shadow: 0 0 5px black;
+
+    overflow: hidden;
+
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 0.8rem;
+        width: 100%;
+        background: linear-gradient(to top, white, transparent);
+    }
+}
+
+
+.title {
+    padding: 0;
+    margin: 0 0 0.5rem;
+
+    font-size: larger;
+}
+
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.checkbox {
+    margin-right: 0.5rem;
+}
+
+
+.item {
+    margin-top: 0.3rem;
+}
+
+
+.small {
+    font-size: smaller;
+}
