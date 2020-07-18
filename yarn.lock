@@ -3831,6 +3831,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"class-names@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "class-names@npm:1.0.0"
+  dependencies:
+    classnames: ^2.2.5
+  checksum: 8ffbe86a56aa3eae882aff0bd8fac584aa96f1509595cecb65262c5d577eb48a4fb8efa44ece7722a6854584df5c3c49d42ef4b9995afb182fa7624ffcf023b1
+  languageName: node
+  linkType: hard
+
 "class-utils@npm:^0.3.5":
   version: 0.3.6
   resolution: "class-utils@npm:0.3.6"
@@ -3840,6 +3849,13 @@ __metadata:
     isobject: ^3.0.0
     static-extend: ^0.1.1
   checksum: 6411679ad4d2bde81b62ad721d4771d108d5d8ef32805d10ebfa6f1d6bdcfd5cb6dfea5232b85221f079e42691c36cf2db05a5e76b87ba8f6deb37a2c23a4a41
+  languageName: node
+  linkType: hard
+
+"classnames@npm:^2.2.5":
+  version: 2.2.6
+  resolution: "classnames@npm:2.2.6"
+  checksum: 490eaeca5931846737ffd33e472a701d268d5b8bc5717dd4cf108a127b06e86e05350e06799abbbe763a0e4c945b4217f6700b7ae00ddc703505682c370e5cf2
   languageName: node
   linkType: hard
 
@@ -13982,6 +13998,7 @@ resolve@1.15.0:
     "@testing-library/jest-dom": ^4.2.4
     "@testing-library/react": ^9.3.2
     "@testing-library/user-event": ^7.1.2
+    class-names: ^1.0.0
     nanoid: ^3.1.10
     node-sass: ^4.14.1
     normalize.css: ^8.0.1
