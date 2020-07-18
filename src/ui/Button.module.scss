@@ -1,0 +1,28 @@
+.border {
+    border: 1px solid;
+}
+
+
+.round {
+    border-radius: 50%;
+}
+
+.round.default {
+    width: 3rem;
+    height: 3rem;
+}
+
+
+.primary {
+    border-color: green;
+}
+
+
+.secondary {
+    border-color: aqua;
+}
+
+
+.normal {
+    border-color: black;
+}
