@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import c from 'class-names'
+import {NoteType} from '../models/note'
 import styles from './MiniCard.module.scss'
 
 
@@ -26,14 +26,5 @@ export const MiniCard = ({note: {content, title}}) => (
 
 
 MiniCard.propTypes = {
-    note: PropTypes.shape({
-        title: PropTypes.string,
-        content: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.arrayOf(PropTypes.shape({
-                text: PropTypes.string.isRequired,
-                checked: PropTypes.bool.isRequired,
-            })),
-        ]).isRequired,
-    }).isRequired,
+    note: NoteType.isRequired,
 }
