@@ -11,6 +11,18 @@ code {
     monospace;
 }
 
+button {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+button:focus {
+  outline: none;
+}
+
 * {
   box-sizing: border-box;
 }
