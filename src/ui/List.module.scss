@@ -2,8 +2,14 @@
     list-style: none;
     margin: 0;
     padding: 0;
+}
 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    grid-gap: 1rem;
+
+.item {
+    min-width: 100px;
+    max-width: 50%;
+
+    padding: 5px;
+
+    overflow: hidden;
 }
