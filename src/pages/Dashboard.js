@@ -7,7 +7,7 @@ import {BottomBar} from '../ui/BottomBar'
 
 
 export const Dashboard = () => {
-    const notes = useNotes()
+    const {notes} = useNotes()
 
     return (
         <main>

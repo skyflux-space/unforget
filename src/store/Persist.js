@@ -1,10 +1,10 @@
 import {useEffect} from 'react'
-import {saveNotes, useNotes} from '../models/note'
+import {useNotes} from '../models/note'
 
 export const Persist = () => {
-    const notes = useNotes()
+    const {saveNotes} = useNotes()
 
-    useEffect(() => saveNotes(notes), [notes])
+    useEffect(saveNotes, [saveNotes])
 
     return ''
 }
