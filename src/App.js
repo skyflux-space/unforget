@@ -1,22 +1,23 @@
 import React from 'react'
-import {RecoilRoot} from 'recoil'
 import {useRoutes} from 'hookrouter'
 import {Dashboard} from './pages/Dashboard'
 import {Create} from './pages/Create'
+import {Store} from './store'
 
 const routes = {
     '/': () => <Dashboard/>,
     '/create': () => <Create/>,
 }
 
+
 export const App = () => {
     const routeResult = useRoutes(routes)
 
     return (
         <React.StrictMode>
-            <RecoilRoot>
+            <Store>
                 {routeResult || <div>Not Found</div>}
-            </RecoilRoot>
+            </Store>
         </React.StrictMode>
     )
 }
