@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import c from 'class-names'
 import {NoteType} from '../models/note'
 import styles from './MiniCard.module.scss'
