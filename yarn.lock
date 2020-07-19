@@ -6834,6 +6834,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"hookrouter@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "hookrouter@npm:1.2.3"
+  peerDependencies:
+    react: ^16.8.0
+  checksum: c7b17eaf21a356facb4ded938dc25e7bf86af48f1f1fb6d140e177934782044591a585cb24a772460fd382d251b306564f58625e74f1b7b82170b17bcbd300d7
+  languageName: node
+  linkType: hard
+
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.8
   resolution: "hosted-git-info@npm:2.8.8"
@@ -14178,6 +14187,7 @@ resolve@1.15.0:
     "@testing-library/react": ^9.3.2
     "@testing-library/user-event": ^7.1.2
     class-names: ^1.0.0
+    hookrouter: ^1.2.3
     nanoid: ^3.1.10
     node-sass: ^4.14.1
     normalize.css: ^8.0.1
