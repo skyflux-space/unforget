@@ -4,8 +4,8 @@ import {NoteType} from '../models/note'
 import styles from './MiniCard.module.scss'
 
 
-export const MiniCard = ({note: {content, title}}) => (
-    <div className={styles.card}>
+export const MiniCard = ({note: {content, title}, selected}) => (
+    <div className={c(styles.card, selected && styles.selected)}>
         {title && <h1 className={styles.title}>{title}</h1>}
         {
             typeof content === 'string'
@@ -27,4 +27,5 @@ export const MiniCard = ({note: {content, title}}) => (
 
 MiniCard.propTypes = {
     note: NoteType.isRequired,
+    selected: PropTypes.bool.isRequired,
 }
