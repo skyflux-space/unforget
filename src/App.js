@@ -9,7 +9,7 @@ const routes = {
     '/create': () => <Create/>,
 }
 
-function App() {
+export const App = () => {
     const routeResult = useRoutes(routes)
 
     return (
@@ -20,5 +20,3 @@ function App() {
         </React.StrictMode>
     )
 }
-
-export default App
