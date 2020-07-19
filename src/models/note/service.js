@@ -18,3 +18,15 @@ export const replaceNote = note => map(e => e.id === note.id ? note : e)
 
 
 export const removeNote = id => filter(note => note.id !== id)
+
+
+export const saveNotes = notes => {
+    const data = JSON.stringify(filterValidNotes(notes))
+    localStorage.setItem('notes', data)
+}
+
+
+export const restoreNotes = () => {
+    const data = localStorage.getItem('notes')
+    return data ? JSON.parse(data) : []
+}
