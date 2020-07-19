@@ -1,7 +1,8 @@
 import React from 'react'
 
+
 function App() {
-  return <></>
+    return <React.StrictMode/>
 }
 
-export default App;
+export default App
