@@ -41,5 +41,5 @@ export const useNotes = () => {
 export const useNote = id => {
     const {getNote} = useNotes()
 
-    return useMemo(() => getNote(id), [getNote])
+    return useMemo(() => getNote(id), [getNote, id])
 }
