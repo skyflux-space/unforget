@@ -1,6 +1,5 @@
 import {atom, useRecoilValue, useSetRecoilState} from 'recoil'
-import {useCallback, useMemo} from 'react'
-import {addNote, getNote, removeNote, replaceNote} from './service'
+import {addNote, filterValidNotes, getNote, removeNote, replaceNote} from './service'
 
 
 export const notes = atom({
@@ -9,7 +8,11 @@ export const notes = atom({
 })
 
 
-export const useNotes = () => useRecoilValue(notes)
+export const useNotes = () => {
+    const value = useRecoilValue(notes)
+
+    return useMemo(() => filterValidNotes(value), [value])
+}
 
 
 export const useNote = id => {

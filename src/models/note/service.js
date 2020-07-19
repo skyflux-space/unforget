@@ -2,6 +2,9 @@ import {append, filter, find, map} from 'ramda'
 import {nanoid} from 'nanoid'
 
 
+export const filterValidNotes = filter(note => !!note.content)
+
+
 export const getNote = id => find(note => note.id === id)
 
 
