@@ -10,13 +10,13 @@ export const MiniCard = ({note: {content, title}, selected}) => (
         {title && <h1 className={styles.title}>{title}</h1>}
         {
             typeof content === 'string'
-                ? <span className={styles.small}>{content}</span>
+                ? <span className={c(styles.small, styles.break)}>{content}</span>
                 : (
                     <ul className={styles.list}>
                         {content.map((e, i) => (
                             <li className={c(styles.item, styles.small)} key={i}>
                                 <input className={styles.checkbox} type="checkbox" checked={e.checked} disabled/>
-                                <span>{e.text}</span>
+                                <span className={styles.break}>{e.text}</span>
                             </li>
                         ))}
                     </ul>
