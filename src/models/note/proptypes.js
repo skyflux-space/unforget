@@ -8,6 +8,6 @@ export const NoteType = PropTypes.shape({
         PropTypes.arrayOf(PropTypes.shape({
             text: PropTypes.string.isRequired,
             checked: PropTypes.bool.isRequired,
-        })),
+        }).isRequired),
     ]).isRequired,
 })
