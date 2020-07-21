@@ -1,7 +1,7 @@
 import {useCallback, useMemo} from 'react'
 import {atom, useRecoilState} from 'recoil'
 import * as Service from './service'
-import {Note, ValidNote} from "./types";
+import {Note, ValidNote} from './types'
 
 
 export const notes = atom<Note[]>({

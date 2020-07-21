@@ -1,6 +1,6 @@
 import {append, filter, find, map} from 'ramda'
-import {v4} from "uuid"
-import {Note, ValidNote} from "./types"
+import {v4} from 'uuid'
+import {Note, ValidNote} from './types'
 
 
 export const isValidNote = (note: Note): note is ValidNote => !!note.content
