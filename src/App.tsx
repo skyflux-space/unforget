@@ -10,7 +10,7 @@ const routes = {
 }
 
 
-export const App = () => {
+export const App: React.FC = () => {
     const routeResult = useRoutes(routes)
 
     return (
