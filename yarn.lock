@@ -1973,6 +1973,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/classnames@npm:^2.2.10":
+  version: 2.2.10
+  resolution: "@types/classnames@npm:2.2.10"
+  checksum: 31b6380183c2123c69f5e50b9e40c7da2862ddfe634361d906a6e300dacd716656ce95e508541d0ec300f71aeed57d30a7ea46f36e881c01eb2334843700fadc
+  languageName: node
+  linkType: hard
+
 "@types/color-name@npm:^1.1.1":
   version: 1.1.1
   resolution: "@types/color-name@npm:1.1.1"
@@ -3901,15 +3908,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-names@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "class-names@npm:1.0.0"
-  dependencies:
-    classnames: ^2.2.5
-  checksum: 8ffbe86a56aa3eae882aff0bd8fac584aa96f1509595cecb65262c5d577eb48a4fb8efa44ece7722a6854584df5c3c49d42ef4b9995afb182fa7624ffcf023b1
-  languageName: node
-  linkType: hard
-
 "class-utils@npm:^0.3.5":
   version: 0.3.6
   resolution: "class-utils@npm:0.3.6"
@@ -3922,7 +3920,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.5":
+"classnames@npm:^2.2.6":
   version: 2.2.6
   resolution: "classnames@npm:2.2.6"
   checksum: 490eaeca5931846737ffd33e472a701d268d5b8bc5717dd4cf108a127b06e86e05350e06799abbbe763a0e4c945b4217f6700b7ae00ddc703505682c370e5cf2
@@ -14519,6 +14517,7 @@ typescript@^3.9.7:
     "@testing-library/jest-dom": ^4.2.4
     "@testing-library/react": ^9.3.2
     "@testing-library/user-event": ^7.1.2
+    "@types/classnames": ^2.2.10
     "@types/hookrouter": ^2.2.2
     "@types/node": ^14.0.23
     "@types/prop-types": ^15.7.3
@@ -14527,7 +14526,7 @@ typescript@^3.9.7:
     "@types/react-dom": ^16.9.8
     "@types/recoil": ^0.0.1
     "@types/uuid": ^8.0.0
-    class-names: ^1.0.0
+    classnames: ^2.2.6
     hookrouter: ^1.2.3
     node-sass: ^4.14.1
     normalize.css: ^8.0.1

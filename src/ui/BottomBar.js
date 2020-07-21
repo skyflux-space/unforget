@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import c from 'class-names'
+import c from 'classnames'
 import styles from './BottomBar.module.scss'
 
 
