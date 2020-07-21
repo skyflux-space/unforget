@@ -1,7 +1,6 @@
 import {append, filter, find, map} from 'ramda'
-// @ts-ignore
-import {nanoid} from 'nanoid'
-import {Note, ValidNote} from "./types";
+import {v4} from "uuid"
+import {Note, ValidNote} from "./types"
 
 
 export const isValidNote = (note: Note): note is ValidNote => !!note.content
@@ -18,7 +17,7 @@ export const getNote
 
 export const createNote
     : () => Note
-    = () => ({id: nanoid()})
+    = () => ({id: v4()})
 
 
 export const addNote
