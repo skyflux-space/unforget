@@ -3,7 +3,7 @@ export interface ValidNote extends Note {
 }
 
 export interface Note extends Identifiable {
-    title?: string
+    title?: string | null
     content?: string | ContentList
 }
 
