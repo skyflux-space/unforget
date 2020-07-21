@@ -4,8 +4,12 @@ import c from 'classnames'
 import styles from './TextArea.module.scss'
 
 
-export const TextArea = forwardRef(({className, size, ...props}, ref) => (
-    <textarea className={c(styles.textarea, styles[size], className)} {...props} ref={ref}/>
+export type TextAreaProps = {
+    size?: 'big' | 'small'
+} & JSX.IntrinsicElements['textarea']
+
+export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({className, size, ...props}, ref) => (
+    <textarea className={c(styles.textarea, size && styles[size], className)} {...props} ref={ref}/>
 ))
 
 TextArea.defaultProps = {

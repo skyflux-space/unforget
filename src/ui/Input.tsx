@@ -4,8 +4,12 @@ import c from 'classnames'
 import styles from './Input.module.scss'
 
 
-export const Input = forwardRef(({className, type, ...props}, ref) => (
-    <input type="text" className={c(styles.input, styles[type], className)} {...props} ref={ref}/>
+export type InputProps = {
+    type?: 'title'
+} & JSX.IntrinsicElements['input']
+
+export const Input = forwardRef<HTMLInputElement, InputProps>(({className, type, ...props}, ref) => (
+    <input type="text" className={c(styles.input, type && styles[type], className)} {...props} ref={ref}/>
 ))
 
 Input.defaultProps = {

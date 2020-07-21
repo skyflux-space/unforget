@@ -4,11 +4,17 @@ import c from 'classnames'
 import styles from './Button.module.scss'
 
 
-export const Button = ({children, className, kind, withoutBorder, round, ...props}) => (
+export type ButtonProps = {
+    kind?: 'normal' | 'primary' | 'secondary'
+    round?: boolean
+    withoutBorder?: boolean
+} & JSX.IntrinsicElements['button']
+
+export const Button: React.FC<ButtonProps> = ({children, className, kind, withoutBorder, round, ...props}) => (
     <button
         className={c(
             className,
-            styles[kind],
+            kind && styles[kind],
             round && styles.round,
             !withoutBorder && styles.border,
         )}

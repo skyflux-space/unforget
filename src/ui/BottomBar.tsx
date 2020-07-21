@@ -4,7 +4,14 @@ import c from 'classnames'
 import styles from './BottomBar.module.scss'
 
 
-export const BottomBar = ({button, visible, left, right}) => (
+export type BottomBarProps = {
+    visible: boolean
+    button?: React.ReactNode
+    left?: React.ReactNode
+    right?: React.ReactNode
+}
+
+export const BottomBar: React.FC<BottomBarProps> = ({button, visible, left, right}) => (
     <div className={styles.bar}>
         <div className={styles.column}>
             <div className={c(styles.row, visible && styles.visible)}>
