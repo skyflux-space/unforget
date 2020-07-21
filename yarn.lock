@@ -2122,6 +2122,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-stickynode@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@types/react-stickynode@npm:3.0.0"
+  dependencies:
+    "@types/react": "*"
+  checksum: 45c5a422bb2f8da2aecbf9b09172c2240bd2f5395580a997f9e684b1d5149b2f0c49767877947ea84d28c927ef59df9c73825531da0c2ef6f49d2909e311a4e8
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^16.9.43":
   version: 16.9.43
   resolution: "@types/react@npm:16.9.43"
@@ -3920,7 +3929,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.6":
+"classnames@npm:^2.0.0, classnames@npm:^2.2.6":
   version: 2.2.6
   resolution: "classnames@npm:2.2.6"
   checksum: 490eaeca5931846737ffd33e472a701d268d5b8bc5717dd4cf108a127b06e86e05350e06799abbbe763a0e4c945b4217f6700b7ae00ddc703505682c370e5cf2
@@ -4341,6 +4350,13 @@ __metadata:
   version: 3.6.4
   resolution: "core-js@npm:3.6.4"
   checksum: 30c4178f2b88e758b4202daf0b8651efd0c6a9f058b50638b1194614c15d31da83a504278b448da1385a594e27dbfcdf2d4bea8d6c6115fbe5cfef0b8734404c
+  languageName: node
+  linkType: hard
+
+"core-js@npm:^3.6.5":
+  version: 3.6.5
+  resolution: "core-js@npm:3.6.5"
+  checksum: 9283348dd5be2f1d07feaf90e2336b3f00a2316e3d3c6d4f789c9a67bdd4d7b08ce1c88dca4e591340130056c6b412b0b74fae039f8e259206f1073f542e4e85
   languageName: node
   linkType: hard
 
@@ -5813,6 +5829,13 @@ __metadata:
   version: 1.1.1
   resolution: "ev-emitter@npm:1.1.1"
   checksum: c93adf4cfac74892e0eede007d2481b9621d345e97884ea06d1cf5bcfccf7c6a6d5e15aba9369b66c4087967b338694710508eb11253f01bba9e216359811153
+  languageName: node
+  linkType: hard
+
+"eventemitter3@npm:^3.0.0":
+  version: 3.1.2
+  resolution: "eventemitter3@npm:3.1.2"
+  checksum: fa1a206c4e4e8e427542f7fdfa10bd073a4ddf2510fb22e2f9a33b9aa7a0d5669bffba9b889e22d8c1c976af51a92dab274845e58d626ddb2d3563ed4d5d50dc
   languageName: node
   linkType: hard
 
@@ -11789,7 +11812,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.8, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -11949,7 +11972,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"raf@npm:^3.4.1":
+"raf@npm:^3.0.0, raf@npm:^3.4.1":
   version: 3.4.1
   resolution: "raf@npm:3.4.1"
   dependencies:
@@ -12184,6 +12207,22 @@ fsevents@^1.2.7:
   bin:
     react-scripts: ./bin/react-scripts.js
   checksum: 417fc7cfb3c7b632f8286e02febf2301ae4a4bc25299a9ef8662c777dcaef8de9d7f2320cd7491bf796674fa1de7d86fdb9e9a2852266167e19085dd78b15f79
+  languageName: node
+  linkType: hard
+
+"react-stickynode@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "react-stickynode@npm:3.0.3"
+  dependencies:
+    classnames: ^2.0.0
+    core-js: ^3.6.5
+    prop-types: ^15.6.0
+    shallowequal: ^1.0.0
+    subscribe-ui-event: ^2.0.6
+  peerDependencies:
+    react: ^0.14.2 || ^15.0.0 || ^16.0.0
+    react-dom: ^0.14.2 || ^15.0.0 || ^16.0.0
+  checksum: 091f98abd4b760b2dc5a426d43de7e46ca54878e7689c23e4a40207b6a780dc966a65edafacc78bb8f138b168bc238ab7239b5d375a98eeeeaf5e404c859d006
   languageName: node
   linkType: hard
 
@@ -13223,6 +13262,13 @@ resolve@1.15.0:
   languageName: node
   linkType: hard
 
+"shallowequal@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "shallowequal@npm:1.1.0"
+  checksum: 15820dd544ce15521565c366940a46dcbe0f093c1336f6259c7b3e2490ca10135645ee262778f555d3ccc38283207f2f0a41e9a0f26888b5d5159f2904c4ac68
+  languageName: node
+  linkType: hard
+
 "shebang-command@npm:^1.2.0":
   version: 1.2.0
   resolution: "shebang-command@npm:1.2.0"
@@ -13982,6 +14028,17 @@ resolve@1.15.0:
   languageName: node
   linkType: hard
 
+"subscribe-ui-event@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "subscribe-ui-event@npm:2.0.6"
+  dependencies:
+    eventemitter3: ^3.0.0
+    lodash: ^4.17.15
+    raf: ^3.0.0
+  checksum: dcb46eaed7f255b3225c0bd648fb3183e2d65acfbe6b55f5eb268a53213be77e15fd98d4e711d9a0e3e40c66cf313b7460e8d7b1088fddbadb32a51e4cd3ddb4
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:^2.0.0":
   version: 2.0.0
   resolution: "supports-color@npm:2.0.0"
@@ -14524,6 +14581,7 @@ typescript@^3.9.7:
     "@types/ramda": ^0.27.11
     "@types/react": ^16.9.43
     "@types/react-dom": ^16.9.8
+    "@types/react-stickynode": ^3.0.0
     "@types/recoil": ^0.0.1
     "@types/uuid": ^8.0.0
     classnames: ^2.2.6
@@ -14537,6 +14595,7 @@ typescript@^3.9.7:
     react-hook-form: ^6.0.7
     react-masonry-component: ^6.2.1
     react-scripts: 3.4.1
+    react-stickynode: ^3.0.3
     react-use: ^15.3.2
     recoil: ^0.0.10
     typescript: ^3.9.7
