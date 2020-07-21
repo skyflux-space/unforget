@@ -1,18 +1,29 @@
 import {useCallback, useMemo} from 'react'
 import {atom, useRecoilState} from 'recoil'
 import * as Service from './service'
+import {Note, ValidNote} from "./types";
 
 
-export const notes = atom({
+export const notes = atom<Note[]>({
     key: 'notes',
     default: [],
 })
 
+export interface NotesUtils {
+    notes: Note[]
+    validNotes: ValidNote[]
+    getNote: (id: string) => Note | undefined
+    addNote: (note: Note) => void
+    replaceNote: (note: Note) => void
+    removeNote: (note: Note) => void
+    saveNotes: () => void
+    restoreNotes: () => void
+}
 
-export const useNotes = () => {
+export const useNotes = (): NotesUtils => {
     const [value, setValue] = useRecoilState(notes)
 
-    const allNotes = useMemo(() => Service.filterValidNotes(value), [value])
+    const validNotes = useMemo(() => Service.filterValidNotes(value), [value])
 
     const getNote = useCallback(id => Service.getNote(id)(value), [value])
 
@@ -27,7 +38,8 @@ export const useNotes = () => {
     const restoreNotes = useCallback(() => setValue(Service.restoreNotes()), [setValue])
 
     return {
-        notes: allNotes,
+        notes: value,
+        validNotes,
         addNote,
         removeNote,
         getNote,
@@ -38,8 +50,6 @@ export const useNotes = () => {
 }
 
 
-export const useNote = id => {
-    const {getNote} = useNotes()
-
-    return useMemo(() => getNote(id), [getNote, id])
-}
+export const useNote
+    : NotesUtils['getNote']
+    = id => useNotes().getNote(id)
