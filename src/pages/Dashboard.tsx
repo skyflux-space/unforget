@@ -6,7 +6,7 @@ import {Button} from '../ui/Button'
 import {BottomBar} from '../ui/BottomBar'
 
 
-export const Dashboard = () => {
+export const Dashboard: React.FC = () => {
     const {validNotes} = useNotes()
 
     return (
@@ -16,7 +16,7 @@ export const Dashboard = () => {
                 visible={false}
                 button={
                     <A href="/create">
-                        <Button children={'+'} round/>
+                        <Button round>+</Button>
                     </A>
                 }
             />

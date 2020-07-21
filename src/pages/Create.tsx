@@ -6,16 +6,17 @@ import {createNote, useNotes} from '../models/note'
 import {Button} from '../ui/Button'
 import {Input} from '../ui/Input'
 import {TextArea} from '../ui/TextArea'
+import {Note} from '../models/note/types'
 
 
 export const Create = () => {
-    const [note, setNote] = useState(null)
+    const [note, setNote] = useState<Note | null>(null)
 
     const {addNote, replaceNote} = useNotes()
 
     useEffect(() => {
         if (!note) {
-            const note = createNote({})
+            const note = createNote()
             addNote(note)
             setNote(note)
         }
@@ -23,7 +24,7 @@ export const Create = () => {
 
     const {register, handleSubmit} = useForm()
     const save = useCallback(
-        handleSubmit(data => void (data.id && replaceNote(data))),
+        handleSubmit((data: Note) => void (data.id && replaceNote(data))),
         [handleSubmit, replaceNote],
     )
 
