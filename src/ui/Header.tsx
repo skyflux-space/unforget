@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {A} from 'hookrouter'
+import Sticky from 'react-stickynode'
 import {Button} from './Button'
 import styles from './Header.module.scss'
 
@@ -11,12 +12,14 @@ export type HeaderProps = {
 }
 
 export const Header: React.FC<HeaderProps> = ({onBackClick, backUrl, children}) => (
-    <header className={styles.fixed}>
-        <A href={backUrl!}>
-            <Button children="<--" onClick={onBackClick}/>
-        </A>
-        {children}
-    </header>
+    <Sticky top={0} bottomBoundary={0}>
+        <header className={styles.row}>
+            <A href={backUrl!}>
+                <Button children="<--" onClick={onBackClick}/>
+            </A>
+            {children && <div className={styles.right}>{children}</div>}
+        </header>
+    </Sticky>
 )
 
 Header.defaultProps = {
