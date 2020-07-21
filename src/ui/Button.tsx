@@ -14,7 +14,7 @@ export const Button: React.FC<ButtonProps> = ({children, className, kind, withou
     <button
         className={c(
             className,
-            kind && styles[kind],
+            styles[kind!],
             round && styles.round,
             !withoutBorder && styles.border,
         )}

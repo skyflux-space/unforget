@@ -9,7 +9,7 @@ export type TextAreaProps = {
 } & JSX.IntrinsicElements['textarea']
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({className, size, ...props}, ref) => (
-    <textarea className={c(styles.textarea, size && styles[size], className)} {...props} ref={ref}/>
+    <textarea className={c(styles.textarea, styles[size!], className)} {...props} ref={ref}/>
 ))
 
 TextArea.defaultProps = {

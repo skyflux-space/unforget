@@ -9,7 +9,7 @@ export type InputProps = {
 } & JSX.IntrinsicElements['input']
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(({className, type, ...props}, ref) => (
-    <input type="text" className={c(styles.input, type && styles[type], className)} {...props} ref={ref}/>
+    <input type="text" className={c(styles.input, styles[type!], className)} {...props} ref={ref}/>
 ))
 
 Input.defaultProps = {
