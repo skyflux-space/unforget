@@ -7,11 +7,11 @@ import {BottomBar} from '../ui/BottomBar'
 
 
 export const Dashboard = () => {
-    const {notes} = useNotes()
+    const {validNotes} = useNotes()
 
     return (
         <main>
-            <List notes={notes}/>
+            <List notes={validNotes}/>
             <BottomBar
                 visible={false}
                 button={
