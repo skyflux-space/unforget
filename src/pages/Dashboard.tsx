@@ -1,9 +1,7 @@
 import React from 'react'
 import {A} from 'hookrouter'
 import {useNotes} from '../models/note'
-import {List} from '../ui/List'
-import {Button} from '../ui/Button'
-import {BottomBar} from '../ui/BottomBar'
+import {List, Button, BottomBar} from '../ui'
 
 
 export const Dashboard: React.FC = () => {
