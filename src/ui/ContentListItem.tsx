@@ -1,12 +1,4 @@
-import React, {
-    ChangeEventHandler,
-    FocusEventHandler,
-    forwardRef, ForwardRefExoticComponent,
-    memo,
-    PropsWithoutRef,
-    Ref,
-    RefAttributes
-} from 'react'
+import React, {ChangeEventHandler, FocusEventHandler, forwardRef, memo, Ref, RefAttributes} from 'react'
 import PropTypes from 'prop-types'
 import {TextArea} from './TextArea'
 
