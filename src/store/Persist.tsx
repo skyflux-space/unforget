@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import {useDebounce} from 'react-use'
 import {useNotes} from '../models/note'
 
 export const Persist: React.FC = () => {
@@ -10,10 +11,10 @@ export const Persist: React.FC = () => {
         setLoaded(true)
     }, [restoreNotes])
 
-    useEffect(() => {
+    useDebounce(() => {
         if (loaded)
             saveNotes()
-    }, [saveNotes, loaded])
+    }, 5000,[saveNotes, loaded])
 
     return <></>
 }
