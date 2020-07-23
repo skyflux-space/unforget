@@ -3,7 +3,18 @@ import {v4} from 'uuid'
 import {Note, ValidNote} from './types'
 
 
-export const isValidNote = (note: Note): note is ValidNote => !!note.content
+
+export const isValidNote = (note: Note): note is ValidNote => (
+    !!note.content
+    && note.content !== ''
+    && (
+        !Array.isArray(note.content)
+        || (
+            !!note.content.length
+            && note.content.some(({text}) => !!text)
+        )
+    )
+)
 
 
 export const filterValidNotes
