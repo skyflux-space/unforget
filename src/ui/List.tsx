@@ -12,7 +12,7 @@ export type ListProps = {
 }
 
 export const List: React.FC<ListProps> = ({notes}) => (
-    <Masonry elementType="ul" className={styles.list}>
+    <Masonry elementType="ul">
         {notes.map(e => (
             <li key={e.id} className={styles.item}>
                 <MiniCard note={e} selected={false}/>

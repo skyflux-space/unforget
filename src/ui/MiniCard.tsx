@@ -18,7 +18,7 @@ export const MiniCard: React.FC<MiniCardProps> = ({note: {content, title}, selec
             typeof content === 'string'
                 ? <span className={c(styles.small, styles.break)}>{content}</span>
                 : (
-                    <ul className={styles.list}>
+                    <ul>
                         {content.map((e, i) => (
                             <li className={c(styles.item, styles.small)} key={i}>
                                 <input className={styles.checkbox} type="checkbox" checked={e.checked} disabled/>
