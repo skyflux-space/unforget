@@ -5,20 +5,19 @@ import {ContentListItem} from '../ui'
 export type ContentListProps = {
     fields: Partial<ContentListItemType & Identifiable>[]
     createRef?: <T extends HTMLElement>() => React.Ref<T>
-    onContentInputBlur?: FocusEventHandler<HTMLTextAreaElement>
-    createOnContentInputBlur?: (i: number) => FocusEventHandler<HTMLTextAreaElement>
+    onFieldBlur?: FocusEventHandler<HTMLTextAreaElement>
+    createOnFieldBlur?: (i: number) => FocusEventHandler<HTMLTextAreaElement>
     onStaticInputChange?: ChangeEventHandler<HTMLTextAreaElement>
-
 }
 
 export const ContentList: React.FC<ContentListProps> = memo((
-    {fields, createRef, onContentInputBlur, createOnContentInputBlur, onStaticInputChange}
+    {fields, createRef, onFieldBlur, createOnFieldBlur, onStaticInputChange}
     ) => (
         <ul>
             {fields.map((e, i) => (
                 <li key={e.id}>
                     <ContentListItem
-                        onBlur={createOnContentInputBlur?.(i) || onContentInputBlur}
+                        onBlur={createOnFieldBlur?.(i) || onFieldBlur}
                         defaultText={e.text}
                         checked={!!e.checked}
                         ref={createRef?.()}
