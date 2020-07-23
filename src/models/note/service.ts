@@ -1,7 +1,9 @@
 import {append, filter, find, map} from 'ramda'
 import {v4} from 'uuid'
-import {ContentList, Note, ValidNote} from './types'
+import {ContentList, Identifiable, Note, ValidNote} from './types'
 
+
+export const isIdentifiable = (value: any): value is Identifiable => value.id !== undefined
 
 
 export const isValidNote = (note: Note): note is ValidNote => (
