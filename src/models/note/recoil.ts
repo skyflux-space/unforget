@@ -1,4 +1,5 @@
-import {useCallback, useMemo} from 'react'
+import {useCallback, useEffect, useMemo, useState} from 'react'
+import {equals} from 'ramda'
 import {atom, useRecoilState} from 'recoil'
 import * as Service from './service'
 import {Note, ValidNote} from './types'
@@ -50,6 +51,46 @@ export const useNotes = (): NotesUtils => {
 }
 
 
-export const useNote
-    : NotesUtils['getNote']
-    = id => useNotes().getNote(id)
+export type CreateNoteHookProps = {
+    note?: Note
+    update: (newNote?: Partial<Note>) => void
+}
+
+export const useCreateNote = (): CreateNoteHookProps => {
+    const [note, setNote] = useState<Note | undefined>()
+    const {addNote, replaceNote, getNote} = useNotes()
+
+    const update = useCallback((newNote?: Partial<Note>) => setNote(note => {
+        if(!newNote || newNote === note || equals(newNote, note))
+            return note
+
+        if(!note && Service.isIdentifiable(newNote))
+            return newNote
+
+        if(note && newNote.id !== undefined && note.id !== newNote.id)
+            return note
+
+        if(note) {
+            const fullNewNote = {...note, ...newNote, id: note.id}
+            return equals(note, fullNewNote) ? note : fullNewNote
+        }
+    }), [setNote])
+
+    useEffect(() => {
+        if(note) {
+            const oldNote = getNote(note.id)
+            if(!oldNote)
+                return addNote(note)
+
+            if(oldNote !== note)
+                return replaceNote(note)
+        }
+    }, [note, getNote, addNote, replaceNote])
+
+    useEffect(() => update(Service.createNote()), [update])
+
+    return {
+        note,
+        update,
+    }
+}
