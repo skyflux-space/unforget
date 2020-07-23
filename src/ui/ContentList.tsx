@@ -1,11 +1,9 @@
 import React, {ChangeEventHandler, FocusEventHandler, memo} from 'react'
-import PropTypes from 'prop-types'
 import {ContentListItem as ContentListItemType, Identifiable} from '../models/note/types'
-import {ContentListItemPropType} from '../models/note'
 import {ContentListItem} from '../ui'
 
 export type ContentListProps = {
-    fields: (ContentListItemType & Identifiable)[]
+    fields: Partial<ContentListItemType & Identifiable>[]
     createRef?: <T extends HTMLElement>() => React.Ref<T>
     onContentInputBlur?: FocusEventHandler<HTMLTextAreaElement>
     createOnContentInputBlur?: (i: number) => FocusEventHandler<HTMLTextAreaElement>
@@ -22,7 +20,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
                     <ContentListItem
                         onBlur={createOnContentInputBlur?.(i) || onContentInputBlur}
                         defaultText={e.text}
-                        checked={e.checked}
+                        checked={!!e.checked}
                         ref={createRef?.()}
                         name={`content[${i}]`}
                     />
@@ -38,14 +36,3 @@ export const ContentList: React.FC<ContentListProps> = memo((
         </ul>
     )
 )
-
-ContentList.propTypes = {
-    fields: PropTypes.arrayOf(PropTypes.shape({
-        ...ContentListItemPropType,
-        id: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
-    createRef: PropTypes.func,
-    onContentInputBlur: PropTypes.func,
-    createOnContentInputBlur: PropTypes.func,
-    onStaticInputChange: PropTypes.func,
-}
