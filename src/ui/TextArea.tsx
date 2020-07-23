@@ -6,15 +6,17 @@ import styles from './TextArea.module.scss'
 
 export type TextAreaProps = {
     size?: 'big' | 'small'
+    fullSize?: boolean
 } & JSX.IntrinsicElements['textarea']
 
-export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({className, size, ...props}, ref) => (
-    <textarea className={c(styles.textarea, styles[size!], className)} {...props} ref={ref}/>
+export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({className, size, fullSize, ...props}, ref) => (
+    <textarea className={c(styles.textarea, styles[size!], fullSize && styles.full, className)} {...props} ref={ref}/>
 ))
 
 TextArea.defaultProps = {
     className: styles.default,
     size: 'big',
+    fullSize: false,
 }
 
 TextArea.propTypes = {
@@ -22,5 +24,6 @@ TextArea.propTypes = {
     size: PropTypes.oneOf([
         'big',
         'small',
-    ])
+    ]),
+    fullSize: PropTypes.bool,
 }
