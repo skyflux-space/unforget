@@ -2131,6 +2131,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-tabs@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "@types/react-tabs@npm:2.3.2"
+  dependencies:
+    "@types/react": "*"
+  checksum: 03634737818eb5dea8557366dfcf5e39011c8b6d3dc241370c2d517e8b80d33026184072a40cae2eb97e261dba242982bceb9b62c82cba5f1b5fb0a40a307bd8
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^16.9.43":
   version: 16.9.43
   resolution: "@types/react@npm:16.9.43"
@@ -4011,6 +4020,13 @@ __metadata:
     kind-of: ^6.0.2
     shallow-clone: ^3.0.0
   checksum: b0146d66cabc7e609d23d10155dcc88e2f74b03539b3b65f8a05f889500e2a78b6c6265a744445d009d512a1afa16836f62aa5737d462027142984c2d41130c8
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^1.1.0":
+  version: 1.1.1
+  resolution: "clsx@npm:1.1.1"
+  checksum: d8ae10ac0546da19fe8c9516886f6582a64a382cf4d09ea7d36d5287cafbdab1192ab249adc2cdf0310e0b0aeac4f4142cf7c738c98d9cb68c19ba24b6f673d5
   languageName: node
   linkType: hard
 
@@ -11812,7 +11828,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.5.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -12223,6 +12239,18 @@ fsevents@^1.2.7:
     react: ^0.14.2 || ^15.0.0 || ^16.0.0
     react-dom: ^0.14.2 || ^15.0.0 || ^16.0.0
   checksum: 091f98abd4b760b2dc5a426d43de7e46ca54878e7689c23e4a40207b6a780dc966a65edafacc78bb8f138b168bc238ab7239b5d375a98eeeeaf5e404c859d006
+  languageName: node
+  linkType: hard
+
+"react-tabs@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "react-tabs@npm:3.1.1"
+  dependencies:
+    clsx: ^1.1.0
+    prop-types: ^15.5.0
+  peerDependencies:
+    react: ^16.3.0
+  checksum: 5cd09b52831f927c767b124e24b4b12d84a253d1a0ab1091b2f61364e8290901b0ce6515ac90799d8d82efb852de59e38ff5a6f33df39e929c466987a31d436c
   languageName: node
   linkType: hard
 
@@ -14582,6 +14610,7 @@ typescript@^3.9.7:
     "@types/react": ^16.9.43
     "@types/react-dom": ^16.9.8
     "@types/react-stickynode": ^3.0.0
+    "@types/react-tabs": ^2.3.2
     "@types/recoil": ^0.0.1
     "@types/uuid": ^8.0.0
     classnames: ^2.2.6
@@ -14596,6 +14625,7 @@ typescript@^3.9.7:
     react-masonry-component: ^6.2.1
     react-scripts: 3.4.1
     react-stickynode: ^3.0.3
+    react-tabs: ^3.1.1
     react-use: ^15.3.2
     recoil: ^0.0.10
     typescript: ^3.9.7
