@@ -10,6 +10,6 @@ export const NoteType = PropTypes.shape({
     title: PropTypes.string,
     content: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.arrayOf(PropTypes.shape(ContentListItemPropType)).isRequired,
+        PropTypes.arrayOf(PropTypes.shape(ContentListItemPropType).isRequired).isRequired,
     ]).isRequired,
 })
