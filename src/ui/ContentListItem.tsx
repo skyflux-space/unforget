@@ -1,4 +1,12 @@
-import React, {ChangeEventHandler, FocusEventHandler, forwardRef, memo, Ref} from 'react'
+import React, {
+    ChangeEventHandler,
+    FocusEventHandler,
+    forwardRef, ForwardRefExoticComponent,
+    memo,
+    PropsWithoutRef,
+    Ref,
+    RefAttributes
+} from 'react'
 import PropTypes from 'prop-types'
 import {TextArea} from './TextArea'
 
@@ -16,8 +24,8 @@ type OptionalRef<T extends HTMLElement> = Ref<T> | undefined
 type InputRef = OptionalRef<HTMLInputElement>
 type TextAreaRef = OptionalRef<HTMLTextAreaElement>
 
-export const ContentListItem = forwardRef<HTMLElement, ContentListItemProps>(memo((
-    {checked, defaultText, onBlur, name, onTextChange, disabled}, ref: InputRef | TextAreaRef
+export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTMLElement>> = memo(forwardRef<HTMLElement, ContentListItemProps>((
+    {checked, defaultText, onBlur, name, onTextChange, disabled}, ref
     ) => (
         <div>
             <input
