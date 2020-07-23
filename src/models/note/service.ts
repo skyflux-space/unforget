@@ -1,6 +1,6 @@
 import {append, filter, find, map} from 'ramda'
 import {v4} from 'uuid'
-import {Note, ValidNote} from './types'
+import {ContentList, Note, ValidNote} from './types'
 
 
 
@@ -55,3 +55,12 @@ export const restoreNotes: () => Note[] = () => {
     const data = localStorage.getItem('notes')
     return data ? JSON.parse(data) : []
 }
+
+
+export const convertContentToString = (arr: ContentList) => arr.map(e => e.text).join('\n')
+
+
+export const convertContentToList = (text?: string): ContentList => (text || '')
+    .split('\n')
+    .filter(text => !!text)
+    .map(text => ({text, checked: false}))
