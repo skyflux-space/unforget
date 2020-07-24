@@ -1,45 +1,55 @@
-import React, {useCallback, useEffect, useState} from 'react'
-import {A} from 'hookrouter'
-import {useForm} from 'react-hook-form'
-import {useInterval} from 'react-use'
-import {createNote, useNotes} from '../models/note'
-import {Button, Input, TextArea} from '../ui'
-import {Note} from '../models/note/types'
+import React, {ChangeEventHandler, FocusEventHandler, useCallback} from 'react'
+import {useFieldArray, useForm} from 'react-hook-form'
+import {useDeepCompareEffect} from 'react-use'
+import {convertContentToList, convertContentToString, useCreateNote} from '../models/note'
+import {ContentListItem} from '../models/note/types'
+import {CreateForm, Header} from '../ui'
 
 
 export const Create = () => {
-    const [note, setNote] = useState<Note | null>(null)
+    const {update} = useCreateNote()
 
-    const {addNote, replaceNote} = useNotes()
+    const {register, watch, control, reset} = useForm()
+    const {fields, append, remove} = useFieldArray<ContentListItem>({
+        control,
+        name: 'content',
+    })
 
-    useEffect(() => {
-        if (!note) {
-            const note = createNote()
-            addNote(note)
-            setNote(note)
-        }
-    }, [addNote, setNote, note])
+    const data = watch()
 
-    const {register, handleSubmit} = useForm()
-    const save = useCallback(
-        handleSubmit((data: Note) => void (data.id && replaceNote(data))),
-        [handleSubmit, replaceNote],
+    const save = useCallback(() => update(data), [update, data])
+
+    useDeepCompareEffect(() => void(update(data)), [data])
+
+    const onTabSelect = useCallback((i: number) => {
+        const {content} = data
+        if (i === 0 && Array.isArray(content))
+            reset({content: convertContentToString(content)})
+
+        if (i === 1 && typeof content === 'string')
+            reset({content: convertContentToList(content)})
+    }, [reset, data])
+
+    const createOnListFieldBlur = useCallback(
+        (i: number): FocusEventHandler<HTMLTextAreaElement> => ({target}) => !target.value && remove(i),
+        [remove],
     )
 
-    useInterval(save, 3000)
+    const createFieldFromStaticFieldValue: ChangeEventHandler<HTMLTextAreaElement> = useCallback(
+        ({target}) => append({text: target.value}),
+        [append],
+    )
 
     return (
-        <main style={{height: '100vh', display: 'flex', flexDirection: 'column'}}>
-            <header>
-                <A href="/">
-                    <Button children="<--" onClick={save}/>
-                </A>
-            </header>
-            <form style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
-                <input hidden readOnly name="id" value={note ? note.id : ''} ref={register}/>
-                <Input name="title" placeholder="Title..." ref={register}/>
-                <TextArea name="content" placeholder="Your note..." ref={register} style={{flex: 1}}/>
-            </form>
-        </main>
+        <div style={{height: '100vh', display: 'flex', flexDirection: 'column'}}>
+            <Header onBackClick={save}/>
+            <CreateForm
+                createRef={register}
+                createOnListFieldBlur={createOnListFieldBlur}
+                onListStaticInputChange={createFieldFromStaticFieldValue}
+                contentListFields={fields}
+                onTabSelect={onTabSelect}
+            />
+        </div>
     )
 }
