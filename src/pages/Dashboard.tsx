@@ -1,7 +1,7 @@
 import React from 'react'
 import {A} from 'hookrouter'
 import {useNotes} from '../models/note'
-import {List, Button, BottomBar} from '../ui'
+import {List, Button, BottomBar, MiniCard} from '../ui'
 
 
 export const Dashboard: React.FC = () => {
@@ -9,7 +9,13 @@ export const Dashboard: React.FC = () => {
 
     return (
         <main>
-            <List notes={validNotes}/>
+            {/*<List>*/}
+                {validNotes.map(note => (
+                    <A href={'/note/' + note.id}>
+                        <MiniCard note={note} selected={false}/>
+                    </A>
+                ))}
+            {/*</List>*/}
             <BottomBar
                 visible={false}
                 button={
