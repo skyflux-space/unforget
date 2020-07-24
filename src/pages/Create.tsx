@@ -1,13 +1,13 @@
 import React, {ChangeEventHandler, FocusEventHandler, useCallback} from 'react'
 import {useFieldArray, useForm} from 'react-hook-form'
 import {useDeepCompareEffect} from 'react-use'
-import {convertContentToList, convertContentToString, useCreateNote} from '../models/note'
+import {convertContentToList, convertContentToString, useNote} from '../models/note'
 import {ContentListItem} from '../models/note/types'
 import {CreateForm, Header} from '../ui'
 
 
 export const Create = () => {
-    const {update} = useCreateNote()
+    const {update} = useNote()
 
     const {register, watch, control, reset} = useForm()
     const {fields, append, remove} = useFieldArray<ContentListItem>({

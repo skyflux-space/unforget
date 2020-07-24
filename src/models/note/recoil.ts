@@ -51,12 +51,12 @@ export const useNotes = (): NotesUtils => {
 }
 
 
-export type CreateNoteHookProps = {
+export type NoteHookProps = {
     note?: Note
     update: (newNote?: Partial<Note>) => void
 }
 
-export const useCreateNote = (): CreateNoteHookProps => {
+export const useNote = (id?: string): NoteHookProps => {
     const [note, setNote] = useState<Note | undefined>()
     const {addNote, replaceNote, getNote} = useNotes()
 
@@ -87,7 +87,10 @@ export const useCreateNote = (): CreateNoteHookProps => {
         }
     }, [note, getNote, addNote, replaceNote])
 
-    useEffect(() => update(Service.createNote()), [update])
+    useEffect(() => {
+        if(!note)
+            update(id ? getNote(id) : Service.createNote())
+    }, [update, note, id, getNote])
 
     return {
         note,
