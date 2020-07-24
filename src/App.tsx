@@ -1,12 +1,14 @@
 import React from 'react'
-import {useRoutes} from 'hookrouter'
+import {HookRouter, useRoutes} from 'hookrouter'
 import {Dashboard} from './pages/Dashboard'
 import {Create} from './pages/Create'
 import {Store} from './store'
+import {Show} from './pages/Show'
 
 const routes = {
     '/': () => <Dashboard/>,
     '/create': () => <Create/>,
+    '/note/:id': ({id}: HookRouter.QueryParams) => <Show id={id}/>
 }
 
 
