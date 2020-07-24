@@ -1,6 +1,7 @@
 import React, {ChangeEventHandler, FocusEventHandler, memo} from 'react'
 import {ContentListItem as ContentListItemType, Identifiable} from '../models/note/types'
 import {ContentListItem} from '../ui'
+import styles from './ContentList.module.scss'
 
 export type ContentListProps = {
     fields: Partial<ContentListItemType & Identifiable>[]
@@ -15,7 +16,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
     ) => (
         <ul>
             {fields.map((e, i) => (
-                <li key={e.id}>
+                <li key={e.id} className={styles.margin}>
                     <ContentListItem
                         onBlur={createOnFieldBlur?.(i) || onFieldBlur}
                         defaultText={e.text}
@@ -25,7 +26,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
                     />
                 </li>
             ))}
-            <li>
+            <li className={styles.margin}>
                 <ContentListItem
                     disabled
                     onTextChange={onStaticInputChange}

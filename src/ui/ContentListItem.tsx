@@ -1,6 +1,7 @@
 import React, {ChangeEventHandler, FocusEventHandler, forwardRef, memo, Ref, RefAttributes} from 'react'
 import PropTypes from 'prop-types'
 import {TextArea} from './TextArea'
+import styles from './ContentListItem.module.scss'
 
 
 export type ContentListItemProps = {
@@ -19,7 +20,7 @@ type TextAreaRef = OptionalRef<HTMLTextAreaElement>
 export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTMLElement>> = memo(forwardRef<HTMLElement, ContentListItemProps>((
     {checked, defaultText, onBlur, name, onTextChange, disabled}, ref
     ) => (
-        <div>
+        <div className={styles.flex}>
             <input
                 type="checkbox"
                 defaultChecked={checked}
@@ -35,6 +36,7 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
                       onBlur={onBlur}
                       onFocus={onFocus}
                       onChange={onTextChange}
+                      className={styles.margin}
                       {...(disabled ? {value: ''} : {})}
             />
         </div>

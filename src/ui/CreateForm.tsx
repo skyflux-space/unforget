@@ -30,11 +30,11 @@ export const CreateForm: React.FC<CreateFormProps> = (
         <Input name="title" placeholder="Title..." ref={createRef}/>
         <Tabs
             className={c(styles.flex, styles.column, styles.grow)}
-            selectedTabPanelClassName={c(styles.grow, styles.scroll)}
+            selectedTabPanelClassName={c(styles.grow, styles.scroll, styles.padding)}
             onSelect={onTabSelect}
         >
             <TabPanel>
-                <TextArea name="content" placeholder="Note..." fullSize ref={createRef}/>
+                <TextArea name="content" placeholder="Note..." fullSize ref={createRef} withoutDefault/>
             </TabPanel>
             <TabPanel>
                 <ContentList
