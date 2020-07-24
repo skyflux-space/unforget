@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {MouseEventHandler} from 'react'
 import PropTypes from 'prop-types'
 import {A} from 'hookrouter'
 import Sticky from 'react-stickynode'
@@ -7,7 +7,7 @@ import styles from './Header.module.scss'
 
 
 export type HeaderProps = {
-    onBackClick: () => any
+    onBackClick?: MouseEventHandler<HTMLButtonElement>
     backUrl?: string
 }
 
@@ -27,6 +27,6 @@ Header.defaultProps = {
 }
 
 Header.propTypes = {
-    onBackClick: PropTypes.func.isRequired,
+    onBackClick: PropTypes.func,
     backUrl: PropTypes.string,
 }
