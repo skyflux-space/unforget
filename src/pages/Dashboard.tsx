@@ -9,13 +9,13 @@ export const Dashboard: React.FC = () => {
 
     return (
         <main>
-            {/*<List>*/}
+            <List>
                 {validNotes.map(note => (
                     <A href={'/note/' + note.id}>
                         <MiniCard note={note} selected={false}/>
                     </A>
                 ))}
-            {/*</List>*/}
+            </List>
             <BottomBar
                 visible={false}
                 button={
