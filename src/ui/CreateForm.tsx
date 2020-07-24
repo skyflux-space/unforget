@@ -26,11 +26,11 @@ export const CreateForm: React.FC<CreateFormProps> = (
         createOnListFieldBlur,
         onListFieldBlur
     }) => (
-    <form className={c(styles.flex, styles.column, styles.grow)}>
+    <form className={c(styles.flex, styles.column, styles.grow, styles.hidden)}>
         <Input name="title" placeholder="Title..." ref={createRef}/>
         <Tabs
             className={c(styles.flex, styles.column, styles.grow)}
-            selectedTabPanelClassName={styles.grow}
+            selectedTabPanelClassName={c(styles.grow, styles.scroll)}
             onSelect={onTabSelect}
         >
             <TabPanel>

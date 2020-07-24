@@ -16,3 +16,15 @@
 .end {
     justify-content: flex-end;
 }
+
+
+.scroll {
+    flex: 1 1 auto;
+    height: 0;
+    overflow-y: auto;
+}
+
+
+.hidden {
+    overflow: hidden;
+}
