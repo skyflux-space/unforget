@@ -35,7 +35,7 @@ export const createNote
 
 export const addNote
     : (note: Note) => (notes: Note[]) => Note[]
-    = note => append(note)
+    = append
 
 
 export const replaceNote
@@ -53,7 +53,7 @@ export const saveNotes
     = notes => localStorage.setItem('notes', JSON.stringify(filterValidNotes(notes)))
 
 
-export const restoreNotes: () => Note[] = () => {
+export const restoreNotes = (): Note[] => {
     const data = localStorage.getItem('notes')
     return data ? JSON.parse(data) : []
 }
