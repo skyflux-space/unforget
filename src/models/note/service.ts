@@ -1,6 +1,6 @@
 import {append, filter, find, map} from 'ramda'
 import {v4} from 'uuid'
-import {ContentList, Identifiable, Note, ValidNote} from './types'
+import {ContentList, ContentType, Identifiable, Note, ValidNote} from './types'
 
 
 export const isIdentifiable = (value: any): value is Identifiable => value.id !== undefined
@@ -66,3 +66,9 @@ export const convertContentToList = (text?: string): ContentList => (text || '')
     .split('\n')
     .filter(text => !!text)
     .map(text => ({text, checked: false}))
+
+
+export const getContentType = (content?: string | ContentList): ContentType | undefined => {
+    if(content !== undefined)
+        return Array.isArray(content) ? ContentType.List : ContentType.String
+}
