@@ -1,6 +1,6 @@
 import React from 'react'
 import {Header} from '../ui'
-import {NoteForm} from '../components/NoteForm'
+import {NoteManager} from '../components/NoteManager'
 
 
 export type ShowProps = {
@@ -11,7 +11,7 @@ export const Show: React.FC<ShowProps> = ({id}) => {
     return (
         <div style={{height: '100vh', display: 'flex', flexDirection: 'column'}}>
             <Header/>
-            <NoteForm id={id} readOnly/>
+            <NoteManager id={id} readOnly/>
         </div>
     )
 }

@@ -5,7 +5,7 @@ import {ContentListItem as ContentListItemType, ContentType, Identifiable} from 
 import {Input} from './Input'
 import {TextArea} from './TextArea'
 import {ContentList} from './ContentList'
-import styles from './CreateForm.module.scss'
+import styles from './NoteForm.module.scss'
 
 
 export type CreateFormProps = {
@@ -19,7 +19,7 @@ export type CreateFormProps = {
     type?: ContentType
 }
 
-export const CreateForm: React.FC<CreateFormProps> = (
+export const NoteForm: React.FC<CreateFormProps> = (
     {
         contentListFields,
         onTabSelect,

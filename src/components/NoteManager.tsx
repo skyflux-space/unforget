@@ -3,15 +3,15 @@ import {useFieldArray, useForm} from 'react-hook-form'
 import {useDeepCompareEffect} from 'react-use'
 import {convertContentToList, convertContentToString, getContentType, useNote} from '../models/note'
 import {ContentListItem, Note} from '../models/note/types'
-import {CreateForm} from '../ui'
+import {NoteForm} from '../ui'
 
 
-export type NoteForm = {
+export type NoteManager = {
     id: string
     readOnly?: boolean
 }
 
-export const NoteForm: React.FC<NoteForm> = ({id, readOnly}) => {
+export const NoteForm: React.FC<NoteManager> = ({id, readOnly}) => {
     const {note, update} = useNote(id)
     const [defaultValues, setDefaultValues] = useState<Partial<Note> | undefined>(undefined)
 
@@ -52,7 +52,7 @@ export const NoteForm: React.FC<NoteForm> = ({id, readOnly}) => {
     )
 
     return (
-            <CreateForm
+            <NoteForm
                 createRef={register}
                 createOnListFieldBlur={createOnListFieldBlur}
                 onListStaticInputChange={createFieldFromStaticFieldValue}
