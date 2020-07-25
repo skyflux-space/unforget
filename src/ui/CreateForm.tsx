@@ -15,6 +15,7 @@ export type CreateFormProps = {
     onListStaticInputChange?: ChangeEventHandler<HTMLTextAreaElement>
     onListFieldBlur?: FocusEventHandler<HTMLTextAreaElement>
     createOnListFieldBlur?: (i: number) => FocusEventHandler<HTMLTextAreaElement>
+    readOnly?: boolean
 }
 
 export const CreateForm: React.FC<CreateFormProps> = (
@@ -24,17 +25,25 @@ export const CreateForm: React.FC<CreateFormProps> = (
         createRef,
         onListStaticInputChange,
         createOnListFieldBlur,
-        onListFieldBlur
+        onListFieldBlur,
+        readOnly = false,
     }) => (
     <form className={c(styles.flex, styles.column, styles.grow, styles.hidden)}>
-        <Input name="title" placeholder="Title..." ref={createRef}/>
+        <Input name="title" placeholder="Title..." ref={createRef} readOnly={readOnly}/>
         <Tabs
             className={c(styles.flex, styles.column, styles.grow)}
             selectedTabPanelClassName={c(styles.grow, styles.scroll, styles.padding)}
             onSelect={onTabSelect}
         >
             <TabPanel>
-                <TextArea name="content" placeholder="Note..." fullSize ref={createRef} withoutDefault/>
+                <TextArea
+                    name="content"
+                    placeholder="Note..."
+                    fullSize
+                    ref={createRef}
+                    withoutDefault
+                    readOnly={readOnly}
+                />
             </TabPanel>
             <TabPanel>
                 <ContentList
@@ -43,14 +52,20 @@ export const CreateForm: React.FC<CreateFormProps> = (
                     createOnFieldBlur={createOnListFieldBlur}
                     onFieldBlur={onListFieldBlur}
                     onStaticInputChange={onListStaticInputChange}
+                    readOnly={readOnly}
                 />
             </TabPanel>
-            <div className={styles.flex}>
-                <TabList className={c(styles.flex, styles.grow, styles.end)}>
-                    <Tab>Текст</Tab>
-                    <Tab>Список</Tab>
-                </TabList>
-            </div>
+            {
+                !readOnly
+                    ? (
+                        <div className={styles.flex}>
+                            <TabList className={c(styles.flex, styles.grow, styles.end)}>
+                                <Tab>Текст</Tab>
+                                <Tab>Список</Tab>
+                            </TabList>
+                        </div>
+                    ) : null
+            }
         </Tabs>
     </form>
 )
