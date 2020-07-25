@@ -4,11 +4,13 @@ import {Dashboard} from './pages/Dashboard'
 import {Create} from './pages/Create'
 import {Store} from './store'
 import {Show} from './pages/Show'
+import {Edit} from './pages/Edit'
 
 const routes = {
     '/': () => <Dashboard/>,
     '/create': () => <Create/>,
-    '/note/:id': ({id}: HookRouter.QueryParams) => <Show id={id}/>
+    '/edit/:id': ({id}: HookRouter.QueryParams) => <Edit id={id}/>,
+    '/note/:id': ({id}: HookRouter.QueryParams) => <Show id={id}/>,
 }
 
 
