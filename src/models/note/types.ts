@@ -17,3 +17,7 @@ export interface ContentListItem {
     text: string
     checked: boolean
 }
+
+export enum ContentType {
+    String, List
+}
