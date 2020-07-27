@@ -1,22 +1,68 @@
-import {always, append, cond, eqProps, filter, find, identity, ifElse, isNil, map, reject, T, whereEq} from 'ramda'
+import {
+    __,
+    allPass,
+    always,
+    any,
+    anyPass,
+    append,
+    assoc,
+    both,
+    complement,
+    cond,
+    curryN,
+    defaultTo,
+    eqProps,
+    filter,
+    find,
+    identity,
+    ifElse,
+    includes,
+    is,
+    isEmpty,
+    isNil,
+    join,
+    map,
+    o,
+    objOf,
+    pipe,
+    prop,
+    propOr,
+    propSatisfies,
+    reject,
+    split,
+    T,
+    whereEq
+} from 'ramda'
 import {v4} from 'uuid'
-import {ContentList, ContentType, Identifiable, Note, ValidNote} from './types'
+import {Content, ContentList, ContentType, Identifiable, Note, ValidNote} from './types'
 
 
 export const isIdentifiable = (value: any): value is Identifiable => value.id !== undefined
 
 
-export const isValidNote = (note: Note): note is ValidNote => (
-    !!note.content
-    && note.content !== ''
-    && (
-        !Array.isArray(note.content)
-        || (
-            !!note.content.length
-            && note.content.some(({text}) => !!text)
-        )
-    )
-)
+export const isValidContentList
+    : (content?: Content) => boolean
+    = allPass([
+    is(Array),
+    complement(isEmpty),
+    any(propSatisfies(both(complement(isNil), complement(isEmpty)), 'text')),
+])
+
+
+export const isValidContentText
+    : (content?: Content) => boolean
+    = allPass([
+    is(String),
+    complement(isEmpty),
+])
+
+
+export const isValidNote
+    : (note: Note) => note is ValidNote
+    = pipe(
+    propOr('', 'content'),
+    anyPass([isValidContentList, isValidContentText]),
+) as (note: Note) => note is ValidNote
 
 
 export const filterValidNotes
@@ -63,19 +109,30 @@ export const restoreNotes
     = () => ifElse(isNil, always([]), JSON.parse)(localStorage.getItem('notes'))
 
 
-export const convertContentToString = (arr: ContentList) => arr.map(e => e.text).join('\n')
+export const convertContentToString
+    : (list: ContentList) => string
+    = o(join('\n'), map(prop('text')))
 
 
-export const convertContentToList = (text?: string): ContentList => (text || '')
-    .split('\n')
-    .filter(text => !!text)
-    .map(text => ({text, checked: false}))
+export const convertContentToList
+    : (text: string) => ContentList
+    = pipe(
+    defaultTo(''),
+    split('\n'),
+    filter(complement(isEmpty)),
+    map(pipe(
+        objOf('text'),
+        assoc('checked', false),
+    )),
+)
 
 
 export const getContentType
     : (content?: string | ContentList) => ContentType | undefined
-    = cond([
-    [isNil, always(undefined)],
-    [Array.isArray, always(ContentType.List)],
-    [T, always(ContentType.String)]
-])
+    = cond(
+    [
+        [is(String), always(ContentType.String)],
+        [is(Array), always(ContentType.List)],
+        [T, always(undefined)]
+    ]
+)
