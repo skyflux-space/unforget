@@ -4,8 +4,10 @@ export interface ValidNote extends Note {
 
 export interface Note extends Identifiable {
     title?: string | null
-    content?: string | ContentList
+    content?: Content
 }
+
+export type Content = string | ContentList
 
 export interface Identifiable {
     id: string
