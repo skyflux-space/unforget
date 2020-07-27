@@ -99,6 +99,17 @@ export const removeNote
     = id => reject(whereEq({id}))
 
 
+interface RemoveNotes {
+    (notes: Note[]): (allNotes: Note[]) => Note[]
+
+    (notes: Note[], allNotes: Note[]): Note[]
+}
+
+export const removeNotes
+    : RemoveNotes
+    = curryN(2, (notes: Note[], allNotes: Note[]) => reject(includes(__, notes), allNotes))
+
+
 export const saveNotes
     : (notes: Note[]) => void
     = notes => localStorage.setItem('notes', JSON.stringify(filterValidNotes(notes)))
