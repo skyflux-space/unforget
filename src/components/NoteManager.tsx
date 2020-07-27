@@ -6,12 +6,12 @@ import {ContentListItem, Note} from '../models/note/types'
 import {NoteForm} from '../ui'
 
 
-export type NoteManager = {
+export type NoteManagerProps = {
     id: string
     readOnly?: boolean
 }
 
-export const NoteForm: React.FC<NoteManager> = ({id, readOnly}) => {
+export const NoteManager: React.FC<NoteManagerProps> = ({id, readOnly}) => {
     const {note, update} = useNote(id)
     const [defaultValues, setDefaultValues] = useState<Partial<Note> | undefined>(undefined)
 
