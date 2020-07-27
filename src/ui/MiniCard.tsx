@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 import c from 'classnames'
 import {NoteType} from '../models/note'
 import styles from './MiniCard.module.scss'
-import {ValidNote} from '../models/note/types'
+import {Note, ValidNote} from '../models/note/types'
 
 
 export type MiniCardProps = {
     note: ValidNote
     selected: boolean
+    onSelect?: (note: Note) => void
 }
 
-export const MiniCard: React.FC<MiniCardProps> = ({note: {content, title}, selected}) => (
+export const MiniCard: React.FC<MiniCardProps> = ({note: {content, title}, selected, onSelect}) => (
     <div className={c(styles.card, selected && styles.selected)}>
         {title && <h1 className={styles.title}>{title}</h1>}
         {
@@ -35,4 +36,5 @@ export const MiniCard: React.FC<MiniCardProps> = ({note: {content, title}, selec
 MiniCard.propTypes = {
     note: NoteType.isRequired,
     selected: PropTypes.bool.isRequired,
+    onSelect: PropTypes.func,
 }
