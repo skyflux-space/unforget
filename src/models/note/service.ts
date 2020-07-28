@@ -1,19 +1,21 @@
 import {
-    __,
     allPass,
     always,
     any,
     anyPass,
     append,
+    apply,
     assoc,
     both,
     complement,
     cond,
+    converge,
     curryN,
     defaultTo,
     eqProps,
     filter,
     find,
+    flip,
     identity,
     ifElse,
     includes,
@@ -24,6 +26,7 @@ import {
     map,
     o,
     objOf,
+    pair,
     pipe,
     prop,
     propOr,
@@ -31,6 +34,7 @@ import {
     reject,
     split,
     T,
+    useWith,
     whereEq
 } from 'ramda'
 import {v4} from 'uuid'
@@ -70,9 +74,15 @@ export const filterValidNotes
     = filter(isValidNote) as (list: Note[]) => ValidNote[]
 
 
+export interface GetNote {
+    (id: string): (notes: Note[]) => Note | undefined
+
+    (id: string, notes: Note[]): Note | undefined
+}
+
 export const getNote
-    : (id: string) => (notes: Note[]) => Note | undefined
-    = id => find(whereEq({id}))
+    : GetNote
+    = useWith(find, [pipe(objOf('id'), whereEq), identity])
 
 
 export const createNote
@@ -89,9 +99,22 @@ export interface AddNote {
 export const addNote: AddNote = append
 
 
-export const replaceNote
-    : (note: Note) => (notes: Note[]) => Note[]
-    = note => map(ifElse(eqProps('id', note), always(note), identity))
+export interface ReplaceNote {
+    (note: Note): (notes: Note[]) => Note[]
+
+    (note: Note, notes: Note[]): Note[]
+}
+
+export const replaceNote: ReplaceNote
+    = useWith(map, [
+        pipe(
+            converge(pair, [curryN(1, eqProps('id')), always]),
+            append(identity),
+            apply(ifElse),
+        ),
+        identity,
+    ]
+)
 
 
 export const removeNote
@@ -105,9 +128,8 @@ export interface RemoveNotes {
     (notes: Note[], allNotes: Note[]): Note[]
 }
 
-export const removeNotes
-    : RemoveNotes
-    = curryN(2, (notes: Note[], allNotes: Note[]) => reject(includes(__, notes), allNotes))
+export const removeNotes: RemoveNotes
+    = useWith(reject, [flip(includes), identity])
 
 
 export const saveNotes
