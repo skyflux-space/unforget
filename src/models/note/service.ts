@@ -10,7 +10,6 @@ import {
     complement,
     cond,
     converge,
-    curryN,
     defaultTo,
     eqProps,
     filter,
@@ -30,14 +29,15 @@ import {
     pipe,
     Placeholder,
     prop,
+    propEq,
     propOr,
     propSatisfies,
     reject,
     split,
     T,
+    unary,
     useWith,
-    where,
-    whereEq
+    where
 } from 'ramda'
 import {v4} from 'uuid'
 import {Content, ContentList, ContentType, Identifiable, Note, ValidNote} from './types'
@@ -96,7 +96,7 @@ export interface GetNote {
 }
 
 export const getNote: GetNote
-    = useWith(find, [pipe(objOf('id'), whereEq), identity])
+    = useWith(find, [propEq('id'), identity])
 
 
 export const createNote: () => Note = (
@@ -122,7 +122,7 @@ export interface ReplaceNote {
 export const replaceNote: ReplaceNote
     = useWith(map, [
         pipe(
-            converge(pair, [curryN(1, eqProps('id')), always]),
+            converge(pair, [unary(eqProps('id')), always]),
             append(identity),
             apply(ifElse),
         ),
@@ -139,10 +139,7 @@ export interface RemoveNoteById {
 
 export const removeNoteById: RemoveNoteById
     = useWith(reject, [
-        pipe(
-            objOf('id'),
-            whereEq('id'),
-        ),
+        propEq('id'),
         identity,
     ]
 )
@@ -182,7 +179,7 @@ export const convertContentToList: (text: string) => ContentList = (
     pipe(
         defaultTo(''),
         split('\n'),
-        filter(complement(isEmpty)),
+        reject(isEmpty),
         map(pipe(
             objOf('text'),
             assoc('checked', false),
