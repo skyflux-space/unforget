@@ -80,7 +80,7 @@ export const createNote
     = () => ({id: v4()})
 
 
-interface AddNote {
+export interface AddNote {
     (note: Note): (notes: Note[]) => Note[]
 
     (note: Note, notes: Note[]): Note[]
@@ -99,7 +99,7 @@ export const removeNote
     = id => reject(whereEq({id}))
 
 
-interface RemoveNotes {
+export interface RemoveNotes {
     (notes: Note[]): (allNotes: Note[]) => Note[]
 
     (notes: Note[], allNotes: Note[]): Note[]
