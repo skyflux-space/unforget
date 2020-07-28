@@ -10,9 +10,10 @@ export type MiniCardProps = {
     note: ValidNote
     selected: boolean
     onSelect?: (note: Note) => void
+    isSelectMode?: boolean
 }
 
-export const MiniCard: React.FC<MiniCardProps> = ({note: {content, title}, selected, onSelect}) => (
+export const MiniCard: React.FC<MiniCardProps> = ({note: {content, title}, selected, onSelect, isSelectMode}) => (
     <div className={c(styles.card, selected && styles.selected)}>
         {title && <h1 className={styles.title}>{title}</h1>}
         {
@@ -37,4 +38,5 @@ MiniCard.propTypes = {
     note: NoteType.isRequired,
     selected: PropTypes.bool.isRequired,
     onSelect: PropTypes.func,
+    isSelectMode: PropTypes.bool,
 }
