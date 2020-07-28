@@ -6,6 +6,7 @@ import {Store} from './store'
 import {Show} from './pages/Show'
 import {Edit} from './pages/Edit'
 
+
 const routes = {
     '/': () => <Dashboard/>,
     '/create': () => <Create/>,
