@@ -36,6 +36,7 @@ import {
     reject,
     split,
     T,
+    trim,
     unary,
     useWith,
     where
@@ -169,14 +170,19 @@ export const restoreNotes: () => Note[] = (
 )
 
 export const convertContentToString: (list: ContentList) => string = (
-    pipe(map(prop('text')), join('\n'))
+    pipe(
+        map(prop('text')),
+        reject(isEmpty),
+        join('\n'),
+    )
 )
 
 
-export const convertContentToList: (text: string) => ContentList = (
+export const convertContentToList: (text?: string) => ContentList = (
     pipe(
         defaultTo(''),
         split('\n'),
+        map(trim),
         reject(isEmpty),
         map(applySpec({
             text: identity,
