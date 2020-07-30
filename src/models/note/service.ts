@@ -26,7 +26,6 @@ import {
     map,
     objOf,
     pair,
-    partial,
     pipe,
     Placeholder,
     prop,
@@ -37,8 +36,10 @@ import {
     split,
     T,
     trim,
+    tryCatch,
     unary,
     useWith,
+    when,
     where
 } from 'ramda'
 import {v4} from 'uuid'
@@ -70,7 +71,7 @@ export const isValidContentList: (content?: Content) => boolean = (
 export const isValidContentText: (content?: Content) => boolean = (
     allPass([
         is(String),
-        complement(isEmpty),
+        pipe(trim, complement(isEmpty)),
     ])
 )
 
@@ -153,21 +154,41 @@ export const removeNotes: RemoveNotes = (
 )
 
 
+export const serializeNotes: (notes?: Note[]) => string = (
+    pipe(
+        defaultTo([]),
+        JSON.stringify,
+    )
+)
+
+
+export const deserializeNotes: (str?: string) => Note[] = (
+    pipe(
+        tryCatch(JSON.parse, always([])),
+        when(complement(is(Array)), always([])),
+        filter(isIdentifiable),
+    )
+)
+
+
 export const saveNotes: (notes: Note[]) => void = (
     pipe(
         filterValidNotes,
-        JSON.stringify,
-        setItem('notes')
+        serializeNotes,
+        setItem('notes'),
     )
 )
 
 
 export const restoreNotes: () => Note[] = (
     pipe(
-        partial<void>(getItem, ['notes']),
-        ifElse(isNil, always([]), JSON.parse)
+        always('notes'),
+        getItem,
+        deserializeNotes,
+        filterValidNotes,
     )
 )
+
 
 export const convertContentToString: (list: ContentList) => string = (
     pipe(
