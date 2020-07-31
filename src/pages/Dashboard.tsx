@@ -1,9 +1,12 @@
 import React, {useCallback, useState} from 'react'
-import {A} from 'hookrouter'
+import {A, navigate} from 'hookrouter'
+import {converge, ifElse, includes, map, pipe, unary} from 'ramda'
 import {Note} from '../models/note/types'
 import {addNote, removeNote, useNotes} from '../models/note'
 import {BottomBar, Button, List, MiniCard} from '../ui'
 
+
+const goToNote = (id: string) => () => navigate('/note/' + id)
 
 export const Dashboard: React.FC = () => {
     const {validNotes, removeNotes} = useNotes()
@@ -30,6 +33,7 @@ export const Dashboard: React.FC = () => {
                         note={note}
                         selected={selectedNotes.includes(note)}
                         onSelect={() => toggleSelect(note)}
+                        onClick={selectedNotes.length ? () => toggleSelect(note) : goToNote(note.id)}
                         key={note.id}
                     />
                 ))}
