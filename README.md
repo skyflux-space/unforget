@@ -1,3 +1,7 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6ad4ed86-b918-4b65-861f-03a4a49198e6/deploy-status)](https://app.netlify.com/sites/unforget/deploys)
+[![skyflux-space](https://circleci.com/gh/skyflux-space/unforget.svg?style=shield)](https://circleci.com/gh/skyflux-space/unforget) 
+[![License](https://img.shields.io/github/license/skyflux-space/unforget)](https://github.com/skyflux-space/unforget/blob/master/LICENSE)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
