@@ -58,3 +58,30 @@
 .break {
     word-break: break-word;
 }
+
+
+.dot {
+    position: absolute;
+    right: 7px;
+    top: 7px;
+
+    width: 14px;
+    height: 14px;
+
+    background: white;
+
+    border: 2px solid black;
+    border-radius: 50%;
+
+    display: none;
+}
+
+.dot.selected {
+    background: black;
+}
+
+@media (min-width: 768px) {
+    .dot {
+        display: block;
+    }
+}

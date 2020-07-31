@@ -16,6 +16,11 @@ export type MiniCardProps = {
 
 export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content}, selected, onSelect = () => {}, onClick}) => {
     const {onTouchEnd, onTouchStart} = useLongClick(onSelect)
+    const onSelectClick = useCallback((event: React.MouseEvent) => {
+        event.stopPropagation()
+        event.preventDefault()
+        onSelect()
+    }, [onSelect])
 
     return (
         <button
@@ -39,6 +44,7 @@ export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content}, selec
                         </ul>
                     )
             }
+            <div role="button" onClick={onSelectClick} className={c(styles.dot, selected && styles.selected)}/>
         </button>
     )
 }
