@@ -8,7 +8,7 @@ export type ListProps = {
 }
 
 export const List: React.FC<ListProps> = ({children, pinned}) => (
-    <Masonry elementType="ul">
+    <Masonry elementType="ul" className={styles.list}>
         {Children.map(children, (e, i) => (
             <li key={i} className={styles.item}>
                 {e}
