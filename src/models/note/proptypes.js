@@ -8,6 +8,7 @@ export const ContentListItemPropType = {
 export const NoteType = PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string,
+    pinned: PropTypes.bool.isRequired,
     content: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.arrayOf(PropTypes.shape(ContentListItemPropType).isRequired).isRequired,

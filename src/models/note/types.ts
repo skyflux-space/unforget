@@ -1,5 +1,6 @@
 export interface ValidNote extends Note {
     content: string | ContentList
+    pinned: boolean
 }
 
 export interface Note extends Identifiable {

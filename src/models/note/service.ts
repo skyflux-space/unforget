@@ -32,6 +32,7 @@ import {
     Placeholder,
     prop,
     propEq,
+    propIs,
     propOr,
     propSatisfies,
     reject,
@@ -79,10 +80,13 @@ export const isValidContentText: (content?: Content) => boolean = (
 
 
 export const isValidNote: (note: Note) => note is ValidNote = (
-    pipe(
-        propOr('', 'content'),
-        anyPass([isValidContentList, isValidContentText]),
-    )
+    allPass([
+        propIs(Boolean, 'pinned'),
+        pipe(
+            propOr('', 'content'),
+            anyPass([isValidContentList, isValidContentText]),
+        )
+    ])
 ) as (note: Note) => note is ValidNote
 
 
