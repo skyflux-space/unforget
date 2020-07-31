@@ -12,10 +12,10 @@ export type MiniCardProps = {
     selected: boolean
     onSelect?: () => void
     onClick?: () => void
-    pined?: boolean
+    pinned?: boolean
 }
 
-export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content}, selected, onSelect = () => {}, onClick, pined}) => {
+export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content}, selected, onSelect = () => {}, onClick, pinned}) => {
     const {onTouchEnd, onTouchStart} = useLongClick(onSelect)
     const onSelectClick = useCallback((event: React.MouseEvent) => {
         event.stopPropagation()
@@ -56,5 +56,5 @@ MiniCard.propTypes = {
     selected: PropTypes.bool.isRequired,
     onSelect: PropTypes.func,
     onClick: PropTypes.func,
-    pined: PropTypes.bool,
+    pinned: PropTypes.bool,
 }
