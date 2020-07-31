@@ -25,6 +25,7 @@ import {
     join,
     map,
     objOf,
+    of,
     pair,
     pipe,
     Placeholder,
@@ -151,6 +152,17 @@ export interface RemoveNotes {
 
 export const removeNotes: RemoveNotes = (
     useWith(reject, [flip(includes), identity])
+)
+
+
+export interface RemoveNote {
+    (note: Note): (notes: Note[]) => Note[]
+    (note: Placeholder, notes: Note[]): (note: Note) => Note[]
+    (note: Note, notes: Note[]): Note[]
+}
+
+export const removeNote: RemoveNote = (
+    useWith(removeNotes, [of, identity])
 )
 
 

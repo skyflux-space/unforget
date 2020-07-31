@@ -20,6 +20,7 @@ export interface NotesUtils {
     saveNotes: () => void
     restoreNotes: () => void
     removeNotes: (notesToRemove: Note[]) => void
+    removeNote: (note: Note) => void
 }
 
 export const useNotes = (): NotesUtils => {
@@ -34,6 +35,8 @@ export const useNotes = (): NotesUtils => {
     const removeNoteById = useCallback(id => setValue(Service.removeNoteById(id)), [setValue])
 
     const removeNotes = useCallback(notes => setValue(Service.removeNotes(notes)), [setValue])
+
+    const removeNote = useCallback(note => setValue(Service.removeNote(note)), [setValue])
 
     const replaceNote = useCallback(note => setValue(Service.replaceNote(note)), [setValue])
 
@@ -51,6 +54,7 @@ export const useNotes = (): NotesUtils => {
         saveNotes,
         restoreNotes,
         removeNotes,
+        removeNote,
     }
 }
 
