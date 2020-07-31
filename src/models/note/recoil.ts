@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useMemo, useState} from 'react'
-import {__, equals, pipe} from 'ramda'
+import {__, compose, equals, pipe, unary} from 'ramda'
 import {atom, useRecoilState} from 'recoil'
 import * as Service from './service'
 import {Note, ValidNote} from './types'
@@ -22,7 +22,9 @@ export interface NotesUtils {
     removeNotes: (notesToRemove: Note[]) => void
     removeNote: (note: Note) => void
     pinNote: (note: Note) => void
+    pinNotes: (notes: Note[]) => void
     unpinNote: (note: Note) => void
+    unpinNotes: (notes: Note[]) => void
 }
 
 export const useNotes = (): NotesUtils => {
@@ -58,6 +60,16 @@ export const useNotes = (): NotesUtils => {
         setValue,
     ), [setValue])
 
+    const unpinNotes = useCallback(
+        unary(compose(setValue, Service.unpinAll as (notes: Note[]) => (allNotes: Note[]) => Note[])),
+        [setValue]
+    )
+
+    const pinNotes = useCallback(
+        unary(compose(setValue, Service.pinAll as (notes: Note[]) => (allNotes: Note[]) => Note[])),
+        [setValue]
+    )
+
     return {
         notes: value,
         validNotes,
@@ -71,6 +83,8 @@ export const useNotes = (): NotesUtils => {
         removeNote,
         pinNote,
         unpinNote,
+        pinNotes,
+        unpinNotes,
     }
 }
 

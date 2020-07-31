@@ -4,7 +4,6 @@ import {
     any,
     anyPass,
     append,
-    apply,
     applySpec,
     assoc,
     both,
@@ -27,7 +26,6 @@ import {
     map,
     nAry,
     of,
-    pair,
     pipe,
     Placeholder,
     prop,
@@ -123,6 +121,24 @@ export interface AddNote {
 export const addNote: AddNote = append
 
 
+export interface ReplaceAll {
+    (notes: Note[], allNotes: Note[]): Note[]
+    (notes: Note[]): (allNotes: Note[]) => Note[]
+    (notes: Placeholder, allNotes: Note[]): (notes: Note[]) => Note[]
+}
+
+export const replaceAll: ReplaceAll = (
+    useWith(map, [
+        converge(ifElse, [
+            unary(useWith(flip(any), [identity, eqProps('id')])),
+            unary(useWith(flip(find), [identity, eqProps('id')])),
+            always(identity)
+        ]),
+        identity,
+    ])
+)
+
+
 export interface ReplaceNote {
     (note: Note, notes: Note[]): Note[]
     (note: Note): (notes: Note[]) => Note[]
@@ -130,14 +146,7 @@ export interface ReplaceNote {
 }
 
 export const replaceNote: ReplaceNote = (
-    useWith(map, [
-        pipe(
-            converge(pair, [unary(eqProps('id')), always]),
-            append(identity),
-            apply(ifElse),
-        ),
-        identity,
-    ])
+    useWith(replaceAll, [of, identity])
 )
 
 
@@ -247,6 +256,28 @@ export const pin: (note: Note) => Note = (
 )
 
 
+export interface PinAll {
+    (notes: Note[]): (allNotes: Note[]) => Note[]
+    (notes: Note[], allNotes: Note[]): Note[]
+    (notes: Placeholder, allNotes: Note[]): (notes: Note[]) => Note[]
+}
+
+export const pinAll: PinAll = (
+    useWith(replaceAll, [map(pin), identity])
+)
+
+
 export const unpin: (note: Note) => Note = (
     assoc('pinned', false)
+)
+
+
+export interface UnpinAll {
+    (notes: Note[]): (allNotes: Note[]) => Note[]
+    (notes: Note[], allNotes: Note[]): Note[]
+    (notes: Placeholder, allNotes: Note[]): (notes: Note[]) => Note[]
+}
+
+export const unpinAll: UnpinAll = (
+    useWith(replaceAll, [map(unpin), identity])
 )
