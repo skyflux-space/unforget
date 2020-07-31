@@ -6,6 +6,7 @@ import {
     append,
     apply,
     applySpec,
+    assoc,
     both,
     complement,
     cond,
@@ -24,7 +25,7 @@ import {
     isNil,
     join,
     map,
-    objOf,
+    nAry,
     of,
     pair,
     pipe,
@@ -102,7 +103,10 @@ export const getNote: GetNote = (
 
 
 export const createNote: () => Note = (
-    pipe(v4, objOf('id'))
+    applySpec({
+        id: nAry(0, v4),
+        pinned: F,
+    })
 ) as () => Note
 
 
@@ -116,8 +120,8 @@ export const addNote: AddNote = append
 
 
 export interface ReplaceNote {
-    (note: Note): (notes: Note[]) => Note[]
     (note: Note, notes: Note[]): Note[]
+    (note: Note): (notes: Note[]) => Note[]
     (note: Placeholder, notes: Note[]): (note: Note) => Note[]
 }
 
@@ -231,4 +235,14 @@ export const getContentType: (content?: string | ContentList) => ContentType | u
         [is(Array), always(ContentType.List)],
         [T, always(undefined)]
     ])
+)
+
+
+export const pin: (note: Note) => Note = (
+    assoc('pinned', true)
+)
+
+
+export const unpin: (note: Note) => Note = (
+    assoc('pinned', false)
 )

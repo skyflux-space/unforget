@@ -5,6 +5,7 @@ export interface ValidNote extends Note {
 export interface Note extends Identifiable {
     title?: string | null
     content?: Content
+    pinned?: boolean
 }
 
 export type Content = string | ContentList
