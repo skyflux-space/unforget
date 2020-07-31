@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react'
 import {A} from 'hookrouter'
 import {Note} from '../models/note/types'
-import {addNote, removeNoteById, useNotes} from '../models/note'
+import {addNote, removeNote, useNotes} from '../models/note'
 import {BottomBar, Button, List, MiniCard} from '../ui'
 
 
@@ -10,30 +10,28 @@ export const Dashboard: React.FC = () => {
 
     const [selectedNotes, selectNotes] = useState<Note[]>([])
 
-    const toggleSelect = useCallback((note: Note) => selectNotes(notes => {
-        if(!notes.includes(note))
-            return addNote(note, notes)
+    const toggleSelect = useCallback<(note: Note) => void>(pipe(
+        converge(ifElse, map(unary, [includes, removeNote, addNote])),
+        selectNotes,
+    ), [selectNotes])
 
-        return removeNoteById(note.id, notes)
-    }), [selectNotes])
+    const clearSelection = useCallback(() => selectNotes([]), [selectNotes])
 
     const removeSelected = useCallback(() => {
         removeNotes(selectedNotes)
-        selectNotes([])
-    }, [removeNotes, selectedNotes, selectNotes])
+        clearSelection()
+    }, [removeNotes, selectedNotes, clearSelection])
 
     return (
         <main>
             <List>
                 {validNotes.map(note => (
-                    <A href={'/note/' + note.id} key={note.id}>
-                        <MiniCard
-                            note={note}
-                            selected={selectedNotes.includes(note)}
-                            onSelect={toggleSelect}
-                            isSelectMode={!!selectedNotes.length}
-                        />
-                    </A>
+                    <MiniCard
+                        note={note}
+                        selected={selectedNotes.includes(note)}
+                        onSelect={() => toggleSelect(note)}
+                        key={note.id}
+                    />
                 ))}
             </List>
             <BottomBar
@@ -44,7 +42,10 @@ export const Dashboard: React.FC = () => {
                     </A>
                 }
                 left={
-                    <button onClick={removeSelected}>x</button>
+                    <>
+                        <button onClick={clearSelection}>y</button>
+                        <button onClick={removeSelected}>x</button>
+                    </>
                 }
             />
         </main>
