@@ -1,3 +1,6 @@
+import {Curried} from '../../utils/Curried'
+
+
 export interface ValidNote extends Note {
     content: string | ContentList
     pinned: boolean
@@ -25,3 +28,6 @@ export interface ContentListItem {
 export enum ContentType {
     String, List
 }
+
+export type MassMutator = Curried<Note[]>
+export type SingleMutator = Curried<Note, Note[]>

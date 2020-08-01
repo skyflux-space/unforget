@@ -27,7 +27,6 @@ import {
     nAry,
     of,
     pipe,
-    Placeholder,
     prop,
     propEq,
     propIs,
@@ -44,20 +43,17 @@ import {
     where
 } from 'ramda'
 import {v4} from 'uuid'
-import {Content, ContentList, ContentType, Identifiable, Note, ValidNote} from './types'
+import {Curried} from '../../utils/Curried'
 import {getItem, setItem} from '../../utils/localStorage'
+import {Content, ContentList, ContentType, Identifiable, MassMutator, Note, SingleMutator, ValidNote} from './types'
 
 
-export interface IsIdentifiable {
-    (value: any): value is Identifiable
-}
-
-export const isIdentifiable: IsIdentifiable = (
+export const isIdentifiable: (value: any) => value is Identifiable = (
     both(
         is(Object),
         where({id: complement(isNil)})
     )
-) as IsIdentifiable
+) as (value: any) => value is Identifiable
 
 
 export const isValidContentList: (content?: Content) => boolean = (
@@ -89,19 +85,10 @@ export const isValidNote: (note: Note) => note is ValidNote = (
 
 
 export const filterValidNotes: (list: Note[]) => ValidNote[] = (
-    filter(isValidNote) as (list: Note[]) => ValidNote[]
-)
+    filter(isValidNote)
+) as (list: Note[]) => ValidNote[]
 
-
-export interface GetNote {
-    (id: string): (notes: Note[]) => Note | undefined
-    (id: string, notes: Note[]): Note | undefined
-    (id: Placeholder, notes: Note[]): (id: string) => Note | undefined
-}
-
-export const getNote: GetNote = (
-    useWith(find, [propEq('id'), identity])
-)
+export const getNote: Curried<string, Note[], Note | undefined> = useWith(find, [propEq('id'), identity])
 
 
 export const createNote: () => Note = (
@@ -112,22 +99,10 @@ export const createNote: () => Note = (
 ) as () => Note
 
 
-export interface AddNote {
-    (note: Note): (notes: Note[]) => Note[]
-    <T = Note>(note: Placeholder, notes: T[]): (note: T) => T[]
-    (note: Note, notes: Note[]): Note[]
-}
-
-export const addNote: AddNote = append
+export const addNote: SingleMutator = append
 
 
-export interface ReplaceAll {
-    (notes: Note[], allNotes: Note[]): Note[]
-    (notes: Note[]): (allNotes: Note[]) => Note[]
-    (notes: Placeholder, allNotes: Note[]): (notes: Note[]) => Note[]
-}
-
-export const replaceAll: ReplaceAll = (
+export const replaceAll: MassMutator = (
     useWith(map, [
         converge(ifElse, [
             unary(useWith(flip(any), [identity, eqProps('id')])),
@@ -138,49 +113,16 @@ export const replaceAll: ReplaceAll = (
     ])
 )
 
-
-export interface ReplaceNote {
-    (note: Note, notes: Note[]): Note[]
-    (note: Note): (notes: Note[]) => Note[]
-    (note: Placeholder, notes: Note[]): (note: Note) => Note[]
-}
-
-export const replaceNote: ReplaceNote = (
-    useWith(replaceAll, [of, identity])
-)
+export const replaceNote: SingleMutator = useWith(replaceAll, [of, identity])
 
 
-export interface RemoveNoteById {
-    (id: string): (notes: Note[]) => Note[]
-    (id: string, notes: Note[]): Note[]
-    (id: Placeholder, notes: Note[]): (id: string) => Note[]
-}
-
-export const removeNoteById: RemoveNoteById = (
-    useWith(reject, [propEq('id'), identity])
-)
+export const removeNoteById: Curried<string, Note[]> = useWith(reject, [propEq('id'), identity])
 
 
-export interface RemoveNotes {
-    (notes: Note[]): (allNotes: Note[]) => Note[]
-    (notes: Note[], allNotes: Note[]): Note[]
-    (notes: Placeholder, allNotes: Note[]): (notes: Note[]) => Note[]
-}
-
-export const removeNotes: RemoveNotes = (
-    useWith(reject, [flip(includes), identity])
-)
+export const removeNotes: MassMutator = useWith(reject, [flip(includes), identity])
 
 
-export interface RemoveNote {
-    (note: Note): (notes: Note[]) => Note[]
-    (note: Placeholder, notes: Note[]): (note: Note) => Note[]
-    (note: Note, notes: Note[]): Note[]
-}
-
-export const removeNote: RemoveNote = (
-    useWith(removeNotes, [of, identity])
-)
+export const removeNote: SingleMutator = useWith(removeNotes, [of, identity])
 
 
 export const serializeNotes: (notes?: Note[]) => string = (
@@ -242,7 +184,7 @@ export const convertContentToList: (text?: string) => ContentList = (
 )
 
 
-export const getContentType: (content?: string | ContentList) => ContentType | undefined = (
+export const getContentType: (content?: Content) => ContentType | undefined = (
     cond([
         [is(String), always(ContentType.String)],
         [is(Array), always(ContentType.List)],
@@ -251,33 +193,13 @@ export const getContentType: (content?: string | ContentList) => ContentType | u
 )
 
 
-export const pin: (note: Note) => Note = (
-    assoc('pinned', true)
-)
+export const pin: (note: Note) => Note = assoc('pinned', true)
 
 
-export interface PinAll {
-    (notes: Note[]): (allNotes: Note[]) => Note[]
-    (notes: Note[], allNotes: Note[]): Note[]
-    (notes: Placeholder, allNotes: Note[]): (notes: Note[]) => Note[]
-}
-
-export const pinAll: PinAll = (
-    useWith(replaceAll, [map(pin), identity])
-)
+export const pinAll: MassMutator = useWith(replaceAll, [map(pin), identity])
 
 
-export const unpin: (note: Note) => Note = (
-    assoc('pinned', false)
-)
+export const unpin: (note: Note) => Note = assoc('pinned', false)
 
 
-export interface UnpinAll {
-    (notes: Note[]): (allNotes: Note[]) => Note[]
-    (notes: Note[], allNotes: Note[]): Note[]
-    (notes: Placeholder, allNotes: Note[]): (notes: Note[]) => Note[]
-}
-
-export const unpinAll: UnpinAll = (
-    useWith(replaceAll, [map(unpin), identity])
-)
+export const unpinAll: MassMutator = useWith(replaceAll, [map(unpin), identity])
