@@ -1,4 +1,5 @@
-import {useCallback, useRef, TouchEvent} from 'react'
+import {TouchEvent, useCallback, useRef} from 'react'
+
 
 export type UseLongClickResult = {
     onTouchStart: (event: TouchEvent) => void
@@ -7,10 +8,8 @@ export type UseLongClickResult = {
 
 export const useLongClick = (f: () => any, delay: number = 350): UseLongClickResult => {
     const longClick = useRef<NodeJS.Timeout | null>(null)
-    const onTouchStart = useCallback((event: TouchEvent) => {
+    const onTouchStart = useCallback(() => {
         longClick.current = setTimeout(() => {
-            event.stopPropagation()
-            event.preventDefault()
             longClick.current = null
             f()
         }, delay)
