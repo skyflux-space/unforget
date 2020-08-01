@@ -88,6 +88,7 @@ export const filterValidNotes: (list: Note[]) => ValidNote[] = (
     filter(isValidNote)
 ) as (list: Note[]) => ValidNote[]
 
+
 export const getNote: Curried<string, Note[], Note | undefined> = useWith(find, [propEq('id'), identity])
 
 

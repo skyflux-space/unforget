@@ -95,40 +95,42 @@ export type NoteHookProps = {
 }
 
 export const useNote = (id?: string): NoteHookProps => {
-    const [note, setNote] = useState<Note | undefined>()
+    const [noteId, setNoteId] = useState(id)
     const {addNote, replaceNote, getNote} = useNotes()
+    const note = useMemo(() => noteId ? getNote(noteId) : undefined, [getNote, noteId])
 
-    const update = useCallback((newNote?: Partial<Note>) => setNote(note => {
-        if(!newNote || newNote === note || equals(newNote, note))
-            return note
+    const replace = useCallback((note: Note) => {
+        const oldNote = getNote(note.id)
+        if (!oldNote)
+            return addNote(note)
 
-        if(!note && Service.isIdentifiable(newNote))
-            return newNote
+        if (oldNote !== note)
+            return replaceNote(note)
+    }, [getNote, addNote, replaceNote])
 
-        if(note && newNote.id !== undefined && note.id !== newNote.id)
-            return note
+    const update = useCallback((newNote?: Partial<Note>) => {
+        if (!newNote || equals(newNote, note))
+            return
 
-        if(note) {
-            const fullNewNote = {...note, ...newNote, id: note.id}
-            return equals(note, fullNewNote) ? note : fullNewNote
-        }
-    }), [setNote])
+        if (!note && Service.isIdentifiable(newNote))
+            return replace(newNote)
+
+        if (!note || note && Service.isIdentifiable(newNote) && note.id !== newNote.id)
+            return
+
+        const fullNewNote = {...note, ...newNote, id: note.id}
+
+        if (!equals(note, fullNewNote))
+            replace(fullNewNote)
+    }, [replace, note])
 
     useEffect(() => {
-        if(note) {
-            const oldNote = getNote(note.id)
-            if(!oldNote)
-                return addNote(note)
-
-            if(oldNote !== note)
-                return replaceNote(note)
+        if (!noteId) {
+            const note = Service.createNote()
+            setNoteId(note.id)
+            update(note)
         }
-    }, [note, getNote, addNote, replaceNote])
-
-    useEffect(() => {
-        if(!note)
-            update(id ? getNote(id) : Service.createNote())
-    }, [update, note, id, getNote])
+    }, [update, noteId])
 
     return {
         note,
