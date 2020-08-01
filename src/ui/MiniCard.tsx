@@ -46,6 +46,7 @@ export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content}, selec
                     )
             }
             <div role="button" onClick={onSelectClick} className={c(styles.dot, selected && styles.selected)}/>
+            <div role="button" className={c(styles.pin, pinned && styles.active)}/>
         </button>
     )
 }

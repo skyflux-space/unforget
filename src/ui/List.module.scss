@@ -1,5 +1,10 @@
 .list + .list {
-    margin-top: 1rem;
+    padding-top: 0.5rem;
+}
+
+.list.pinned {
+    background: #E8E8E8;
+    padding-bottom: 0.5rem;
 }
 
 
