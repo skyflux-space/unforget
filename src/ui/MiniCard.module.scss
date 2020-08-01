@@ -28,6 +28,12 @@
     background: #3a8686;
 }
 
+@media (min-width: 768px) {
+    .card {
+        padding: 1rem;
+    }
+}
+
 
 .title {
     padding: 0;
@@ -62,8 +68,8 @@
 
 .dot {
     position: absolute;
-    right: 7px;
-    top: 7px;
+    left: 2px;
+    top: 2px;
 
     width: 14px;
     height: 14px;
