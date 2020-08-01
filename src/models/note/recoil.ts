@@ -115,7 +115,7 @@ export const useNote = (id?: string): NoteHookProps => {
         if (!note && Service.isIdentifiable(newNote))
             return replace(newNote)
 
-        if (!note || note && Service.isIdentifiable(newNote) && note.id !== newNote.id)
+        if (!note || (note && Service.isIdentifiable(newNote) && note.id !== newNote.id))
             return
 
         const fullNewNote = {...note, ...newNote, id: note.id}
