@@ -85,3 +85,19 @@
         display: block;
     }
 }
+
+
+.pin {
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    width: 10px;
+    height: 10px;
+
+    display: none;
+}
+
+.pin.active {
+    display: block;
+    background: black;
+}
