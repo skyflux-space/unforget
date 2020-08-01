@@ -18,7 +18,7 @@ export const Show: React.FC<ShowProps> = ({id}) => {
         if(note)
             removeNote(note)
         navigate('/', true)
-    }, [note, unpinNote])
+    }, [note, removeNote])
 
     return (
         <div style={{position: 'fixed', height: '100%', width: '100%', display: 'flex', flexDirection: 'column'}}>
