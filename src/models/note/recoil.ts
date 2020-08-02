@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useMemo, useState} from 'react'
-import {__, equals} from 'ramda'
+import {__, compose, equals, pipe, unary} from 'ramda'
 import {atom, useRecoilState} from 'recoil'
 import * as Service from './service'
 import {Note, ValidNote} from './types'
@@ -21,6 +21,10 @@ export interface NotesUtils {
     restoreNotes: () => void
     removeNotes: (notesToRemove: Note[]) => void
     removeNote: (note: Note) => void
+    pinNote: (note: Note) => void
+    pinNotes: (notes: Note[]) => void
+    unpinNote: (note: Note) => void
+    unpinNotes: (notes: Note[]) => void
 }
 
 export const useNotes = (): NotesUtils => {
@@ -44,6 +48,28 @@ export const useNotes = (): NotesUtils => {
 
     const restoreNotes = useCallback(() => setValue(Service.restoreNotes()), [setValue])
 
+    const pinNote = useCallback(pipe(
+        Service.pin,
+        Service.replaceNote as (note: Note) => (notes: Note[]) => Note[],
+        setValue,
+    ), [setValue])
+
+    const unpinNote = useCallback(pipe(
+        Service.unpin,
+        Service.replaceNote as (note: Note) => (notes: Note[]) => Note[],
+        setValue,
+    ), [setValue])
+
+    const unpinNotes = useCallback(
+        unary(compose(setValue, Service.unpinAll as (notes: Note[]) => (allNotes: Note[]) => Note[])),
+        [setValue]
+    )
+
+    const pinNotes = useCallback(
+        unary(compose(setValue, Service.pinAll as (notes: Note[]) => (allNotes: Note[]) => Note[])),
+        [setValue]
+    )
+
     return {
         notes: value,
         validNotes,
@@ -55,6 +81,10 @@ export const useNotes = (): NotesUtils => {
         restoreNotes,
         removeNotes,
         removeNote,
+        pinNote,
+        unpinNote,
+        pinNotes,
+        unpinNotes,
     }
 }
 
@@ -65,40 +95,42 @@ export type NoteHookProps = {
 }
 
 export const useNote = (id?: string): NoteHookProps => {
-    const [note, setNote] = useState<Note | undefined>()
+    const [noteId, setNoteId] = useState(id)
     const {addNote, replaceNote, getNote} = useNotes()
+    const note = useMemo(() => noteId ? getNote(noteId) : undefined, [getNote, noteId])
 
-    const update = useCallback((newNote?: Partial<Note>) => setNote(note => {
-        if(!newNote || newNote === note || equals(newNote, note))
-            return note
+    const replace = useCallback((note: Note) => {
+        const oldNote = getNote(note.id)
+        if (!oldNote)
+            return addNote(note)
 
-        if(!note && Service.isIdentifiable(newNote))
-            return newNote
+        if (oldNote !== note)
+            return replaceNote(note)
+    }, [getNote, addNote, replaceNote])
 
-        if(note && newNote.id !== undefined && note.id !== newNote.id)
-            return note
+    const update = useCallback((newNote?: Partial<Note>) => {
+        if (!newNote || equals(newNote, note))
+            return
 
-        if(note) {
-            const fullNewNote = {...note, ...newNote, id: note.id}
-            return equals(note, fullNewNote) ? note : fullNewNote
-        }
-    }), [setNote])
+        if (!note && Service.isIdentifiable(newNote))
+            return replace(newNote)
+
+        if (!note || (note && Service.isIdentifiable(newNote) && note.id !== newNote.id))
+            return
+
+        const fullNewNote = {...note, ...newNote, id: note.id}
+
+        if (!equals(note, fullNewNote))
+            replace(fullNewNote)
+    }, [replace, note])
 
     useEffect(() => {
-        if(note) {
-            const oldNote = getNote(note.id)
-            if(!oldNote)
-                return addNote(note)
-
-            if(oldNote !== note)
-                return replaceNote(note)
+        if (!noteId) {
+            const note = Service.createNote()
+            setNoteId(note.id)
+            update(note)
         }
-    }, [note, getNote, addNote, replaceNote])
-
-    useEffect(() => {
-        if(!note)
-            update(id ? getNote(id) : Service.createNote())
-    }, [update, note, id, getNote])
+    }, [update, noteId])
 
     return {
         note,

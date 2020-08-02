@@ -9,7 +9,7 @@ export type EditProps = {
 
 export const Edit: React.FC<EditProps> = ({id}) => {
     return (
-        <div style={{height: '100vh', display: 'flex', flexDirection: 'column'}}>
+        <div style={{position: 'fixed', height: '100%', width: '100%', display: 'flex', flexDirection: 'column'}}>
             <Header/>
             <NoteManager id={id}/>
         </div>

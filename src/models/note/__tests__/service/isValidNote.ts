@@ -1,5 +1,5 @@
-import {createNote, isValidNote} from '../../service'
 import {dissoc} from 'ramda'
+import {createNote, isValidNote} from '../../service'
 import {Note} from '../../types'
 
 
@@ -25,6 +25,12 @@ describe('isValidNote', function () {
 
     it('should return false for blank string content', function () {
         const note: Note = {...createNote(), content: '      '}
+        const valid = isValidNote(note)
+        expect(valid).toBe(false)
+    })
+
+    it('should return false for note with undefined pinned prop', function () {
+        const note: Note = dissoc('pinned', createNote())
         const valid = isValidNote(note)
         expect(valid).toBe(false)
     })
