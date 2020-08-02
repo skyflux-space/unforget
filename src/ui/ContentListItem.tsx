@@ -7,11 +7,12 @@ import styles from './ContentListItem.module.scss'
 export type ContentListItemProps = {
     checked: boolean
     defaultText?: string
-    onBlur?: FocusEventHandler<HTMLTextAreaElement>
     name?: string
     disabled?: boolean
-    onTextChange?: ChangeEventHandler<HTMLTextAreaElement>
     readOnly?: boolean
+    onBlur?: FocusEventHandler<HTMLTextAreaElement>
+    onTextChange?: ChangeEventHandler<HTMLTextAreaElement>
+    onRemoveClicked?: (...args: any[]) => any
 }
 
 type OptionalRef<T extends HTMLElement> = Ref<T> | undefined
@@ -19,7 +20,7 @@ type InputRef = OptionalRef<HTMLInputElement>
 type TextAreaRef = OptionalRef<HTMLTextAreaElement>
 
 export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTMLElement>> = memo(forwardRef<HTMLElement, ContentListItemProps>((
-    {checked, defaultText, onBlur, name, onTextChange, disabled, readOnly}, ref
+    {checked, defaultText, onBlur, name, onTextChange, disabled, readOnly, onRemoveClicked}, ref
     ) => (
         <div className={styles.flex}>
             <input
@@ -41,6 +42,7 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
                       readOnly={readOnly}
                       {...(disabled ? {value: ''} : {})}
             />
+            <button onClick={onRemoveClicked}>X</button>
         </div>
     )
 ))
