@@ -15,6 +15,7 @@ export type CreateFormProps = {
     onListStaticInputChange?: ChangeEventHandler<HTMLTextAreaElement>
     onListFieldBlur?: FocusEventHandler<HTMLTextAreaElement>
     createOnListFieldBlur?: (i: number) => FocusEventHandler<HTMLTextAreaElement>
+    onListFieldRemoved?: (i: number) => void
     readOnly?: boolean
     type?: ContentType
 }
@@ -27,6 +28,7 @@ export const NoteForm: React.FC<CreateFormProps> = (
         onListStaticInputChange,
         createOnListFieldBlur,
         onListFieldBlur,
+        onListFieldRemoved,
         readOnly = false,
         type = ContentType.String,
     }) => (
@@ -54,6 +56,7 @@ export const NoteForm: React.FC<CreateFormProps> = (
                     createRef={createRef}
                     createOnFieldBlur={createOnListFieldBlur}
                     onFieldBlur={onListFieldBlur}
+                    onFieldRemoved={onListFieldRemoved}
                     onStaticInputChange={onListStaticInputChange}
                     readOnly={readOnly}
                 />
