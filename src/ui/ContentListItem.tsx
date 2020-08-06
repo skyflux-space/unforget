@@ -1,11 +1,11 @@
 import React, {ChangeEventHandler, FocusEventHandler, forwardRef, memo, Ref, RefAttributes} from 'react'
-import PropTypes from 'prop-types'
 import {TextArea} from './TextArea'
 import styles from './ContentListItem.module.scss'
 
 
 export type ContentListItemProps = {
     checked: boolean
+    index?: number
     defaultText?: string
     name?: string
     disabled?: boolean
@@ -13,6 +13,7 @@ export type ContentListItemProps = {
     onBlur?: FocusEventHandler<HTMLTextAreaElement>
     onTextChange?: ChangeEventHandler<HTMLTextAreaElement>
     onRemoveClicked?: (...args: any[]) => any
+    onChecked?: (value: boolean) => void
 }
 
 type OptionalRef<T extends HTMLElement> = Ref<T> | undefined
@@ -20,15 +21,17 @@ type InputRef = OptionalRef<HTMLInputElement>
 type TextAreaRef = OptionalRef<HTMLTextAreaElement>
 
 export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTMLElement>> = memo(forwardRef<HTMLElement, ContentListItemProps>((
-    {checked, defaultText, onBlur, name, onTextChange, disabled, readOnly, onRemoveClicked}, ref
+    {checked, index, defaultText, onBlur, name, onTextChange, disabled, readOnly, onRemoveClicked, onChecked}, ref
     ) => (
         <div className={styles.flex}>
+            {index !== undefined && <input hidden readOnly name={`${name}.index`} value={index} ref={ref as InputRef}/>}
             <input
                 type="checkbox"
                 defaultChecked={checked}
                 ref={ref as InputRef}
                 name={`${name}.checked`}
                 disabled={disabled}
+                onChange={({target}) => onChecked?.(target.checked)}
             />
             <TextArea name={`${name}.text`}
                       size="small"
@@ -46,15 +49,6 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
         </div>
     )
 ))
-
-ContentListItem.propTypes = {
-    checked: PropTypes.bool.isRequired,
-    defaultText: PropTypes.string,
-    onBlur: PropTypes.func,
-    name: PropTypes.string,
-    disabled: PropTypes.bool,
-    onTextChange: PropTypes.func,
-}
 
 
 const onFocus: FocusEventHandler<HTMLTextAreaElement> = ({target}) => {

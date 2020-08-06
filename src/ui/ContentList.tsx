@@ -9,12 +9,13 @@ export type ContentListProps = {
     onFieldBlur?: FocusEventHandler<HTMLTextAreaElement>
     createOnFieldBlur?: (i: number) => FocusEventHandler<HTMLTextAreaElement>
     onStaticInputChange?: ChangeEventHandler<HTMLTextAreaElement>
+    onFieldChecked?: (i: number, value: boolean) => void
     onFieldRemoved?: (i: number) => void
     readOnly?: boolean
 }
 
 export const ContentList: React.FC<ContentListProps> = memo((
-    {fields, createRef, onFieldBlur, createOnFieldBlur, onStaticInputChange, readOnly, onFieldRemoved}
+    {fields, createRef, onFieldBlur, createOnFieldBlur, onStaticInputChange, readOnly, onFieldRemoved, onFieldChecked}
     ) => (
         <ul>
             {fields.map((e, i) => (
@@ -27,6 +28,8 @@ export const ContentList: React.FC<ContentListProps> = memo((
                         ref={createRef?.()}
                         name={`content[${i}]`}
                         readOnly={readOnly}
+                        index={e.index}
+                        onChecked={(value: boolean) => onFieldChecked?.(i, value)}
                     />
                 </li>
             ))}
