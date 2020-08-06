@@ -1,5 +1,5 @@
 import {dissoc} from 'ramda'
-import {serializeNotes, deserializeNotes, createNote} from '../../service'
+import {createNote, deserializeNotes, serializeNotes} from '../../service'
 import {Note} from '../../types'
 
 
@@ -14,16 +14,16 @@ describe('serializeNotes', function () {
     it('should serialize valid notes to valid string', function () {
         const validNotes: Note[] = [
             {...createNote(), content: '1'},
-            {...createNote(), content: [{text: '1', checked: false}]},
-            {...createNote(), content: [{text: '1', checked: true}]},
+            {...createNote(), content: [{text: '1', checked: false, index: 0}]},
+            {...createNote(), content: [{text: '1', checked: true, index: 0}]},
             {
                 ...createNote(), content: [
-                    {text: '1', checked: true},
-                    {text: '', checked: true},
-                    {text: '', checked: true}
-                ]
+                    {text: '1', checked: true, index: 0},
+                    {text: '', checked: true, index: 1},
+                    {text: '', checked: true, index: 2},
+                ],
             },
-            dissoc('content', createNote())
+            dissoc('content', createNote()),
         ]
         const str = serializeNotes(validNotes)
         const deserialized = deserializeNotes(str)

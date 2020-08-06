@@ -6,13 +6,13 @@ describe('deserializeNotes', function () {
     const invalidNote: Note = dissoc('content', createNote())
     const validNotes: Note[] = [
         {...createNote(), content: '1'},
-        {...createNote(), content: [{text: '1', checked: false}]},
-        {...createNote(), content: [{text: '1', checked: true}]},
+        {...createNote(), content: [{text: '1', checked: false, index: 0}]},
+        {...createNote(), content: [{text: '1', checked: true, index: 0}]},
         {
             ...createNote(), content: [
-                {text: '1', checked: true},
-                {text: '', checked: true},
-                {text: '', checked: true}
+                {text: '1', checked: true, index: 0},
+                {text: '', checked: true, index: 1},
+                {text: '', checked: true, index: 2}
             ]
         },
     ]
