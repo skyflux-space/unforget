@@ -1,7 +1,5 @@
 import React, {useCallback} from 'react'
-import PropTypes from 'prop-types'
 import c from 'classnames'
-import {NoteType} from '../models/note'
 import {ValidNote} from '../models/note/types'
 import {useLongClick} from '../utils/useLongClick'
 import styles from './MiniCard.module.scss'
@@ -49,13 +47,4 @@ export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content}, selec
             <div role="button" className={c(styles.pin, pinned && styles.active)}/>
         </button>
     )
-}
-
-
-MiniCard.propTypes = {
-    note: NoteType.isRequired,
-    selected: PropTypes.bool.isRequired,
-    onSelect: PropTypes.func,
-    onClick: PropTypes.func,
-    pinned: PropTypes.bool,
 }
