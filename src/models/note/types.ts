@@ -1,5 +1,8 @@
 import {Curried} from '../../utils/Curried'
 
+export interface ListNote extends ValidNote {
+    content: ContentList
+}
 
 export interface ValidNote extends Note {
     content: string | ContentList
@@ -23,6 +26,7 @@ export type ContentList = ContentListItem[]
 export interface ContentListItem {
     text: string
     checked: boolean
+    index: number
 }
 
 export enum ContentType {

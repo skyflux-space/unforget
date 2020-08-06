@@ -1,4 +1,5 @@
 import {
+    addIndex,
     allPass,
     always,
     any,
@@ -11,7 +12,10 @@ import {
     cond,
     converge,
     defaultTo,
+    dissoc,
     eqProps,
+    equals,
+    evolve,
     F,
     filter,
     find,
@@ -25,6 +29,7 @@ import {
     join,
     map,
     nAry,
+    nthArg,
     of,
     pipe,
     prop,
@@ -40,12 +45,23 @@ import {
     unary,
     useWith,
     when,
-    where
+    where,
 } from 'ramda'
 import {v4} from 'uuid'
 import {Curried} from '../../utils/Curried'
 import {getItem, setItem} from '../../utils/localStorage'
-import {Content, ContentList, ContentType, Identifiable, MassMutator, Note, SingleMutator, ValidNote} from './types'
+import {
+    Content,
+    ContentList,
+    ContentListItem,
+    ContentType,
+    Identifiable,
+    ListNote,
+    MassMutator,
+    Note,
+    SingleMutator,
+    ValidNote,
+} from './types'
 
 
 export const isIdentifiable: (value: any) => value is Identifiable = (
@@ -126,9 +142,31 @@ export const removeNotes: MassMutator = useWith(reject, [flip(includes), identit
 export const removeNote: SingleMutator = useWith(removeNotes, [of, identity])
 
 
+export const getContentType: (content?: Content) => ContentType | undefined = (
+    cond([
+        [is(String), always(ContentType.String)],
+        [is(Array), always(ContentType.List)],
+        [T, always(undefined)]
+    ])
+)
+
+
+export const isListNote: (note: Note) => note is ListNote = (
+    pipe(
+        propOr([], 'content'),
+        getContentType,
+        both(complement(isNil), equals(ContentType.List))
+    )
+) as (note: Note) => note is ListNote
+
+
 export const serializeNotes: (notes?: Note[]) => string = (
     pipe(
         defaultTo([]),
+        map((when as <T, G extends T, H>(pred: (v: T) => v is G, fn: (v: G) => H) => (v: T) => T | H)(
+            isListNote,
+            evolve({content: map(dissoc('index'))})
+        )),
         JSON.stringify,
     )
 )
@@ -139,6 +177,10 @@ export const deserializeNotes: (str?: string) => Note[] = (
         tryCatch(JSON.parse, always([])),
         when(complement(is(Array)), always([])),
         filter(isIdentifiable),
+        map((when as <T, G extends T, H>(pred: (v: T) => v is G, fn: (v: G) => H) => (v: T) => T | H)(
+            isListNote,
+            evolve({content: addIndex(map)(flip(assoc('index'))) as (list: ContentList) => ContentList}),
+        )),
     )
 )
 
@@ -177,20 +219,12 @@ export const convertContentToList: (text?: string) => ContentList = (
         split('\n'),
         map(trim),
         reject(isEmpty),
-        map(applySpec({
-            text: identity,
+        addIndex<string, ContentListItem>(map)(applySpec({
+            text: nthArg(0),
+            index: nthArg(1),
             checked: F,
         })),
     )
-)
-
-
-export const getContentType: (content?: Content) => ContentType | undefined = (
-    cond([
-        [is(String), always(ContentType.String)],
-        [is(Array), always(ContentType.List)],
-        [T, always(undefined)]
-    ])
 )
 
 
