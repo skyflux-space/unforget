@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useState} from 'react'
+import {useCallback, useMemo} from 'react'
 import {__, compose, equals, pipe, unary} from 'ramda'
 import {atom, useRecoilState} from 'recoil'
 import * as Service from './service'
@@ -62,12 +62,12 @@ export const useNotes = (): NotesUtils => {
 
     const unpinNotes = useCallback(
         unary(compose(setValue, Service.unpinAll as (notes: Note[]) => (allNotes: Note[]) => Note[])),
-        [setValue]
+        [setValue],
     )
 
     const pinNotes = useCallback(
         unary(compose(setValue, Service.pinAll as (notes: Note[]) => (allNotes: Note[]) => Note[])),
-        [setValue]
+        [setValue],
     )
 
     return {
@@ -91,49 +91,46 @@ export const useNotes = (): NotesUtils => {
 
 export type NoteHookProps = {
     note?: Note
-    update: (newNote?: Partial<Note>) => void
+    update: (newNote: ((note: Note) => Note) | Partial<Note>) => void
+    remove: () => void
+    pin: () => void
+    unpin: () => void
 }
 
 export const useNote = (id?: string): NoteHookProps => {
-    const [noteId, setNoteId] = useState(id)
-    const {addNote, replaceNote, getNote} = useNotes()
-    const note = useMemo(() => noteId ? getNote(noteId) : undefined, [getNote, noteId])
+    const {replaceNote, getNote, removeNote, pinNote, unpinNote} = useNotes()
 
-    const replace = useCallback((note: Note) => {
-        const oldNote = getNote(note.id)
-        if (!oldNote)
-            return addNote(note)
+    const note = useMemo(() => id !== undefined ? getNote(id) : undefined, [getNote, id])
 
-        if (oldNote !== note)
-            return replaceNote(note)
-    }, [getNote, addNote, replaceNote])
-
-    const update = useCallback((newNote?: Partial<Note>) => {
-        if (!newNote || equals(newNote, note))
+    const update: NoteHookProps['update'] = useCallback(newNote => {
+        if (!note)
             return
 
-        if (!note && Service.isIdentifiable(newNote))
-            return replace(newNote)
+        if (typeof newNote === 'function')
+            return update(newNote(note))
 
-        if (!note || (note && Service.isIdentifiable(newNote) && note.id !== newNote.id))
-            return
+        if (newNote && !equals(newNote, note) && (!Service.isIdentifiable(newNote) || newNote.id === note.id)) {
+            const fullNewNote = {...note, ...newNote, id: note.id}
 
-        const fullNewNote = {...note, ...newNote, id: note.id}
-
-        if (!equals(note, fullNewNote))
-            replace(fullNewNote)
-    }, [replace, note])
-
-    useEffect(() => {
-        if (!noteId) {
-            const note = Service.createNote()
-            setNoteId(note.id)
-            update(note)
+            if (!equals(note, fullNewNote))
+                replaceNote(fullNewNote)
         }
-    }, [update, noteId])
+    }, [replaceNote, note])
+
+    const remove = useCallback(() => {
+        if (note)
+            removeNote(note)
+    }, [note, removeNote])
+
+    const pin = useCallback(() => note && pinNote(note), [note, pinNote])
+
+    const unpin = useCallback(() => note && unpinNote(note), [note, unpinNote])
 
     return {
         note,
         update,
+        pin,
+        unpin,
+        remove,
     }
 }
