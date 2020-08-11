@@ -1,7 +1,6 @@
 import {getContentType} from '../../service'
 import {Content, ContentList, ContentType} from '../../types'
 
-
 describe('getContentType', function () {
 
     test.each([
@@ -19,8 +18,6 @@ describe('getContentType', function () {
         const type = getContentType('123')
         expect(type).toBe(ContentType.String)
     })
-
-
 
     test.each([
         [undefined],

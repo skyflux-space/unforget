@@ -3,15 +3,14 @@ import {HookRouter, useRoutes} from 'hookrouter'
 import {Dashboard} from './pages/Dashboard'
 import {Create} from './pages/Create'
 import {Store} from './store'
-import {Show} from './pages/Show'
-import {Edit} from './pages/Edit'
+import {Note} from './pages/Note'
 
 
 const routes = {
     '/': () => <Dashboard/>,
     '/create': () => <Create/>,
-    '/edit/:id': ({id}: HookRouter.QueryParams) => <Edit id={id}/>,
-    '/note/:id': ({id}: HookRouter.QueryParams) => <Show id={id}/>,
+    '/note/:id': ({id}: HookRouter.QueryParams) => <Note id={id} readOnly/>,
+    '/note/edit/:id': ({id}: HookRouter.QueryParams) => <Note id={id}/>,
 }
 
 

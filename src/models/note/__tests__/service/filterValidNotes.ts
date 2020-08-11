@@ -9,9 +9,9 @@ describe('filterValidNotes', function () {
         {...createNote(), content: '1'},
         {...createNote(), content: []},
         {...createNote(), content: ''},
-        {...createNote(), content: [{checked: false, text: ''}]},
-        {...createNote(), content: [{checked: false, text: '1'}]},
-        {...createNote(), content: [{checked: false, text: '1'}, {checked: false, text: '2'}]},
+        {...createNote(), content: [{checked: false, text: '', index: 0}]},
+        {...createNote(), content: [{checked: false, text: '1', index: 0}]},
+        {...createNote(), content: [{checked: false, text: '1', index: 0}, {checked: false, text: '2', index: 1}]},
     ]
 
     it('should return valid notes', function () {

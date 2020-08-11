@@ -1,12 +1,12 @@
-import {convertContentToList} from '../../service'
 import {map, prop} from 'ramda'
+import {convertContentToList} from '../../service'
 
 
 describe('convertContentToList', function () {
 
     test.each([
         undefined,
-        ''
+        '',
     ])('should return empty array for empty input', function (empty) {
         const list = convertContentToList(empty)
         expect(list.length).toBe(0)
@@ -24,7 +24,7 @@ describe('convertContentToList', function () {
         expect(texts).toEqual(['1', '2', '3', '4'])
     })
 
-    it('should parse line content', function() {
+    it('should parse line content', function () {
         const content = 'one line'
         const list = convertContentToList(content)
         const texts = map(prop('text'), list)
@@ -50,10 +50,26 @@ describe('convertContentToList', function () {
             1
             2
             3
-        `
+        `,
     ])('should return non-checked list', function (content) {
         const list = convertContentToList(content)
         const checks: boolean[] = map(prop('checked'), list)
         expect(checks).not.toContain(true)
     })
+
+    test.each([
+        '',
+        '123',
+        `
+            1
+            2
+            3
+        `,
+    ])('should return list with indexes', function (content) {
+        const list = convertContentToList(content)
+        const valid = list.every(({index}, i) => index === i)
+        expect(valid).toBe(true)
+    })
+
+
 })

@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
     "@types/classnames": "^2.2.10",
     "@types/hookrouter": "^2.2.2",
     "@types/jest": "^26.0.7",
@@ -26,7 +23,7 @@
     "ramda": "^0.27.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hook-form": "^6.0.7",
+    "react-hook-form": "^6.3.2",
     "react-masonry-component": "^6.2.1",
     "react-scripts": "3.4.1",
     "react-stickynode": "^3.0.3",
@@ -58,6 +55,12 @@
     ]
   },
   "devDependencies": {
-    "identity-obj-proxy": "^3.0.0"
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/react-hooks": "^3.4.1",
+    "@types/testing-library__react-hooks": "^3.4.0",
+    "identity-obj-proxy": "^3.0.0",
+    "react-test-renderer": "^16.13.1"
   }
 }

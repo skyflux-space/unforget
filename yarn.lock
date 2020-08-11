@@ -1396,6 +1396,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.5.4":
+  version: 7.11.2
+  resolution: "@babel/runtime@npm:7.11.2"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 2f127ad60a0f0568faa0044e5b48329d8166c7fd3a0a3ce774070010a1c441ebf5570f526dd6bb26e214fb1a01bb987ab6a4c3f60a00f04d02448939f4c61e1e
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.10.4":
   version: 7.10.4
   resolution: "@babel/template@npm:7.10.4"
@@ -1909,6 +1918,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@testing-library/react-hooks@npm:^3.4.1":
+  version: 3.4.1
+  resolution: "@testing-library/react-hooks@npm:3.4.1"
+  dependencies:
+    "@babel/runtime": ^7.5.4
+    "@types/testing-library__react-hooks": ^3.3.0
+  peerDependencies:
+    react: ">=16.9.0"
+    react-test-renderer: ">=16.9.0"
+  checksum: e1fd838173f5b879cde8a5c91c78f8e6b0b5dc85e083d037b95e9da8ae553524645d3913630163ded11ac82ec357290bcb92fb0ce97d1fe5245c91ff8d32a05b
+  languageName: node
+  linkType: hard
+
 "@testing-library/react@npm:^9.3.2":
   version: 9.5.0
   resolution: "@testing-library/react@npm:9.5.0"
@@ -2150,6 +2172,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-test-renderer@npm:*":
+  version: 16.9.3
+  resolution: "@types/react-test-renderer@npm:16.9.3"
+  dependencies:
+    "@types/react": "*"
+  checksum: 43465f5866e2636170ce8baa519aaccc3fee65bb6a312ce7099a29f88b65d10b0b2db0062e81c9aa26f6cfe17ed879a6963ef84442e57496f588c995b5c713aa
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^16.9.43":
   version: 16.9.43
   resolution: "@types/react@npm:16.9.43"
@@ -2182,6 +2213,15 @@ __metadata:
   dependencies:
     pretty-format: ^24.3.0
   checksum: 8c52edd75c929bdbd607d55daad971a6a7a88566b8ac245bd0a2dbf71c54e276375adb0790bc31ced2c56da2f478e07f1259383afcb3958ab81c7acbae9d78a5
+  languageName: node
+  linkType: hard
+
+"@types/testing-library__react-hooks@npm:^3.3.0, @types/testing-library__react-hooks@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@types/testing-library__react-hooks@npm:3.4.0"
+  dependencies:
+    "@types/react-test-renderer": "*"
+  checksum: acae19c41b5053897ebb7b203158f6ec319a1befdc349f5961d7f105fdb5c322e3e9b6d713dd99aa8e954966cebfa5f9d9309cffd929e9a84aac21391b600cd9
   languageName: node
   linkType: hard
 
@@ -12159,16 +12199,16 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^6.0.7":
-  version: 6.0.7
-  resolution: "react-hook-form@npm:6.0.7"
+"react-hook-form@npm:^6.3.2":
+  version: 6.3.2
+  resolution: "react-hook-form@npm:6.3.2"
   peerDependencies:
     react: ^16.8.0
-  checksum: 8546983fae5c2c3a9a556e4261bf341e5ab1606f5b038a318f6c44b149d6cb34b8bb93d01b09b6f5c86c926e652c13b59f481b23cc48411ee973b7041aeed7d8
+  checksum: 7fc4a91b150cf3643b4f4345a4b4b524c47edec194850d5f4115e3a6b01fa2e4bd3b3d11e1ecfdab27cf5c0e6489a4590faea32ae07e07069ac42a8c8afd72a3
   languageName: node
   linkType: hard
 
-"react-is@npm:^16.12.0, react-is@npm:^16.8.1, react-is@npm:^16.8.4":
+"react-is@npm:^16.12.0, react-is@npm:^16.8.1, react-is@npm:^16.8.4, react-is@npm:^16.8.6":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: 11bcf1267a314a522615f626f3ce3727a3a24cdbf61c4d452add3550a7875326669631326cfb1ba3e92b6f72244c32ffecf93ad21c0cad8455d3e169d0e3f060
@@ -12287,6 +12327,20 @@ fsevents@^1.2.7:
   peerDependencies:
     react: ^16.3.0
   checksum: 5cd09b52831f927c767b124e24b4b12d84a253d1a0ab1091b2f61364e8290901b0ce6515ac90799d8d82efb852de59e38ff5a6f33df39e929c466987a31d436c
+  languageName: node
+  linkType: hard
+
+"react-test-renderer@npm:^16.13.1":
+  version: 16.13.1
+  resolution: "react-test-renderer@npm:16.13.1"
+  dependencies:
+    object-assign: ^4.1.1
+    prop-types: ^15.6.2
+    react-is: ^16.8.6
+    scheduler: ^0.19.1
+  peerDependencies:
+    react: ^16.13.1
+  checksum: e9c3c068d09a4252103eed270635d05897e23cbb86c6f0f74beced9345ed1b94a0fff44f16f97526e6f7a8337669156616e1e02eacb6d7b8f40295c92d91be12
   languageName: node
   linkType: hard
 
@@ -14637,6 +14691,7 @@ typescript@^3.9.7:
   dependencies:
     "@testing-library/jest-dom": ^4.2.4
     "@testing-library/react": ^9.3.2
+    "@testing-library/react-hooks": ^3.4.1
     "@testing-library/user-event": ^7.1.2
     "@types/classnames": ^2.2.10
     "@types/hookrouter": ^2.2.2
@@ -14649,6 +14704,7 @@ typescript@^3.9.7:
     "@types/react-stickynode": ^3.0.0
     "@types/react-tabs": ^2.3.2
     "@types/recoil": ^0.0.1
+    "@types/testing-library__react-hooks": ^3.4.0
     "@types/uuid": ^8.0.0
     classnames: ^2.2.6
     hookrouter: ^1.2.3
@@ -14659,11 +14715,12 @@ typescript@^3.9.7:
     ramda: ^0.27.0
     react: ^16.13.1
     react-dom: ^16.13.1
-    react-hook-form: ^6.0.7
+    react-hook-form: ^6.3.2
     react-masonry-component: ^6.2.1
     react-scripts: 3.4.1
     react-stickynode: ^3.0.3
     react-tabs: ^3.1.1
+    react-test-renderer: ^16.13.1
     react-use: ^15.3.2
     recoil: ^0.0.10
     typescript: ^3.9.7
