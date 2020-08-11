@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react'
 import c from 'classnames'
-import {ValidNote} from '../models/note/types'
+import {ValidNote} from '../models/note'
 import {useLongClick} from '../utils/useLongClick'
 import styles from './MiniCard.module.scss'
 
