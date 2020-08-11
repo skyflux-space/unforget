@@ -12159,12 +12159,12 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^6.3.1":
-  version: 6.3.1
-  resolution: "react-hook-form@npm:6.3.1"
+"react-hook-form@npm:^6.3.2":
+  version: 6.3.2
+  resolution: "react-hook-form@npm:6.3.2"
   peerDependencies:
     react: ^16.8.0
-  checksum: 0a0b09e7623557422623c31aca399c5ce3b19e9665c4e105d96c4ef7f373053c19852e52bc5073d38d83a37dbbc95693fc7fe8f00110776b26e3b5f72e394436
+  checksum: 7fc4a91b150cf3643b4f4345a4b4b524c47edec194850d5f4115e3a6b01fa2e4bd3b3d11e1ecfdab27cf5c0e6489a4590faea32ae07e07069ac42a8c8afd72a3
   languageName: node
   linkType: hard
 
@@ -14659,7 +14659,7 @@ typescript@^3.9.7:
     ramda: ^0.27.0
     react: ^16.13.1
     react-dom: ^16.13.1
-    react-hook-form: ^6.3.1
+    react-hook-form: ^6.3.2
     react-masonry-component: ^6.2.1
     react-scripts: 3.4.1
     react-stickynode: ^3.0.3
