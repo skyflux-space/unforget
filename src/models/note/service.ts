@@ -1,21 +1,15 @@
 import {
-    addIndex,
     allPass,
     always,
     any,
-    anyPass,
     append,
     applySpec,
     assoc,
     both,
     complement,
-    cond,
     converge,
     defaultTo,
-    dissoc,
     eqProps,
-    equals,
-    evolve,
     F,
     filter,
     find,
@@ -24,28 +18,20 @@ import {
     ifElse,
     includes,
     is,
-    isEmpty,
     isNil,
-    join,
     map,
     nAry,
-    nthArg,
     of,
     pipe,
     prop,
     propEq,
     propIs,
-    propOr,
     propSatisfies,
     reject,
-    split,
-    T,
-    trim,
     tryCatch,
     unary,
     useWith,
     when,
-    where,
 } from 'ramda'
 import {v4} from 'uuid'
 import {Curried} from '../../utils/Curried'
@@ -57,7 +43,7 @@ import {isListContent, isValidContent} from '../content'
 export const isIdentifiable: (value: any) => value is Identifiable = (
     both(
         is(Object),
-        where({id: complement(isNil)})
+        propSatisfies(complement(isNil), 'id'),
     )
 ) as (value: any) => value is Identifiable
 
@@ -97,7 +83,7 @@ export const replaceAll: MassMutator = (
         converge(ifElse, [
             unary(useWith(flip(any), [identity, eqProps('id')])),
             unary(useWith(flip(find), [identity, eqProps('id')])),
-            always(identity)
+            always(identity),
         ]),
         identity,
     ])
@@ -116,21 +102,13 @@ export const removeNote: SingleMutator = useWith(removeNotes, [of, identity])
 
 
 export const isListNote: (note: Note) => note is ListNote = (
-    pipe(
-        propOr([], 'content'),
-        getContentType,
-        both(complement(isNil), equals(ContentType.List))
-    )
+    propSatisfies(isListContent, 'content')
 ) as (note: Note) => note is ListNote
 
 
 export const serializeNotes: (notes?: Note[]) => string = (
     pipe(
         defaultTo([]),
-        map((when as <T, G extends T, H>(pred: (v: T) => v is G, fn: (v: G) => H) => (v: T) => T | H)(
-            isListNote,
-            evolve({content: map(dissoc('index'))})
-        )),
         JSON.stringify,
     )
 )
@@ -141,10 +119,6 @@ export const deserializeNotes: (str?: string) => Note[] = (
         tryCatch(JSON.parse, always([])),
         when(complement(is(Array)), always([])),
         filter(isIdentifiable),
-        map((when as <T, G extends T, H>(pred: (v: T) => v is G, fn: (v: G) => H) => (v: T) => T | H)(
-            isListNote,
-            evolve({content: addIndex(map)(flip(assoc('index'))) as (list: ContentList) => ContentList}),
-        )),
     )
 )
 
