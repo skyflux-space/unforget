@@ -19,7 +19,9 @@ export const Header: React.FC<HeaderProps> = ({onBackClick, backUrl, children}) 
                 <Icon icon="back"/>
             </Button>
         </A>
-        <div className={styles.right}>{children}</div>
+        <ul className={styles.right}>{Children.map(children, (e, i) => (
+            <li key={i} className={styles.item}>{e}</li>
+        ))}</ul>
     </header>
 )
 

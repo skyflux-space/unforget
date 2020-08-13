@@ -2,7 +2,8 @@ import React, {useEffect} from 'react'
 import {navigate} from 'hookrouter'
 import {useNote} from '../models/note'
 import {useNoteFormManager} from '../hooks/useNoteFormManager'
-import {Header, NoteForm} from '../ui'
+import {Button, Header, NoteForm} from '../ui'
+import {Icon} from '../ui/Icon'
 
 
 export type NoteProps = {
@@ -24,9 +25,15 @@ export const Note: React.FC<NoteProps> = ({id, readOnly = false}) => {
             {note && (
                 <>
                     <Header>
-                        {readOnly && <button onClick={() => navigate('/note/edit/' + id, true)}>Edit</button>}
-                        <button onClick={note.pinned ? unpin : pin}>{note.pinned ? 'Unpin' : 'Pin'}</button>
-                        <button onClick={remove}>Remove</button>
+                        {readOnly && <Button full withoutBorder onClick={() => navigate('/note/edit/' + id, true)}>
+                            <Icon icon="edit"/>
+                        </Button>}
+                        <Button full withoutBorder onClick={note.pinned ? unpin : pin}>
+                            <Icon icon={note.pinned ? 'unpin' : 'pin'} active={note.pinned}/>
+                        </Button>
+                        <Button full withoutBorder onClick={remove}>
+                            <Icon icon="remove"/>
+                        </Button>
                     </Header>
                     <NoteForm
                         readOnly={readOnly}
