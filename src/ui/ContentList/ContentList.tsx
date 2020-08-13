@@ -1,6 +1,6 @@
 import React, {FocusEventHandler, memo, useMemo} from 'react'
-import {ContentList as ContentListType, partitionByChecked} from '../models/content'
-import {ContentListItem} from '../ui'
+import {ContentList as ContentListType, partitionByChecked} from '../../models/content'
+import {ContentListItem} from '../index'
 import styles from './ContentList.module.scss'
 
 export type ContentListProps = {

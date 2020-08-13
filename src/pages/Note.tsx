@@ -2,8 +2,7 @@ import React, {useEffect} from 'react'
 import {navigate} from 'hookrouter'
 import {useNote} from '../models/note'
 import {useNoteFormManager} from '../hooks/useNoteFormManager'
-import {Button, Header, NoteForm} from '../ui'
-import {Icon} from '../ui/Icon'
+import {Button, Header, NoteForm, Icon} from '../ui'
 
 
 export type NoteProps = {

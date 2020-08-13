@@ -1,8 +1,7 @@
 import React, {useCallback, useMemo, useState} from 'react'
 import {A, navigate} from 'hookrouter'
 import {converge, ifElse, includes, map, partition, pipe, propOr, unary} from 'ramda'
-import {Note, ValidNote} from '../models/note'
-import {addNote, removeNote, useNotes} from '../models/note'
+import {addNote, Note, removeNote, useNotes, ValidNote} from '../models/note'
 import {BottomBar, Button, List, MiniCard} from '../ui'
 
 

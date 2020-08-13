@@ -2,9 +2,8 @@ import React, {Children, MouseEventHandler} from 'react'
 import PropTypes from 'prop-types'
 import {A} from 'hookrouter'
 import c from 'classnames'
-import {Button} from './Button'
+import {Button, Icon} from '..'
 import styles from './Header.module.scss'
-import {Icon} from './Icon'
 
 
 export type HeaderProps = {

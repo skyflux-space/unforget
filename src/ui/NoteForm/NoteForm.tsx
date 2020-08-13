@@ -1,13 +1,11 @@
 import React, {FocusEventHandler, FormEventHandler, useCallback} from 'react'
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs'
 import c from 'classnames'
-import {Note} from '../models/note'
-import {ContentList as ContentListType, ContentType, getContentType} from '../models/content'
-import {Input} from './Input'
-import {TextArea} from './TextArea'
-import {ContentList} from './ContentList'
-import styles from './NoteForm.module.scss'
 import {always, cond, equals, identity, ifElse, isNil, pipe} from 'ramda'
+import {Note} from '../../models/note'
+import {ContentList as ContentListType, ContentType, getContentType} from '../../models/content'
+import {ContentList, Input, TextArea} from '..'
+import styles from './NoteForm.module.scss'
 
 
 export type CreateFormProps = {

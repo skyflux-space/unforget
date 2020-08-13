@@ -1,7 +1,6 @@
 import React, {ChangeEventHandler, FocusEventHandler, forwardRef, memo, Ref, RefAttributes} from 'react'
-import {TextArea} from './TextArea'
+import {Icon, TextArea} from '..'
 import styles from './ContentListItem.module.scss'
-import {Icon} from './Icon'
 
 
 export type ContentListItemProps = {
