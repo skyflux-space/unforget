@@ -1,8 +1,8 @@
 import React, {useCallback, useMemo, useState} from 'react'
-import {A, navigate} from 'hookrouter'
+import {navigate} from 'hookrouter'
 import {converge, ifElse, includes, map, partition, pipe, propOr, unary} from 'ramda'
 import {addNote, Note, removeNote, useNotes, ValidNote} from '../models/note'
-import {BottomBar, Button, List, MiniCard} from '../ui'
+import {DashboardBottomBar, List, MiniCard} from '../ui'
 
 
 const goToNote = (id: string) => () => navigate('/note/' + id)
@@ -58,24 +58,13 @@ export const Dashboard: React.FC = () => {
                     </List>
                 ))
             }
-            <BottomBar
-                visible={!!selectedNotes.length}
-                button={
-                    <A href="/create">
-                        <Button round>+</Button>
-                    </A>
-                }
-                left={
-                    <>
-                        <button onClick={clearSelection}>c</button>
-                        <button onClick={removeSelected}>x</button>
-                    </>
-                }
-                right={
-                    <button onClick={pinnedSelected.length > 0 ? unpinSelected : pinSelected}>
-                        {pinnedSelected.length > 0 ? 'u' : 'p'}
-                    </button>
-                }
+            <DashboardBottomBar
+                onUnpinClicked={unpinSelected}
+                onPinClicked={pinSelected}
+                onRemoveClicked={removeSelected}
+                onClearClicked={clearSelection}
+                pinned={pinnedSelected.length > 0}
+                visible={selectedNotes.length > 0}
             />
         </main>
     )
