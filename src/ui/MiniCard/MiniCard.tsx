@@ -3,6 +3,7 @@ import c from 'classnames'
 import {ValidNote} from '../../models/note'
 import {useLongClick} from '../../utils/useLongClick'
 import styles from './MiniCard.module.scss'
+import {Icon} from '../Icon'
 
 
 export type MiniCardProps = {
@@ -44,7 +45,9 @@ export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content}, selec
                     )
             }
             <div role="button" onClick={onSelectClick} className={c(styles.dot, selected && styles.selected)}/>
-            <div role="button" className={c(styles.pin, pinned && styles.active)}/>
+            <div role="button" className={c(styles.pin, pinned && styles.active)}>
+                <Icon icon="pin"/>
+            </div>
         </button>
     )
 }
