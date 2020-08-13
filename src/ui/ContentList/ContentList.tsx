@@ -33,13 +33,15 @@ export const ContentList: React.FC<ContentListProps> = memo((
                         />
                     </li>
                 ))}
-                <li className={styles.margin}>
-                    <ContentListItem
-                        disabled
-                        onTextChange={({target: {value}}) => onStaticInputChange?.(value)}
-                        checked={false}
-                    />
-                </li>
+                {!readOnly && (
+                    <li className={styles.margin}>
+                        <ContentListItem
+                            disabled
+                            onTextChange={({target: {value}}) => onStaticInputChange?.(value)}
+                            checked={false}
+                        />
+                    </li>
+                )}
                 {checked.map((e, i) => (
                     <li className={styles.margin} key={e.index.toString()}>
                         <ContentListItem

@@ -45,7 +45,7 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
                       readOnly={readOnly}
                       {...(disabled ? {value: ''} : {})}
             />
-            {!disabled && (
+            {!disabled && !readOnly && (
                 <button onClick={onRemoveClicked} className={styles.remove}>
                     <Icon icon="close"/>
                 </button>
