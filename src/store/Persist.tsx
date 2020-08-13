@@ -1,19 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {useNotes} from '../models/note'
 
 export const Persist: React.FC = () => {
-    const [loaded, setLoaded] = useState(false)
-    const {restoreNotes, saveNotes} = useNotes()
+    const {saveNotes} = useNotes()
 
     useEffect(() => {
-        restoreNotes()
-        setLoaded(true)
-    }, [restoreNotes])
-
-    useEffect(() => {
-        if (loaded)
-            saveNotes()
-    }, [saveNotes, loaded])
+        saveNotes()
+    }, [saveNotes])
 
     return <></>
 }

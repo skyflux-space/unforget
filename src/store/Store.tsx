@@ -1,13 +1,16 @@
 import React from 'react'
-import {RecoilRoot} from 'recoil'
+import {RecoilRoot, RecoilRootProps} from 'recoil'
+import {notes, restoreNotes} from '../models/note'
 import {Persist} from './Persist'
 
 type StoreProps = {
     children: React.ReactNode
 }
 
+const setInitialNotes: RecoilRootProps['initializeState'] = ({set}) => set(notes, restoreNotes())
+
 export const Store: React.FC<StoreProps> = ({children}) => (
-    <RecoilRoot>
+    <RecoilRoot initializeState={setInitialNotes}>
         <Persist/>
         {children}
     </RecoilRoot>
