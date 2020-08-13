@@ -1,6 +1,7 @@
 import React, {ChangeEventHandler, FocusEventHandler, forwardRef, memo, Ref, RefAttributes} from 'react'
 import {TextArea} from './TextArea'
 import styles from './ContentListItem.module.scss'
+import {Icon} from './Icon'
 
 
 export type ContentListItemProps = {
@@ -45,7 +46,11 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
                       readOnly={readOnly}
                       {...(disabled ? {value: ''} : {})}
             />
-            <button onClick={onRemoveClicked}>X</button>
+            {!disabled && (
+                <button onClick={onRemoveClicked} className={styles.remove}>
+                    <Icon icon="close"/>
+                </button>
+            )}
         </div>
     )
 ))
