@@ -1,10 +1,10 @@
-import React, {FocusEventHandler, FormEventHandler, useCallback} from 'react'
+import React, {FocusEventHandler, FormEventHandler, useCallback, useMemo} from 'react'
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs'
 import c from 'classnames'
 import {always, cond, equals, identity, ifElse, isNil, pipe} from 'ramda'
 import {Note} from '../../models/note'
 import {ContentList as ContentListType, ContentType, getContentType} from '../../models/content'
-import {ContentList, Input, TextArea} from '..'
+import {ContentList, Icon, Input, TextArea} from '..'
 import styles from './NoteForm.module.scss'
 
 
@@ -43,6 +43,8 @@ export const NoteForm: React.FC<CreateFormProps> = (
         ),
     ), [onContentTypeChanged])
 
+    const contentType = useMemo(() => getContentType(note.content), [note.content])
+
     return (
         <form onSubmit={onSubmit} className={c(styles.flex, styles.column, styles.grow, styles.hidden)}>
             <Input name="title" placeholder="Title..." ref={createRef} readOnly={readOnly}/>
@@ -50,7 +52,7 @@ export const NoteForm: React.FC<CreateFormProps> = (
                 className={c(styles.flex, styles.column, styles.grow)}
                 selectedTabPanelClassName={c(styles.grow, styles.scroll, styles.padding)}
                 onSelect={onTabSelect}
-                selectedIndex={getContentType(note.content) || 0}
+                selectedIndex={contentType || 0}
             >
                 <TabPanel>
                     <TextArea
@@ -76,9 +78,13 @@ export const NoteForm: React.FC<CreateFormProps> = (
                     !readOnly
                         ? (
                             <div className={styles.flex}>
-                                <TabList className={c(styles.flex, styles.grow, styles.end)}>
-                                    <Tab>Текст</Tab>
-                                    <Tab>Список</Tab>
+                                <TabList className={c(styles.flex, styles.grow, styles.end, styles.padding, styles.footer)}>
+                                    <Tab className={styles.switch}>
+                                        <Icon icon="text" active={contentType === ContentType.String}/>
+                                    </Tab>
+                                    <Tab className={styles.switch}>
+                                        <Icon icon="list" active={contentType === ContentType.List}/>
+                                    </Tab>
                                 </TabList>
                             </div>
                         ) : null
@@ -87,4 +93,3 @@ export const NoteForm: React.FC<CreateFormProps> = (
         </form>
     )
 }
-
