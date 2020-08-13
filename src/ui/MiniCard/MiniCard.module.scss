@@ -95,15 +95,14 @@
 
 .pin {
     position: absolute;
-    right: 7px;
-    top: 7px;
-    width: 10px;
-    height: 10px;
+    right: 0;
+    top: 2px;
+    width: 1.5rem;
+    height: 1.5rem;
 
     display: none;
 }
 
 .pin.active {
     display: block;
-    background: black;
 }
