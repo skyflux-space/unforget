@@ -13,7 +13,6 @@ export type ContentListItemProps = {
     onBlur?: FocusEventHandler<HTMLTextAreaElement>
     onTextChange?: ChangeEventHandler<HTMLTextAreaElement>
     onRemoveClicked?: (...args: any[]) => any
-    onChecked?: (value: boolean) => void
 }
 
 type OptionalRef<T extends HTMLElement> = Ref<T> | undefined
@@ -21,7 +20,7 @@ type InputRef = OptionalRef<HTMLInputElement>
 type TextAreaRef = OptionalRef<HTMLTextAreaElement>
 
 export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTMLElement>> = memo(forwardRef<HTMLElement, ContentListItemProps>((
-    {checked, index, defaultText, onBlur, name, onTextChange, disabled, readOnly, onRemoveClicked, onChecked}, ref
+    {checked, index, defaultText, onBlur, name, onTextChange, disabled, readOnly, onRemoveClicked}, ref
     ) => (
         <div className={styles.flex}>
             {index !== undefined && <input hidden readOnly name={`${name}.index`} value={index} ref={ref as InputRef}/>}
@@ -31,7 +30,6 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
                 ref={ref as InputRef}
                 name={`${name}.checked`}
                 disabled={disabled}
-                onChange={({target}) => onChecked?.(target.checked)}
             />
             <TextArea name={`${name}.text`}
                       size="small"
