@@ -47,6 +47,8 @@ export const NoteForm: React.FC<CreateFormProps> = (
 
     return (
         <form onSubmit={onSubmit} className={c(styles.flex, styles.column, styles.grow, styles.hidden)}>
+            <input name="id" readOnly hidden value={note.id} ref={createRef}/>
+            <input name="pinned" type="checkbox" readOnly hidden checked={note.pinned} ref={createRef}/>
             <Input name="title" placeholder="Title..." ref={createRef} readOnly={readOnly}/>
             <Tabs
                 className={c(styles.flex, styles.column, styles.grow)}
