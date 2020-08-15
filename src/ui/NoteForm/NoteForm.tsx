@@ -15,7 +15,7 @@ export type CreateFormProps = {
     onContentTypeChanged?: (type: ContentType) => void
     onListStaticInputChange?: (text: string) => void
     onListFieldBlur?: FocusEventHandler<HTMLTextAreaElement>
-    onListFieldRemoved?: (i: number) => void
+    onListFieldRemoved?: (i: number | string) => void
     onSubmit?: FormEventHandler<HTMLFormElement>
 }
 
