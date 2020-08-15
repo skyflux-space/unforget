@@ -1,4 +1,4 @@
-import React, {forwardRef} from 'react'
+import React, {forwardRef, memo} from 'react'
 import PropTypes from 'prop-types'
 import c from 'classnames'
 import styles from './TextArea.module.scss'
@@ -10,7 +10,7 @@ export type TextAreaProps = {
     withoutDefault?: boolean
 } & JSX.IntrinsicElements['textarea']
 
-export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({className, size, fullSize, withoutDefault, ...props}, ref) => (
+export const TextArea = memo(forwardRef<HTMLTextAreaElement, TextAreaProps>(({className, size, fullSize, withoutDefault, ...props}, ref) => (
     <textarea className={c(
         styles.textarea,
         styles[size!],
@@ -18,7 +18,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({classNa
         !withoutDefault && styles.default,
         className,
     )} {...props} ref={ref}/>
-))
+))) as React.FC<TextAreaProps>
 
 TextArea.defaultProps = {
     size: 'big',

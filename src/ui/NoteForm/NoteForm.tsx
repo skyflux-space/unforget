@@ -1,4 +1,4 @@
-import React, {FocusEventHandler, FormEventHandler, useCallback, useMemo} from 'react'
+import React, {FocusEventHandler, FormEventHandler, memo, useCallback, useMemo} from 'react'
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs'
 import c from 'classnames'
 import {always, cond, equals, identity, ifElse, isNil, pipe} from 'ramda'
@@ -19,7 +19,7 @@ export type CreateFormProps = {
     onSubmit?: FormEventHandler<HTMLFormElement>
 }
 
-export const NoteForm: React.FC<CreateFormProps> = (
+export const NoteForm: React.FC<CreateFormProps> = memo((
     {
         note,
         readOnly = false,
@@ -94,4 +94,4 @@ export const NoteForm: React.FC<CreateFormProps> = (
             </Tabs>
         </form>
     )
-}
+})
