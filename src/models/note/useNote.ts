@@ -1,5 +1,6 @@
 import {useCallback, useMemo} from 'react'
 import {equals} from 'ramda'
+import {useLatest} from 'react-use'
 import {Note} from './types'
 import {useNotes} from './useNotes'
 import * as Service from './service'
@@ -7,7 +8,7 @@ import * as Service from './service'
 
 export type NoteHookProps = {
     note?: Note
-    update: (newNote: ((note: Note) => Note) | Partial<Note>) => void
+    update: (newNote: ((note: Note) => Partial<Note>) | Partial<Note>) => void
     remove: () => void
     pin: () => void
     unpin: () => void
@@ -17,8 +18,10 @@ export const useNote = (id?: string): NoteHookProps => {
     const {replaceNote, getNote, removeNote, pinNote, unpinNote} = useNotes()
 
     const note = useMemo(() => id !== undefined ? getNote(id) : undefined, [getNote, id])
+    const latestNote = useLatest(note)
 
     const update: NoteHookProps['update'] = useCallback(newNote => {
+        const {current: note} = latestNote
         if (!note)
             return
 
@@ -31,16 +34,16 @@ export const useNote = (id?: string): NoteHookProps => {
             if (!equals(note, fullNewNote))
                 replaceNote(fullNewNote)
         }
-    }, [replaceNote, note])
+    }, [replaceNote, latestNote])
 
     const remove = useCallback(() => {
-        if (note)
-            removeNote(note)
-    }, [note, removeNote])
+        if (latestNote.current)
+            removeNote(latestNote.current)
+    }, [latestNote, removeNote])
 
-    const pin = useCallback(() => note && pinNote(note), [note, pinNote])
+    const pin = useCallback(() => latestNote.current && pinNote(latestNote.current), [latestNote, pinNote])
 
-    const unpin = useCallback(() => note && unpinNote(note), [note, unpinNote])
+    const unpin = useCallback(() => latestNote.current && unpinNote(latestNote.current), [latestNote, unpinNote])
 
     return {
         note,

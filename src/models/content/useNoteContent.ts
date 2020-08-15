@@ -1,5 +1,20 @@
 import {useCallback} from 'react'
-import {binary, equals, identity, ifElse, nthArg, pipe, prop, reject, unary, useWith, when} from 'ramda'
+import {
+    always,
+    binary,
+    call, converge,
+    equals,
+    identity,
+    ifElse,
+    is,
+    nthArg, objOf,
+    pipe,
+    prop, propOr,
+    reject,
+    unary,
+    useWith,
+    when,
+} from 'ramda'
 import {isIdentifiable, Note, useNote} from '../note'
 import {addItem, convertTo, filterEmptyItems, isListContent} from './service'
 import {Content, ContentList, ContentType} from './types'
@@ -20,12 +35,15 @@ export const useNoteContent = (noteOrId?: string | Note): UseNoteContentProps =>
 
     const updateContent: UseNoteContentProps['updateContent'] = useCallback(
         pipe(
-            when(is(Function), applyTo(defaultTo('', content))),
-            when(isListContent, sortListByChecked),
-            objOf('content'),
+            ifElse(
+                is(Function),
+                useWith(call, [identity, propOr('', 'content')]),
+                identity,
+            ),
+            converge(pipe, [identity, always(objOf('content'))]),
             update,
         ),
-        [update, content],
+        [update],
     )
 
     const convert = useCallback(pipe(
