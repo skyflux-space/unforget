@@ -1,23 +1,22 @@
-import * as React from 'react'
-import {PropsWithChildren} from 'react'
+import React, {PropsWithChildren} from 'react'
 import {RecoilRoot, RecoilRootProps} from 'recoil'
 import {act, renderHook} from '@testing-library/react-hooks'
+import {map, pipe, prop, propEq, reject} from 'ramda'
+import {v4} from 'uuid'
 import {useNoteContent} from '../useNoteContent'
 import {createNote, ListNote, Note, notes as notesAtom} from '../../note'
 import {Content, ContentList, ContentType} from '../types'
-import {v4} from 'uuid'
 import {convertContentToList, convertContentToString, getContentType} from '../service'
-import {map, pipe, prop, remove} from 'ramda'
 
 const noteWithoutContent = {...createNote(), content: undefined, id: 'noteWithoutContent'}
 const noteWithTextContent = {...createNote(), content: v4(), id: 'noteWithTextContent'}
 const noteWithListContent: ListNote = {
     ...createNote(), id: 'noteWithListContent', pinned: false, content: [
         {index: 0, checked: false, text: '0'},
-        {index: 1, checked: true, text: '1'},
-        {index: 2, checked: true, text: '2'},
-        {index: 3, checked: true, text: '3'},
         {index: 4, checked: true, text: '4'},
+        {index: 2, checked: true, text: '2'},
+        {index: 1, checked: true, text: '1'},
+        {index: 3, checked: true, text: '3'},
     ],
 }
 const noteWithEmptyItems = {
@@ -138,7 +137,7 @@ describe('useNoteContent.removeListItem', function () {
     it('should remove list item by index', function () {
         const {result} = renderHook(() => useNoteContent(noteWithListContent), {wrapper})
         act(() => result.current.removeListItem(3))
-        expect(result.current.content).toEqual(remove(3, 1, noteWithListContent.content))
+        expect(result.current.content).toEqual(reject(propEq('index', 3), noteWithListContent.content))
     })
 
     it('should do anything if content is not list', function () {

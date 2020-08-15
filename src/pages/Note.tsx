@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import {navigate} from 'hookrouter'
 import {useNote} from '../models/note'
 import {useNoteFormManager} from '../hooks/useNoteFormManager'
@@ -19,6 +19,8 @@ export const Note: React.FC<NoteProps> = ({id, readOnly = false}) => {
             navigate('/', true)
     }, [note])
 
+    const submit = useCallback(handleSubmit(console.log), [handleSubmit])
+
     return (
         <div style={{position: 'fixed', height: '100%', width: '100%', display: 'flex', flexDirection: 'column'}}>
             {note && (
@@ -37,7 +39,7 @@ export const Note: React.FC<NoteProps> = ({id, readOnly = false}) => {
                     <NoteForm
                         readOnly={readOnly}
                         note={note}
-                        onSubmit={handleSubmit(console.log)}
+                        onSubmit={submit}
                         createRef={register}
                         onListFieldBlur={filterEmptyListItems}
                         onListStaticInputChange={addItemToList}

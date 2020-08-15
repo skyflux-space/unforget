@@ -1,22 +1,22 @@
 import {useCallback} from 'react'
 import {
-    apply,
-    applyTo,
+    always,
     binary,
-    defaultTo,
-    flip,
+    call, converge,
+    equals,
+    identity,
     ifElse,
     is,
-    nthArg,
-    objOf,
-    pair,
+    nthArg, objOf,
     pipe,
-    remove,
+    prop, propOr,
+    reject,
     unary,
+    useWith,
     when,
 } from 'ramda'
 import {isIdentifiable, Note, useNote} from '../note'
-import {addItem, convertTo, filterEmptyItems, isListContent, sortListByChecked} from './service'
+import {addItem, convertTo, filterEmptyItems, isListContent} from './service'
 import {Content, ContentList, ContentType} from './types'
 
 
@@ -25,7 +25,7 @@ export type UseNoteContentProps = {
     updateContent: (content: ((content: Content) => Content) | Content) => void
     convert: (type: ContentType) => void
     filterEmptyListItems: () => void
-    removeListItem: (i: number) => void
+    removeListItem: (i: number | string) => void
     addItemToList: (text: string) => void
 }
 
@@ -35,12 +35,15 @@ export const useNoteContent = (noteOrId?: string | Note): UseNoteContentProps =>
 
     const updateContent: UseNoteContentProps['updateContent'] = useCallback(
         pipe(
-            when(is(Function), applyTo(defaultTo('', content))),
-            when(isListContent, sortListByChecked),
-            objOf('content'),
+            ifElse(
+                is(Function),
+                useWith(call, [identity, propOr('', 'content')]),
+                identity,
+            ),
+            converge(pipe, [identity, always(objOf('content'))]),
             update,
         ),
-        [update, content],
+        [update],
     )
 
     const convert = useCallback(pipe(
@@ -50,7 +53,14 @@ export const useNoteContent = (noteOrId?: string | Note): UseNoteContentProps =>
 
     const filterEmptyListItems = useCallback(() => updateContent(when(isListContent, filterEmptyItems as any)), [updateContent])
 
-    const removeListItem = useCallback(pipe(flip(remove)(1) as any, pair(isListContent), apply(when as any), updateContent), [updateContent])
+    const removeListItem = useCallback(pipe(
+        ifElse(
+            pipe(nthArg(1), isListContent),
+            useWith(reject, [pipe(Number, useWith(equals, [identity, pipe(prop('index'), Number)])), identity]),
+            nthArg(1),
+        ),
+        updateContent,
+    ), [updateContent])
 
     const addItemToList = useCallback(unary(pipe(
         ifElse(
