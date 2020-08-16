@@ -16,7 +16,7 @@ import {
     when,
 } from 'ramda'
 import {isIdentifiable, Note, useNote} from '../note'
-import {addItem, convertTo, filterEmptyItems, isListContent} from './service'
+import {addItem, convertTo, filterEmptyItems, isListContent, sortListByChecked} from './service'
 import {Content, ContentList, ContentType} from './types'
 
 
@@ -40,7 +40,7 @@ export const useNoteContent = (noteOrId?: string | Note): UseNoteContentProps =>
                 useWith(call, [identity, propOr('', 'content')]),
                 identity,
             ),
-            converge(pipe, [identity, always(objOf('content'))]),
+            converge(pipe, [identity, always(when(isListContent, sortListByChecked)), always(objOf('content'))]),
             update,
         ),
         [update],

@@ -6,18 +6,18 @@ import {v4} from 'uuid'
 import {useNoteContent} from '../useNoteContent'
 import {createNote, ListNote, Note, notes as notesAtom} from '../../note'
 import {Content, ContentList, ContentType} from '../types'
-import {convertContentToList, convertContentToString, getContentType} from '../service'
+import {convertContentToList, convertContentToString, getContentType, sortListByChecked} from '../service'
 
 const noteWithoutContent = {...createNote(), content: undefined, id: 'noteWithoutContent'}
 const noteWithTextContent = {...createNote(), content: v4(), id: 'noteWithTextContent'}
 const noteWithListContent: ListNote = {
-    ...createNote(), id: 'noteWithListContent', pinned: false, content: [
+    ...createNote(), id: 'noteWithListContent', pinned: false, content: sortListByChecked([
         {index: 0, checked: false, text: '0'},
         {index: 4, checked: true, text: '4'},
         {index: 2, checked: true, text: '2'},
         {index: 1, checked: true, text: '1'},
         {index: 3, checked: true, text: '3'},
-    ],
+    ]),
 }
 const noteWithEmptyItems = {
     ...createNote(), content: [
@@ -87,6 +87,20 @@ describe('useNoteContent.updateContent', function () {
         expect(called).toBe('')
     })
 
+    it('should sort list content', function () {
+        const content: Content = [
+            {checked: true, index: 0, text: '0'},
+            {checked: true, index: 1, text: '1'},
+            {checked: false, index: 2, text: '2'},
+            {checked: true, index: 3, text: '3'},
+            {checked: false, index: 4, text: '4'},
+            {checked: false, index: 5, text: '5'},
+        ]
+        const {result} = renderHook(() => useNoteContent(noteWithListContent), {wrapper})
+        act(() => result.current.updateContent(content))
+        expect(result.current.content).toEqual(sortListByChecked(content))
+    })
+
 })
 
 describe('useNoteContent.convert', function () {
@@ -111,7 +125,7 @@ describe('useNoteContent.convert', function () {
     ])('should not convert to the same type', function (note: Note) {
         const {result} = renderHook(() => useNoteContent(note), {wrapper})
         act(() => result.current.convert(getContentType(note.content)!))
-        expect(result.current.content).toBe(note.content)
+        expect(result.current.content).toEqual(note.content)
     })
 
 })
