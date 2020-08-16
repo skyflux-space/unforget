@@ -11,8 +11,8 @@ export type NoteProps = {
 }
 
 export const Note: React.FC<NoteProps> = ({id, readOnly = false}) => {
-    const {note, remove, pin, unpin} = useNote(id)
-    const {handleSubmit, register, filterEmptyListItems, addItemToList, removeListItem, convert} = useNoteFormManager(id)
+    const {remove, pin, unpin} = useNote(id)
+    const {note, handleSubmit, register, filterEmptyListItems, addItemToList, removeListItem, convert} = useNoteFormManager(id)
 
     useEffect(() => {
         if (!note)
