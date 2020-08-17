@@ -1,4 +1,4 @@
-import React, {FocusEventHandler, memo, useCallback, useEffect, useMemo} from 'react'
+import React, {FocusEventHandler, memo, useCallback, useMemo} from 'react'
 import {memoizeWith} from 'ramda'
 import {ContentList as ContentListType, partitionByChecked} from '../../models/content'
 import {ContentListItem} from '../index'
@@ -24,8 +24,6 @@ export const ContentList: React.FC<ContentListProps> = memo((
             ...acc,
             [e.index]: createOnRemovedCallback(e.index),
         }), {}), [fields, createOnRemovedCallback])
-
-        useEffect(() => console.log('a'), [onFieldRemoved])
 
         return (
             <ul>
