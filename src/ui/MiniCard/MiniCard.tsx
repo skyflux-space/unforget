@@ -1,8 +1,8 @@
 import React, {useCallback} from 'react'
-import {always} from 'ramda'
+import {always, length, prop, reject} from 'ramda'
 import c from 'classnames'
 import {ValidNote} from '../../models/note'
-import {isListContent, isTextContent} from '../../models/content'
+import {ContentList, isListContent, isTextContent} from '../../models/content'
 import {useLongClick} from '../../utils/useLongClick'
 import {Icon} from '../Icon'
 import styles from './MiniCard.module.scss'
@@ -26,8 +26,11 @@ export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content, pinned
         onSelect()
     }, [onSelect])
 
-    const unchecked = isListContent(content) && content.filter(e => !e.checked).length
-    const checked = isListContent(content) && content.length - (unchecked as number)
+    const isList = isListContent(content)
+    const isOverflowed = isList && content.length > MAX
+
+    const unchecked = isList && length(reject(prop('checked'), content as ContentList))
+    const checked = isList && content.length - (unchecked as number)
 
     return (
         <button
@@ -37,14 +40,14 @@ export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content, pinned
             onTouchEnd={onTouchEnd}
         >
             <div
-                className={c(styles.content, isListContent(content) && content.length > MAX && styles.overflowed, isTextContent(content) && styles.text)}>
+                className={c(styles.content, isOverflowed && styles.overflowed, isTextContent(content) && styles.text)}>
                 {title && <h1 className={styles.title}>{title}</h1>}
                 {
                     typeof content === 'string'
                         ? <span className={c(styles.small, styles.break)}>{content}</span>
                         : (
                             <ul>
-                                {content.slice(0, content.length > MAX ? 8 : 9).map((e, i) => (
+                                {content.slice(0, isOverflowed ? 8 : 9).map((e, i) => (
                                     <li className={c(styles.flex, styles.item, styles.small)} key={i}>
                                         <span className={c(styles.ellipsis, e.checked && styles.checked)}>{e.text}</span>
                                     </li>
@@ -57,7 +60,7 @@ export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content, pinned
                     <Icon icon="pin"/>
                 </div>
             </div>
-            {isListContent(content) && content.length > MAX && (
+            {isOverflowed && (
                 <div className={styles.info}>
                     {(unchecked > MAX - 1) && <span>{unchecked}</span>}
                     {checked > 0 && <span className={styles.checked}>{checked}</span>}
