@@ -50,6 +50,7 @@ export const NoteForm: React.FC<CreateFormProps> = memo((
             <input name="id" readOnly hidden value={note.id} ref={createRef}/>
             <input name="pinned" type="checkbox" readOnly hidden checked={note.pinned} ref={createRef}/>
             <Input name="title" placeholder="Title..." ref={createRef} readOnly={readOnly}/>
+            <div className={styles.divider}/>
             <Tabs
                 className={c(styles.flex, styles.column, styles.grow)}
                 selectedTabPanelClassName={c(styles.grow, styles.scroll, styles.padding)}
