@@ -1,6 +1,8 @@
-import React, {forwardRef, memo} from 'react'
+import React, {forwardRef, memo, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import c from 'classnames'
+import TextareaAutosize from 'react-textarea-autosize'
+import {TextareaAutosizeProps} from 'react-textarea-autosize/dist/declarations/src'
 import styles from './TextArea.module.scss'
 
 
@@ -8,17 +10,26 @@ export type TextAreaProps = {
     size?: 'big' | 'small'
     fullSize?: boolean
     withoutDefault?: boolean
-} & JSX.IntrinsicElements['textarea']
+    autoResize?: boolean
+} & JSX.IntrinsicElements['textarea'] & TextareaAutosizeProps
 
-export const TextArea = memo(forwardRef<HTMLTextAreaElement, TextAreaProps>(({className, size, fullSize, withoutDefault, ...props}, ref) => (
-    <textarea className={c(
-        styles.textarea,
-        styles[size!],
-        fullSize && styles.full,
-        !withoutDefault && styles.default,
-        className,
-    )} {...props} ref={ref}/>
-))) as React.FC<TextAreaProps>
+export const TextArea = memo(forwardRef<HTMLTextAreaElement, TextAreaProps>(({className, size, fullSize, withoutDefault, autoResize, ...props}, ref) => {
+    const Component = useMemo(() => autoResize ? TextareaAutosize : 'textarea', [autoResize])
+
+    return (
+        <Component
+            className={c(
+                styles.textarea,
+                styles[size!],
+                fullSize && styles.full,
+                !withoutDefault && styles.default,
+                className,
+            )}
+            {...props}
+            ref={ref}
+        />
+    )
+})) as React.FC<TextAreaProps>
 
 TextArea.defaultProps = {
     size: 'big',
