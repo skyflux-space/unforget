@@ -1,4 +1,5 @@
 import React, {useCallback} from 'react'
+import {always} from 'ramda'
 import c from 'classnames'
 import {ValidNote} from '../../models/note'
 import {useLongClick} from '../../utils/useLongClick'
@@ -11,10 +12,9 @@ export type MiniCardProps = {
     selected: boolean
     onSelect?: () => void
     onClick?: () => void
-    pinned?: boolean
 }
 
-export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content}, selected, onSelect = () => {}, onClick, pinned}) => {
+export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content, pinned}, selected, onSelect = always(undefined), onClick}) => {
     const {onTouchEnd, onTouchStart} = useLongClick(onSelect)
     const onSelectClick = useCallback((event: React.MouseEvent) => {
         event.stopPropagation()

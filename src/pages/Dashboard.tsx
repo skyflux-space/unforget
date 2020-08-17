@@ -52,7 +52,6 @@ export const Dashboard: React.FC = () => {
                                 onSelect={() => toggleSelect(note)}
                                 onClick={selectedNotes.length ? () => toggleSelect(note) : goToNote(note.id)}
                                 key={note.id}
-                                pinned={note.pinned}
                             />
                         ))}
                     </List>
