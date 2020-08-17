@@ -2,7 +2,7 @@ import React, {useCallback} from 'react'
 import {always} from 'ramda'
 import c from 'classnames'
 import {ValidNote} from '../../models/note'
-import {isListContent} from '../../models/content'
+import {isListContent, isTextContent} from '../../models/content'
 import {useLongClick} from '../../utils/useLongClick'
 import {Icon} from '../Icon'
 import styles from './MiniCard.module.scss'
@@ -36,7 +36,8 @@ export const MiniCard: React.FC<MiniCardProps> = ({note: {title, content, pinned
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
         >
-            <div className={c(styles.content, isListContent(content) && content.length > MAX && styles.overflowed)}>
+            <div
+                className={c(styles.content, isListContent(content) && content.length > MAX && styles.overflowed, isTextContent(content) && styles.text)}>
                 {title && <h1 className={styles.title}>{title}</h1>}
                 {
                     typeof content === 'string'
