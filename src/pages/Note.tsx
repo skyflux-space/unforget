@@ -22,7 +22,7 @@ export const Note: React.FC<NoteProps> = ({id, readOnly = false}) => {
     const submit = useCallback(handleSubmit(console.log), [handleSubmit])
 
     return (
-        <div style={{position: 'fixed', height: '100%', width: '100%', display: 'flex', flexDirection: 'column'}}>
+        <div style={{position: 'fixed', height: '100%', width: '100%', display: 'flex', flexDirection: 'column', background: 'blanchedalmond'}}>
             {note && (
                 <>
                     <Header>

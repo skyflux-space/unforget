@@ -41,7 +41,7 @@ export const Dashboard: React.FC = () => {
     }
 
     return (
-        <main>
+        <main style={{position: 'fixed', height: '100%', width: '100%', overflow: 'auto', background: 'blanchedalmond'}}>
             {
                 sortedNotes.map((notes, i) => (
                     <List key={i} pinned={notes.length > 0 && notes[0].pinned}>
