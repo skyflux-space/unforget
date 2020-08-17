@@ -26,13 +26,13 @@ export const Note: React.FC<NoteProps> = ({id, readOnly = false}) => {
             {note && (
                 <>
                     <Header>
-                        {readOnly && <Button full withoutBorder onClick={() => navigate('/note/edit/' + id, true)}>
+                        {readOnly && <Button full onClick={() => navigate('/note/edit/' + id, true)}>
                             <Icon icon="edit"/>
                         </Button>}
-                        <Button full withoutBorder onClick={note.pinned ? unpin : pin}>
+                        <Button full onClick={note.pinned ? unpin : pin}>
                             <Icon icon={note.pinned ? 'unpin' : 'pin'} active={note.pinned}/>
                         </Button>
-                        <Button full withoutBorder onClick={remove}>
+                        <Button full onClick={remove}>
                             <Icon icon="remove"/>
                         </Button>
                     </Header>

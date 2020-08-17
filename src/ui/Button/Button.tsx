@@ -8,17 +8,15 @@ export type ButtonProps = {
     kind?: 'normal' | 'primary' | 'secondary'
     round?: boolean
     full?: boolean
-    withoutBorder?: boolean
 } & JSX.IntrinsicElements['button']
 
-export const Button: React.FC<ButtonProps> = ({children, className, kind, withoutBorder, full, round, ...props}) => (
+export const Button: React.FC<ButtonProps> = ({children, className, kind, full, round, ...props}) => (
     <button
         className={c(
             className,
             styles[kind!],
             full && styles.full,
             round && styles.round,
-            !withoutBorder && styles.border,
         )}
         {...props}
     >{children}</button>
@@ -28,7 +26,6 @@ Button.defaultProps = {
     kind: 'normal',
     className: styles.default,
     round: false,
-    withoutBorder: false,
 }
 
 Button.propTypes = {
@@ -39,5 +36,4 @@ Button.propTypes = {
         'secondary',
     ]),
     round: PropTypes.bool,
-    withoutBorder: PropTypes.bool,
 }

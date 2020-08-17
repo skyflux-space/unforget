@@ -14,7 +14,7 @@ export type HeaderProps = {
 export const Header: React.FC<HeaderProps> = ({onBackClick, backUrl, children}) => (
     <header className={c(styles.row, styles.padding)}>
         <A href={backUrl!}>
-            <Button onClick={onBackClick} withoutBorder className={styles.item}>
+            <Button onClick={onBackClick} className={styles.item}>
                 <Icon icon="back"/>
             </Button>
         </A>

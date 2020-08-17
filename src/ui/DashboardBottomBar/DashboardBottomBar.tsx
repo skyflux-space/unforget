@@ -18,23 +18,23 @@ export const DashboardBottomBar: React.FC<DashboardBottomBarProps> = ({pinned, v
         visible={visible}
         button={
             <A href={'/create'}>
-                <Button className={styles.round} round withoutBorder>
+                <Button className={styles.round} round>
                     <Icon icon="add"/>
                 </Button>
             </A>
         }
         left={
             <>
-                <Button className={styles.item} full withoutBorder onClick={onClearClicked}>
+                <Button className={styles.item} full onClick={onClearClicked}>
                     <Icon icon="cancel"/>
                 </Button>
-                <Button className={styles.item} full withoutBorder onClick={onRemoveClicked}>
+                <Button className={styles.item} full onClick={onRemoveClicked}>
                     <Icon icon="remove"/>
                 </Button>
             </>
         }
         right={
-            <Button className={styles.item} full withoutBorder onClick={pinned ? onUnpinClicked : onPinClicked}>
+            <Button className={styles.item} full onClick={pinned ? onUnpinClicked : onPinClicked}>
                 <Icon icon={pinned ? 'unpin' : 'pin'}/>
             </Button>
         }
