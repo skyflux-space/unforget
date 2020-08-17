@@ -18,7 +18,7 @@ export const DashboardBottomBar: React.FC<DashboardBottomBarProps> = ({pinned, v
         visible={visible}
         button={
             <A href={'/create'}>
-                <Button className={styles.round} round>
+                <Button className={styles.round} round withoutBorder>
                     <Icon icon="add"/>
                 </Button>
             </A>
