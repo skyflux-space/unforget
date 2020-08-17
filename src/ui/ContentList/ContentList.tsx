@@ -1,5 +1,4 @@
-import React, {FocusEventHandler, memo, useCallback, useMemo} from 'react'
-import {memoizeWith} from 'ramda'
+import React, {FocusEventHandler, memo, useMemo} from 'react'
 import {ContentList as ContentListType, partitionByChecked} from '../../models/content'
 import {ContentListItem} from '../index'
 import styles from './ContentList.module.scss'
@@ -18,20 +17,13 @@ export const ContentList: React.FC<ContentListProps> = memo((
     ) => {
         const [checked, unchecked] = useMemo(() => partitionByChecked(fields), [fields])
 
-        const createOnRemovedCallback = useCallback(memoizeWith(String, (key: string | number) => () => onFieldRemoved?.(key)), [onFieldRemoved])
-
-        const callbacks: Record<string, () => void> = useMemo(() => fields.reduce((acc, e) => ({
-            ...acc,
-            [e.index]: createOnRemovedCallback(e.index),
-        }), {}), [fields, createOnRemovedCallback])
-
         return (
             <ul>
                 {unchecked.map((e, i) => (
                     <li className={styles.margin} key={e.index.toString()}>
                         <ContentListItem
                             onBlur={onFieldBlur}
-                            onRemoveClicked={callbacks[e.index.toString()]}
+                            onRemoveClicked={onFieldRemoved}
                             defaultText={e.text}
                             checked={e.checked}
                             ref={createRef}
@@ -54,7 +46,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
                     <li className={styles.margin} key={e.index.toString()}>
                         <ContentListItem
                             onBlur={onFieldBlur}
-                            onRemoveClicked={callbacks[e.index.toString()]}
+                            onRemoveClicked={onFieldRemoved}
                             defaultText={e.text}
                             checked={e.checked}
                             ref={createRef}
