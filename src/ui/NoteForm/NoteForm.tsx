@@ -49,7 +49,7 @@ export const NoteForm: React.FC<CreateFormProps> = memo((
         <form onSubmit={onSubmit} className={c(styles.flex, styles.column, styles.grow, styles.hidden)}>
             <input name="id" readOnly hidden value={note.id} ref={createRef}/>
             <input name="pinned" type="checkbox" readOnly hidden checked={note.pinned} ref={createRef}/>
-            <Input name="title" placeholder="Title..." ref={createRef} readOnly={readOnly}/>
+            <Input name="title" placeholder="Title..." hidden={readOnly && !note.title} ref={createRef} readOnly={readOnly}/>
             <div className={styles.divider}/>
             <Tabs
                 className={c(styles.flex, styles.column, styles.grow)}
