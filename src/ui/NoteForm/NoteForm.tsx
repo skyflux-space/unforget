@@ -64,6 +64,7 @@ export const NoteForm: React.FC<CreateFormProps> = memo((
                         ref={createRef}
                         withoutDefault
                         readOnly={readOnly}
+                        className={styles.round}
                     />
                 </TabPanel>
                 <TabPanel>

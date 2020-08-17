@@ -1,4 +1,5 @@
 import React, {ChangeEventHandler, FocusEventHandler, forwardRef, memo, Ref, RefAttributes} from 'react'
+import c from 'classnames'
 import {Icon, TextArea} from '..'
 import styles from './ContentListItem.module.scss'
 
@@ -22,16 +23,11 @@ type TextAreaRef = OptionalRef<HTMLTextAreaElement>
 export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTMLElement>> = memo(forwardRef<HTMLElement, ContentListItemProps>((
     {checked, index, defaultText, onBlur, name, onTextChange, disabled, readOnly, onRemoveClicked}, ref
     ) => (
-        <div className={styles.flex}>
+        <div className={c(styles.flex, styles.center, styles.relative, styles.round)}>
             {index !== undefined && <input hidden readOnly name={`${name}.index`} value={index} ref={ref as InputRef}/>}
-            <input
-                type="checkbox"
-                defaultChecked={checked}
-                ref={ref as InputRef}
-                name={`${name}.checked`}
-                disabled={disabled}
-            />
             <TextArea name={`${name}.text`}
+                      autoResize
+                      maxLength={999}
                       size="small"
                       defaultValue={defaultText}
                       ref={ref as TextAreaRef}
@@ -39,8 +35,8 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
                       onBlur={onBlur}
                       onFocus={onFocus}
                       onChange={onTextChange}
-                      className={styles.margin}
                       readOnly={readOnly}
+                      className={c(checked && styles.checked)}
                       {...(disabled ? {value: ''} : {})}
             />
             {!disabled && !readOnly && (
@@ -48,6 +44,14 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
                     <Icon icon="close"/>
                 </button>
             )}
+            <input
+                type="checkbox"
+                className={styles.checkbox}
+                defaultChecked={checked}
+                ref={ref as InputRef}
+                name={`${name}.checked`}
+                hidden={disabled || !readOnly}
+            />
         </div>
     )
 ))

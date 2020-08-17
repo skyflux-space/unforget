@@ -5,11 +5,14 @@
 }
 
 
-.default {
-    width: 100%;
-}
-
 .title {
-    font-size: larger;
+    margin: 0.6rem;
+    padding: 0.7rem;
+
+    border-radius: 1.5rem;
+    box-shadow: 0 0 10px burlywood;
+    background: burlywood;
+
     font-weight: 500;
+    font-size: larger;
 }
