@@ -22,13 +22,20 @@ export const Note: React.FC<NoteProps> = ({id, readOnly = false}) => {
     const submit = useCallback(handleSubmit(console.log), [handleSubmit])
 
     return (
-        <div style={{position: 'fixed', height: '100%', width: '100%', display: 'flex', flexDirection: 'column', background: 'blanchedalmond'}}>
+        <div style={{
+            position: 'fixed',
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            background: 'blanchedalmond'
+        }}>
             {note && (
                 <>
                     <Header>
-                        {readOnly && <Button full onClick={() => navigate('/note/edit/' + id, true)}>
-                            <Icon icon="edit"/>
-                        </Button>}
+                        <Button full onClick={() => navigate(`/note/${readOnly ? 'edit/' : ''}` + id, true)}>
+                            <Icon icon={readOnly ? 'edit' : 'read'}/>
+                        </Button>
                         <Button full onClick={note.pinned ? unpin : pin}>
                             <Icon icon={note.pinned ? 'unpin' : 'pin'} active={note.pinned}/>
                         </Button>
