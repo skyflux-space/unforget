@@ -7,8 +7,7 @@ import React, {
     Ref,
     RefAttributes,
     useCallback,
-    useEffect,
-    useRef
+    useRef,
 } from 'react'
 import c from 'classnames'
 import {Icon, TextArea} from '..'
@@ -24,7 +23,8 @@ export type ContentListItemProps = {
     readOnly?: boolean
     focus?: boolean
     onBlur?: FocusEventHandler<HTMLTextAreaElement>
-    onEnter?: (data: {index?: string, text: string}) => void
+    onEnter?: (data: { index?: string, text: string }) => void
+    onFocus?: (data: { index?: string, text: string }) => void
     onTextChange?: ChangeEventHandler<HTMLTextAreaElement>
     onRemoveClicked?: (...args: any[]) => any
 }
@@ -33,14 +33,14 @@ type OptionalRef<T extends HTMLElement> = Ref<T> | undefined
 type InputRef = OptionalRef<HTMLInputElement>
 
 export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTMLElement>> = memo(forwardRef<HTMLElement, ContentListItemProps>((
-    {checked, index, defaultText, onBlur, name, onTextChange, disabled, readOnly, onRemoveClicked, focus, onEnter}, ref
+    {checked, index, defaultText, onBlur, name, onTextChange, disabled, readOnly, onRemoveClicked, focus, onEnter, onFocus}, ref,
     ) => {
         const onRemove = useCallback(() => index !== undefined && onRemoveClicked?.(index), [onRemoveClicked, index])
 
         const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
         const registerTextArea = useCallback((element: HTMLTextAreaElement) => {
             textAreaRef.current = element
-            if(typeof ref === 'function')
+            if (typeof ref === 'function')
                 ref(element)
         }, [textAreaRef, ref])
 
@@ -51,10 +51,14 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
             event.preventDefault()
         }), [index, onEnter])
 
-        useEffect(() => {
-            if(focus && textAreaRef.current)
-                textAreaRef.current.focus()
-        }, [focus, textAreaRef])
+        const onFieldFocused = useCallback(event => {
+            const {value} = event.target as HTMLTextAreaElement
+            onFocus?.({text: value, index})
+            fixFocus(event)
+        }, [onFocus, index])
+
+        if (focus && textAreaRef.current)
+            textAreaRef.current.focus()
 
         return (
             <div className={c(styles.flex, styles.center, styles.relative, styles.round)}>
@@ -65,9 +69,8 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
                           size="small"
                           defaultValue={defaultText}
                           ref={registerTextArea}
-                          // autoFocus
                           onBlur={onBlur}
-                          onFocus={onFocus}
+                          onFocus={onFieldFocused}
                           onKeyPress={onEnterPressed}
                           onChange={onTextChange}
                           readOnly={readOnly}
@@ -89,11 +92,11 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
                 />
             </div>
         )
-    }
+    },
 ))
 
 
-const onFocus: FocusEventHandler<HTMLTextAreaElement> = ({target}) => {
+const fixFocus: FocusEventHandler<HTMLTextAreaElement> = ({target}) => {
     const {value} = target
     target.value = ''
     target.value = value
@@ -101,7 +104,7 @@ const onFocus: FocusEventHandler<HTMLTextAreaElement> = ({target}) => {
 
 
 const createOnEnterEvent = (fn: KeyboardEventHandler): KeyboardEventHandler => event => {
-    if(event.key === 'Enter') {
+    if (event.key === 'Enter') {
         event.persist()
         fn(event)
     }

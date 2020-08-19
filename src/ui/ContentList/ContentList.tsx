@@ -1,5 +1,6 @@
 import React, {FocusEventHandler, memo, useCallback, useMemo, useState} from 'react'
-import {ContentList as ContentListType, partitionByChecked} from '../../models/content'
+import {useCustomCompareEffect} from 'react-use'
+import {ContentList as ContentListType, getMaxIndex, partitionByChecked} from '../../models/content'
 import {ContentListItem} from '../index'
 import styles from './ContentList.module.scss'
 
@@ -34,6 +35,14 @@ export const ContentList: React.FC<ContentListProps> = memo((
                 return setFocused(checked[checkedIndex + 1].index.toString())
         }, [setFocused, unchecked, checked])
 
+        const onFocus = useCallback(({index}: { index?: string }) => setFocused(index || 'static'), [setFocused])
+
+        useCustomCompareEffect(
+            () => setFocused(String(getMaxIndex(fields) || 'static')),
+            [fields.length, unchecked],
+            ([length, unchecked], [newLength, newUnchecked]) => newLength <= length && unchecked === newUnchecked,
+        )
+
         return (
             <ul>
                 {unchecked.map((e, i) => (
@@ -42,6 +51,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
                             onBlur={onFieldBlur}
                             onEnter={onEnter}
                             onRemoveClicked={onFieldRemoved}
+                            onFocus={onFocus}
                             defaultText={e.text}
                             checked={e.checked}
                             ref={createRef}
@@ -53,9 +63,10 @@ export const ContentList: React.FC<ContentListProps> = memo((
                     </li>
                 ))}
                 {!readOnly && (
-                    <li className={styles.margin} key="static">
+                    <li className={styles.margin}>
                         <ContentListItem
                             disabled
+                            onFocus={onFocus}
                             onEnter={onEnter}
                             onTextChange={({target: {value}}) => onStaticInputChange?.(value)}
                             checked={false}
@@ -69,6 +80,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
                             onBlur={onFieldBlur}
                             onEnter={onEnter}
                             onRemoveClicked={onFieldRemoved}
+                            onFocus={onFocus}
                             defaultText={e.text}
                             checked={e.checked}
                             ref={createRef}
