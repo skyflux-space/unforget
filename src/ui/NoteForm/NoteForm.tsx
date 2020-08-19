@@ -81,16 +81,20 @@ export const NoteForm: React.FC<CreateFormProps> = memo((
                 {
                     !readOnly
                         ? (
-                            <div className={styles.flex}>
-                                <TabList className={c(styles.flex, styles.grow, styles.end, styles.padding, styles.footer)}>
-                                    <Tab className={styles.switch}>
-                                        <Icon icon="text" active={contentType === ContentType.String}/>
-                                    </Tab>
-                                    <Tab className={styles.switch}>
-                                        <Icon icon="list" active={contentType === ContentType.List}/>
-                                    </Tab>
-                                </TabList>
-                            </div>
+                            <>
+                                <div className={styles.divider}/>
+                                <div className={styles.flex}>
+                                    <TabList
+                                        className={c(styles.flex, styles.grow, styles.end, styles.padding, styles.footer)}>
+                                        <Tab className={styles.switch}>
+                                            <Icon icon="text" active={contentType === ContentType.String}/>
+                                        </Tab>
+                                        <Tab className={styles.switch}>
+                                            <Icon icon="list" active={contentType === ContentType.List}/>
+                                        </Tab>
+                                    </TabList>
+                                </div>
+                            </>
                         ) : null
                 }
             </Tabs>

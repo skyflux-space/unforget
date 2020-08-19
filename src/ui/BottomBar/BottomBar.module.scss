@@ -1,3 +1,5 @@
+@import "src/theme";
+
 $background-height: 75%;
 
 
@@ -28,7 +30,10 @@ $background-height: 75%;
 
     height: $background-height;
 
-    background: #a8a8b9;
+    background: $color-primary-2;
+
+    border-top: 1px solid $color-complement-1;
+    box-shadow: 0 0 10px $color-complement-1;
 
     transition: all 200ms linear;
     transform: translateY(100%);
@@ -44,6 +49,8 @@ $background-height: 75%;
 
     position: relative;
     padding-bottom: 0.5rem;
+
+    z-index: 1;
 }
 
 .background {
@@ -56,7 +63,7 @@ $background-height: 75%;
     width: 100%;
     height: $background-height;
 
-    background: #a8a8b9;
+    background: $color-primary-2;
 
     transition: all 200ms linear;
     transform: translateY(100%);

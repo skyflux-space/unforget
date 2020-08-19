@@ -1,3 +1,6 @@
+@import "src/theme";
+
+
 .item {
     width: 2.7rem;
     height: 2.7rem;
@@ -10,6 +13,6 @@
 
     padding: 10%;
 
-    background: #81bed5;
-    box-shadow: 0 0 8px inset #000000b8;
+    background: $color-complement-2;
+    box-shadow: 0 0 8px inset $color-complement-1, 0 0 2px $color-complement-4;
 }

@@ -1,8 +1,11 @@
+@import "src/theme";
+
+
 .card {
     width: 100%;
 
     border-radius: 5px;
-    box-shadow: 0 0 5px black;
+    box-shadow: 0 0 5px $color-complement-1;
 
     overflow: hidden;
 
@@ -13,7 +16,7 @@
 }
 
 .card.selected {
-    background: #deb88780;
+    background: $color-primary-0;
 }
 
 @media (min-width: 768px) {
@@ -33,14 +36,14 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        height: 4rem;
+        height: 2rem;
         width: 100%;
-        background: linear-gradient(to top, #e9d3b259, transparent);
+        background: linear-gradient(to top, $color-primary-1, transparent);
     }
 }
 
 .content.pinned::after {
-    background: linear-gradient(to top, burlywood, transparent);
+    background: linear-gradient(to top, $color-primary-2, transparent);
 }
 
 .content.overflowed {
@@ -144,9 +147,9 @@
 
     padding: 0.2rem;
 
-    border: 1px solid #e8c792;
+    border-top: 1px solid $color-primary-2;
     background: #0000000f;
 
-    color: #000000a3;
+    color: $color-primary-4;
     font-size: smaller;
 }
