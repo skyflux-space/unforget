@@ -38,7 +38,7 @@ import {
     split,
     T,
     trim,
-    useWith,
+    useWith, when,
 } from 'ramda'
 import {Content, ContentList, ContentListItem, ContentType} from './types'
 import {Curried} from '../../utils/Curried'
@@ -135,6 +135,14 @@ export const filterEmptyItems: (content: ContentList) => ContentList = (
     ))
 )
 
+export const partitionByChecked: (list: ContentList) => [ContentList, ContentList] = partition(prop('checked'))
+
+export const getMaxIndex: (list: ContentList) => number | undefined = pipe(
+    map<ContentListItem, number>(pipe(prop('index'), Number)),
+    apply(Math.max),
+    when(equals(-Infinity), always(undefined)),
+)
+
 export const addItem: Curried<string, ContentList, ContentList> = (
     converge(
         append,
@@ -143,16 +151,12 @@ export const addItem: Curried<string, ContentList, ContentList> = (
                 text: nthArg(0) as (...args: any) => string,
                 checked: F,
                 index: pipe(
-                    nthArg(1) as (...args: any) => ContentList,
-                    map(pipe(prop('index'), Number)),
-                    append(-1),
-                    apply(Math.max),
-                    inc,
+                    nthArg(1),
+                    getMaxIndex,
+                    ifElse(isNil, always(0), inc),
                 ),
             }),
             binary(nthArg(1)),
         ],
     )
 )
-
-export const partitionByChecked: (list: ContentList) => [ContentList, ContentList] = partition(prop('checked'))
