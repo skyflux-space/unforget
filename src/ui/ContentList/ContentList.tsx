@@ -56,7 +56,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
                                 defaultText={e.text}
                                 checked={e.checked}
                                 ref={createRef}
-                                name={`content[${i}]`}
+                                name={`listContent[${i}]`}
                                 readOnly={readOnly}
                                 index={e.index.toString()}
                                 focus={e.index.toString() === focused}

@@ -59,7 +59,7 @@ export const NoteForm: React.FC<CreateFormProps> = memo((
             >
                 <TabPanel>
                     <TextArea
-                        name="content"
+                        name="textContent"
                         placeholder="Note..."
                         fullSize
                         ref={createRef}
