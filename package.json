@@ -23,7 +23,7 @@
     "ramda": "^0.27.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hook-form": "^6.3.2",
+    "react-hook-form": "^6.4.1",
     "react-masonry-component": "^6.2.1",
     "react-scripts": "3.4.1",
     "react-stickynode": "^3.0.3",
