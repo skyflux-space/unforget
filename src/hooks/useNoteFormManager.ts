@@ -1,8 +1,25 @@
+import {useEffect, useMemo, useRef} from 'react'
+import {
+    assoc,
+    complement,
+    cond,
+    converge,
+    dissoc,
+    equals,
+    identity,
+    isNil,
+    length,
+    not,
+    pipe,
+    prop,
+    propOr,
+    propSatisfies,
+    reject,
+    T,
+} from 'ramda'
 import {useForm, UseFormMethods} from 'react-hook-form'
 import {isListNote, Note, NoteHookProps, useNote} from '../models/note'
-import {ContentList, getContentType, isListContent, useNoteContent, UseNoteContentProps} from '../models/content'
-import {equals, evolve, F, is, length, not, pipe, propOr, reject, when} from 'ramda'
-import {useEffect, useMemo, useRef} from 'react'
+import {ContentList, getContentType, useNoteContent, UseNoteContentProps} from '../models/content'
 
 
 export type UseNoteFormManagerProps = NoteHookProps & UseFormMethods & UseNoteContentProps
@@ -20,18 +37,27 @@ export const useNoteFormManager = (id: string): UseNoteFormManagerProps => {
         changeRef.current = true
     }, [note, changeRef])
 
-    const data: Note = watch()
+    const data: Note & { listContent?: ContentList, textContent?: string } = watch()
 
     useEffect(() => {
-        if (not(equals(note, data))) {
-            if (changeRef.current)
-                reset(note)
-            else {
-                if (not(equals(note?.content, data.content))) {
-                    if (isListContent(data.content!))
-                        updateContent(data.content!.map(evolve({checked: when(is(Array), F)})))
-                    else
-                        updateContent(data.content!)
+        const handledData: Note = pipe(
+            cond<typeof data, typeof data>([
+                [propSatisfies(complement(isNil), 'listContent'), converge(assoc('content'), [prop('listContent'), identity])],
+                [propSatisfies(complement(isNil), 'textContent'), converge(assoc('content'), [prop('textContent'), identity])],
+                [propSatisfies(complement(isNil), 'content'), identity],
+                [T, assoc('content', [])],
+            ]),
+            dissoc('textContent') as (value: typeof data) => Omit<typeof data, 'textContent'>,
+            dissoc('listContent') as (note: Omit<typeof data, 'textContent'>) => Note,
+        )(data)
+
+        if (not(equals(note, handledData))) {
+            if (changeRef.current) {
+                if (note)
+                    reset(assoc(isListNote(note) ? 'listContent' : 'textContent', note.content, note))
+            } else {
+                if (not(equals(note?.content, handledData.content))) {
+                    updateContent(handledData.content!)
                 } else
                     update(data)
             }
