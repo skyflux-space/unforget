@@ -1,3 +1,6 @@
+@import "src/theme";
+
+
 .flex {
     display: flex;
 }
@@ -45,7 +48,7 @@
     padding: 0.5rem;
 
     border-radius: 1.5rem;
-    box-shadow: 1px 1px 8px #cb944a;
+    box-shadow: 1px 1px 8px $color-primary-0;
 
-    background: antiquewhite;
+    background: $color-primary-1;
 }

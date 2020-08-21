@@ -28,7 +28,7 @@ export const Note: React.FC<NoteProps> = ({id, readOnly = false}) => {
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            background: 'blanchedalmond'
+            background: '#FFDEAD'
         }}>
             {note && (
                 <>

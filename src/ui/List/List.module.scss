@@ -1,9 +1,12 @@
+@import "src/theme";
+
+
 .list + .list {
     padding-top: 0.5rem;
 }
 
 .list.pinned {
-    background: burlywood;
+    background: $color-primary-2;
     padding-bottom: 0.5rem;
 }
 
