@@ -1,4 +1,4 @@
-import React, {FocusEventHandler, memo, useCallback, useMemo, useState} from 'react'
+import React, {FocusEventHandler, Fragment, memo, useCallback, useMemo, useState} from 'react'
 import {useCustomCompareEffect} from 'react-use'
 import {ContentList as ContentListType, getMaxIndex, partitionByChecked} from '../../models/content'
 import {ContentListItem} from '../index'
@@ -45,24 +45,38 @@ export const ContentList: React.FC<ContentListProps> = memo((
 
         return (
             <ul>
-                {unchecked.map((e, i) => (
-                    <li className={styles.margin} key={e.index.toString()}>
-                        <ContentListItem
-                            onBlur={onFieldBlur}
-                            onEnter={onEnter}
-                            onRemoveClicked={onFieldRemoved}
-                            onFocus={onFocus}
-                            defaultText={e.text}
-                            checked={e.checked}
-                            ref={createRef}
-                            name={`content[${i}]`}
-                            readOnly={readOnly}
-                            index={e.index.toString()}
-                            focus={e.index.toString() === focused}
-                        />
-                    </li>
+                {fields.map((e, i, arr) => (
+                    <Fragment key={e.index.toString()}>
+                        <li className={styles.margin}>
+                            <ContentListItem
+                                onBlur={onFieldBlur}
+                                onEnter={onEnter}
+                                onRemoveClicked={onFieldRemoved}
+                                onFocus={onFocus}
+                                defaultText={e.text}
+                                checked={e.checked}
+                                ref={createRef}
+                                name={`listContent[${i}]`}
+                                readOnly={readOnly}
+                                index={e.index.toString()}
+                                focus={e.index.toString() === focused}
+                            />
+                        </li>
+                        {!readOnly && !e.checked && (i === arr.length - 1 || arr[i + 1].checked) && (
+                            <li className={styles.margin}>
+                                <ContentListItem
+                                    disabled
+                                    onFocus={onFocus}
+                                    onEnter={onEnter}
+                                    onTextChange={({target: {value}}) => onStaticInputChange?.(value)}
+                                    checked={false}
+                                    focus={focused === 'static'}
+                                />
+                            </li>
+                        )}
+                    </Fragment>
                 ))}
-                {!readOnly && (
+                {!readOnly && !fields.length && (
                     <li className={styles.margin}>
                         <ContentListItem
                             disabled
@@ -74,23 +88,6 @@ export const ContentList: React.FC<ContentListProps> = memo((
                         />
                     </li>
                 )}
-                {checked.map((e, i) => (
-                    <li className={styles.margin} key={e.index.toString()}>
-                        <ContentListItem
-                            onBlur={onFieldBlur}
-                            onEnter={onEnter}
-                            onRemoveClicked={onFieldRemoved}
-                            onFocus={onFocus}
-                            defaultText={e.text}
-                            checked={e.checked}
-                            ref={createRef}
-                            name={`content[${unchecked.length + i}]`}
-                            readOnly={readOnly}
-                            index={e.index.toString()}
-                            focus={e.index.toString() === focused}
-                        />
-                    </li>
-                ))}
             </ul>
         )
     },
