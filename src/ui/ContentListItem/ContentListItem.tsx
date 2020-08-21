@@ -7,6 +7,7 @@ import React, {
     Ref,
     RefAttributes,
     useCallback,
+    useEffect,
     useRef,
 } from 'react'
 import c from 'classnames'
@@ -57,8 +58,10 @@ export const ContentListItem: React.FC<ContentListItemProps & RefAttributes<HTML
             fixFocus(event)
         }, [onFocus, index])
 
-        if (focus && textAreaRef.current)
-            textAreaRef.current.focus()
+        useEffect(() => {
+            if (focus && textAreaRef.current)
+                textAreaRef.current.focus()
+        })
 
         return (
             <div className={c(styles.flex, styles.center, styles.relative, styles.round)}>

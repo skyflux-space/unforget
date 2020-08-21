@@ -1,5 +1,6 @@
 import React, {FocusEventHandler, Fragment, memo, useCallback, useMemo, useState} from 'react'
 import {useCustomCompareEffect} from 'react-use'
+import {always, isNil, pipe, when} from 'ramda'
 import {ContentList as ContentListType, getMaxIndex, partitionByChecked} from '../../models/content'
 import {ContentListItem} from '../index'
 import styles from './ContentList.module.scss'
@@ -21,7 +22,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
         const [focused, setFocused] = useState('static')
         const onEnter = useCallback(({index}) => {
             if (index === undefined)
-                return checked.length && setFocused(checked[0].index.toString())
+                return unchecked.length && setFocused(unchecked[0].index.toString())
 
             if (unchecked.length && index === unchecked[unchecked.length - 1].index.toString())
                 return setFocused('static')
@@ -38,7 +39,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
         const onFocus = useCallback(({index}: { index?: string }) => setFocused(index || 'static'), [setFocused])
 
         useCustomCompareEffect(
-            () => setFocused(String(getMaxIndex(fields) || 'static')),
+            pipe(always(fields), getMaxIndex, when(isNil, always('static')), String, setFocused),
             [fields.length, unchecked],
             ([length, unchecked], [newLength, newUnchecked]) => newLength <= length && unchecked === newUnchecked,
         )
