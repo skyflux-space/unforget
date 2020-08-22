@@ -1,12 +1,14 @@
 import {useEffect, useMemo, useRef} from 'react'
 import {
+    always,
     assoc,
     complement,
     cond,
     converge,
-    dissoc,
+    dissoc, eqProps,
     equals,
     identity,
+    ifElse,
     isNil,
     length,
     not,
@@ -16,6 +18,7 @@ import {
     propSatisfies,
     reject,
     T,
+    when,
 } from 'ramda'
 import {useForm, UseFormMethods} from 'react-hook-form'
 import {isListNote, Note, NoteHookProps, useNote} from '../models/note'
@@ -27,7 +30,7 @@ export type UseNoteFormManagerProps = NoteHookProps & UseFormMethods & UseNoteCo
 export const useNoteFormManager = (id: string): UseNoteFormManagerProps => {
     const useNoteProps = useNote(id)
     const {note, update} = useNoteProps
-    const useFormProps = useForm({defaultValues: note})
+    const useFormProps = useForm<FormFields>({defaultValues: noteToFormFields(note)})
     const {watch, reset} = useFormProps
     const useNoteContentProps = useNoteContent(note)
     const {updateContent} = useNoteContentProps
@@ -37,27 +40,18 @@ export const useNoteFormManager = (id: string): UseNoteFormManagerProps => {
         changeRef.current = true
     }, [note, changeRef])
 
-    const data: Note & { listContent?: ContentList, textContent?: string } = watch()
+    const data: FormFields = watch()
 
     useEffect(() => {
-        const handledData: Note = pipe(
-            cond<typeof data, typeof data>([
-                [propSatisfies(complement(isNil), 'listContent'), converge(assoc('content'), [prop('listContent'), identity])],
-                [propSatisfies(complement(isNil), 'textContent'), converge(assoc('content'), [prop('textContent'), identity])],
-                [propSatisfies(complement(isNil), 'content'), identity],
-                [T, assoc('content', [])],
-            ]),
-            dissoc('textContent') as (value: typeof data) => Omit<typeof data, 'textContent'>,
-            dissoc('listContent') as (note: Omit<typeof data, 'textContent'>) => Note,
-        )(data)
+        const noteFromFields: Note = formFieldToNote(data)
 
-        if (not(equals(note, handledData))) {
+        if (not(equals(note, noteFromFields))) {
             if (changeRef.current) {
                 if (note)
-                    reset(assoc(isListNote(note) ? 'listContent' : 'textContent', note.content, note))
+                    reset(noteToFormFields(note))
             } else {
-                if (not(equals(note?.content, handledData.content))) {
-                    updateContent(handledData.content!)
+                if (not(eqProps('content', note, noteFromFields))) {
+                    updateContent(noteFromFields.content!)
                 } else
                     update(data)
             }
@@ -82,4 +76,31 @@ export const useNoteFormManager = (id: string): UseNoteFormManagerProps => {
     }), [useNoteProps, useFormProps, useNoteContentProps])
 }
 
+
 const uncheckedLength: (content: ContentList) => number = pipe(reject(propOr(false, 'checked')), length)
+
+
+type FormFields = Partial<Note & { listContent: ContentList, textContent: string }>
+
+
+const noteToFormFields: (note?: Note) => FormFields = pipe(
+    when(isNil, always({})),
+    converge(assoc, [
+        ifElse(isListNote, always('listContent'), always('textContent')),
+        prop('content'),
+        identity,
+    ]),
+)
+
+
+const formFieldToNote: (fields?: FormFields) => Note = pipe(
+    when(isNil, always({})),
+    cond<FormFields, FormFields>([
+        [propSatisfies(complement(isNil), 'content'), identity],
+        [propSatisfies(complement(isNil), 'listContent'), converge(assoc('content'), [prop('listContent'), identity])],
+        [propSatisfies(complement(isNil), 'textContent'), converge(assoc('content'), [prop('textContent'), identity])],
+        [T, assoc('content', [])],
+    ]),
+    dissoc('textContent') as any,
+    dissoc('listContent') as any,
+)
