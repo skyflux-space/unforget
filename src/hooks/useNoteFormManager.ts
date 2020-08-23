@@ -53,7 +53,7 @@ export const useNoteFormManager = (id: string): UseNoteFormManagerProps => {
                 if (not(eqProps('content', note, noteFromFields))) {
                     updateContent(noteFromFields.content!)
                 } else
-                    update(data)
+                    update(noteFromFields)
             }
         }
         changeRef.current = false
