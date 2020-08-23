@@ -44,6 +44,8 @@ export const ContentList: React.FC<ContentListProps> = memo((
             ([length, unchecked], [newLength, newUnchecked]) => newLength <= length && unchecked === newUnchecked,
         )
 
+        const onStaticChange = useCallback(({target: {value}}) => onStaticInputChange?.(value), [onStaticInputChange])
+
         return (
             <ul>
                 {fields.map((e, i, arr) => (
@@ -69,7 +71,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
                                     disabled
                                     onFocus={onFocus}
                                     onEnter={onEnter}
-                                    onTextChange={({target: {value}}) => onStaticInputChange?.(value)}
+                                    onTextChange={onStaticChange}
                                     checked={false}
                                     focus={focused === 'static'}
                                 />
@@ -83,7 +85,7 @@ export const ContentList: React.FC<ContentListProps> = memo((
                             disabled
                             onFocus={onFocus}
                             onEnter={onEnter}
-                            onTextChange={({target: {value}}) => onStaticInputChange?.(value)}
+                            onTextChange={onStaticChange}
                             checked={false}
                             focus={focused === 'static'}
                         />
